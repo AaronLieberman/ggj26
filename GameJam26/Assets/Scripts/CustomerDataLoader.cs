@@ -5,10 +5,10 @@ public static class CustomerDataLoader
 {
     public static CustomerData[] Load()
     {
-        var asset = Resources.Load<TextAsset>("CustomerData");
+        var asset = Resources.Load<TextAsset>("Mask Maker - Customers");
         if (asset == null)
         {
-            Debug.LogError("CustomerDataLoader: CustomerData.csv not found in Resources");
+            Debug.LogError("CustomerDataLoader: 'Mask Maker - Customers.csv' not found in Resources");
             return new CustomerData[0];
         }
 
