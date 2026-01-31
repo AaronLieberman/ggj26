@@ -246,8 +246,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 86bb4cfa758eedd409e554c4636fad5b, type: 3}
   - {fileID: 21300000, guid: cae0d2e159cd4aa479399306d82ac8b9, type: 3}
   - {fileID: 21300000, guid: ab0a379f6ca352e439a8aef0a2fc0adb, type: 3}
-  _speed: 30000
-  _spawnDelaySeconds: 3
+  _speed: 5000
+  _spawnDelaySeconds: 0.8
 --- !u!1 &6864680718138246265
 GameObject:
   m_ObjectHideFlags: 0
