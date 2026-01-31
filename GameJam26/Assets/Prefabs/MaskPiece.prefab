@@ -160,6 +160,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6922485875019541830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 780e4074367d4314cb6588b72c2a278b, type: 3}
+  m_Script: {fileID: 11500000, guid: b0af0bf1987aa77458aceed05fdebe18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaskPiece
