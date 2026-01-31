@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    public MaskPartData Data { get; set; }
 
     private RectTransform _rectTransform;
     private Canvas _canvas;
