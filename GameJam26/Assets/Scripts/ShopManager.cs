@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using System.Linq;
 
 [System.Serializable]
@@ -15,23 +14,22 @@ public class ShopManager : MonoBehaviour
 {
     public GameObject Customer;
     public Transform CustomerSpawnPoint;
-    public float Speed = 1;
+    public float Speed = 400;
     public CustomerEntry[] Sprites;
     public float SpeedMultiplier = 1;
+    public WaypointPath EnterPath;
+    public WaypointPath ExitPath;
 
     GameObject _currentCustomer;
     CustomerData _currentCustomerData;
     float _timeRemaining;
     bool _customerWaiting;
     bool _customerLeaving;
-    EventHandler<Collider2D> _triggerHandler;
 
     GameObject _nameObj;
     TextMeshProUGUI _nameText;
     GameObject _conversationObj;
     TextMeshProUGUI _conversationText;
-    GenericTrigger _stopTrigger;
-    GameObject _destroyTrigger;
 
     CustomerData[] _customers;
 
@@ -46,23 +44,13 @@ public class ShopManager : MonoBehaviour
         var conversation = transform.Find("Conversation");
         _conversationObj = conversation.gameObject;
         _conversationText = conversation.Find("ConversationText").GetComponent<TextMeshProUGUI>();
-
-        _stopTrigger = transform.Find("CustomerStopLocation").GetComponent<GenericTrigger>();
-        _destroyTrigger = transform.Find("CustomerDestroy").gameObject;
     }
 
     void Update()
     {
-        if (_currentCustomer == null && _customerLeaving)
-        {
-            _customerLeaving = false;
-            _nameObj.SetActive(false);
-            _conversationObj.SetActive(false);
-        }
-
         if (_currentCustomer == null && !_customerLeaving)
         {
-            _currentCustomer = SpawnCustomer(_customers[UnityEngine.Random.Range(0, _customers.Length)]);
+            _currentCustomer = SpawnCustomer(_customers[Random.Range(0, _customers.Length)]);
         }
 
         if (_customerWaiting)
@@ -77,33 +65,32 @@ public class ShopManager : MonoBehaviour
     {
         _currentCustomerData = customerData;
 
-        GameObject created = Instantiate(Customer, CustomerSpawnPoint.position, CustomerSpawnPoint.rotation, CustomerSpawnPoint);
-        created.GetComponent<Rigidbody2D>().AddForce(new Vector2(-Speed, 0.0f));
+        GameObject created = Instantiate(Customer, transform);
+        var rect = created.GetComponent<RectTransform>();
+        var spawnRect = ((RectTransform)CustomerSpawnPoint).anchoredPosition;
+        rect.anchoredPosition = spawnRect;
 
         created.GetComponent<Image>().sprite = Sprites.SingleOrDefault(a => a.name == customerData.customerImageName).sprite;
 
-        if (_triggerHandler != null)
-            _stopTrigger.TriggerEnter2D -= _triggerHandler;
-
-        _triggerHandler = (_, collision) =>
-        {
-            collision.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-
-            _nameText.SetText(customerData.customerName);
-            _nameObj.SetActive(true);
-
-            _conversationText.SetText(customerData.customerDialogue);
-            _conversationObj.SetActive(true);
-
-            float duration = customerData.time / SpeedMultiplier;
-            _customerWaiting = true;
-            _timeRemaining = duration;
-            _currentCustomer.GetComponent<Customer>().StartTimer(duration);
-        };
-
-        _stopTrigger.TriggerEnter2D += _triggerHandler;
+        var follower = created.GetComponent<PathFollower>();
+        follower.Speed = Speed;
+        follower.Follow(EnterPath, () => CustomerArrived(customerData));
 
         return created;
+    }
+
+    void CustomerArrived(CustomerData customerData)
+    {
+        _nameText.SetText(customerData.customerName);
+        _nameObj.SetActive(true);
+
+        _conversationText.SetText(customerData.customerDialogue);
+        _conversationObj.SetActive(true);
+
+        float duration = customerData.time / SpeedMultiplier;
+        _customerWaiting = true;
+        _timeRemaining = duration;
+        _currentCustomer.GetComponent<Customer>().StartTimer(duration);
     }
 
     public void CustomerSatisfied()
@@ -121,8 +108,15 @@ public class ShopManager : MonoBehaviour
 
         _customerLeaving = true;
 
-        _destroyTrigger.SetActive(true);
-
-        _currentCustomer.GetComponent<Rigidbody2D>().AddForce(new Vector2(Speed, 0));
+        var follower = _currentCustomer.GetComponent<PathFollower>();
+        follower.Speed = Speed;
+        follower.Follow(ExitPath, () =>
+        {
+            Destroy(_currentCustomer);
+            _currentCustomer = null;
+            _customerLeaving = false;
+            _nameObj.SetActive(false);
+            _conversationObj.SetActive(false);
+        });
     }
 }
