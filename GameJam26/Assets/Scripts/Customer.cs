@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class Customer : MonoBehaviour
 {
     public Sprite ProgressFill;
+    public CustomerData Data { get; set; }
 
     float _totalTime;
     float _timeRemaining;

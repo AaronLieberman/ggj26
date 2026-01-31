@@ -21,7 +21,6 @@ public class ShopManager : MonoBehaviour
     public WaypointPath ExitPath;
 
     GameObject _currentCustomer;
-    CustomerData _currentCustomerData;
     float _timeRemaining;
     bool _customerWaiting;
     bool _customerLeaving;
@@ -63,14 +62,13 @@ public class ShopManager : MonoBehaviour
 
     GameObject SpawnCustomer(CustomerData customerData)
     {
-        _currentCustomerData = customerData;
-
         GameObject created = Instantiate(Customer, transform);
         var rect = created.GetComponent<RectTransform>();
         var spawnRect = ((RectTransform)CustomerSpawnPoint).anchoredPosition;
         rect.anchoredPosition = spawnRect;
 
         created.GetComponent<Image>().sprite = Sprites.SingleOrDefault(a => a.name == customerData.customerImageName).sprite;
+        created.GetComponent<Customer>().Data = customerData;
 
         var follower = created.GetComponent<PathFollower>();
         follower.Speed = Speed;
@@ -103,7 +101,8 @@ public class ShopManager : MonoBehaviour
     {
         _customerWaiting = false;
 
-        string dialog = satisfied ? _currentCustomerData.gradeADialog : _currentCustomerData.gradeFDialog;
+        var data = _currentCustomer.GetComponent<Customer>().Data;
+        string dialog = satisfied ? data.gradeADialog : data.gradeFDialog;
         _conversationText.SetText(dialog);
 
         _customerLeaving = true;
