@@ -14,6 +14,8 @@ public class ShopManager : MonoBehaviour
     public WaypointPath ExitPath;
     public string DebugCustomerToShow;
 
+    public Customer CurrentCustomer { get { return _currentCustomer?.GetComponent<Customer>(); } }
+
     GameObject _currentCustomer;
     float _timeRemaining;
     bool _customerWaiting;

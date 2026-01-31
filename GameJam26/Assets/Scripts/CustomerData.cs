@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,11 @@ public struct CustomerStat
     public int Min;
     public int Max;
     public int Points;
+
+    public readonly bool InRange(int value, int scaler = 1)
+    {
+        return value >= Min * scaler && value <= Max * scaler;
+    }
 }
 
 public struct CustomerTag
