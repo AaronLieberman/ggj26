@@ -2,14 +2,6 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 
-public enum MaskPieceType
-{
-	Nose,
-	Horns,
-	Mouth,
-	Eyes,
-	Base
-}
 
 [CreateAssetMenu(fileName = "MaskPieceScriptableObject", menuName = "Scriptable Objects/MaskPieceScriptableObject")]
 public class MaskPieceScriptableObject : ScriptableObject
