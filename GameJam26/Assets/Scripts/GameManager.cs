@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         shopManager = Utilities.GetRootComponentRecursive<ShopManager>();
         conveyorManager = Utilities.GetRootComponentRecursive<ConveyorManager>();
 
-        foregroundImage = GameObject.Find("ForegroundImage").GetComponent<Image>();
+        foregroundImage = GameObject.Find("Foreground").GetComponentInChildren<Image>(true);
 
         gameEndTime = Time.time + gameLengthSeconds;
     }
@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Starting game");
 
+        foregroundImage.gameObject.SetActive(true);
         StartCoroutine(FadeInForeground());
 
         shopManager.ActivateManager();
