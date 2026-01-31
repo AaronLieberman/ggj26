@@ -32,6 +32,8 @@ public class ShopManager : MonoBehaviour
 
     CustomerData[] _customers;
 
+    bool isActive = false;
+
     void Awake()
     {
         _customers = CustomerDataLoader.Load();
@@ -47,7 +49,7 @@ public class ShopManager : MonoBehaviour
 
     void Update()
     {
-        if (_currentCustomer == null && !_customerLeaving)
+        if (isActive && _currentCustomer == null && !_customerLeaving)
         {
             _currentCustomer = SpawnCustomer(_customers[Random.Range(0, _customers.Length)]);
         }
@@ -117,5 +119,15 @@ public class ShopManager : MonoBehaviour
             _nameObj.SetActive(false);
             _conversationObj.SetActive(false);
         });
+    }
+
+    public void ActivateManager()
+    {
+        isActive = true;
+    }
+
+    public void DeactivateManager()
+    {
+        isActive = false;
     }
 }

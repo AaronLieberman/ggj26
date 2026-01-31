@@ -6,6 +6,8 @@ public enum GameState { STARTED, ENDED }
 
 public class GameManager : MonoBehaviour
 {
+    private ShopManager shopManager;
+
     [SerializeField] private int gameLengthSeconds;
     private float gameEndTime;
     private GameState gameState;
@@ -15,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        shopManager = Utilities.GetRootComponentRecursive<ShopManager>();
+
         foregroundImage = GameObject.Find("ForegroundImage").GetComponent<Image>();
 
         gameEndTime = Time.time + gameLengthSeconds;
@@ -35,12 +39,21 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
+        Debug.Log("Starting game");
+
         StartCoroutine(FadeInForeground());
+
+        shopManager.ActivateManager();
+
         gameState = GameState.STARTED;
     }
 
     private void EndGame()
     {
+        Debug.Log("Ending game");
+
+        shopManager.DeactivateManager();
+
         gameState = GameState.ENDED;
     }
 
