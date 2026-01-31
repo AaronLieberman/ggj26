@@ -36,6 +36,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.Log("Begin Dragging Mask Piece");
         if (_canvasGroup != null)
         {
             _canvasGroup.blocksRaycasts = false;
@@ -44,10 +45,13 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
-        _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
-        _cursorLocation = _rectTransform.anchoredPosition;
-
         UpdateMaskSnap();
+
+        if (!_currentSnap.HasValue)
+        {
+            _rectTransform.anchoredPosition = _cursorLocation + eventData.delta / _canvas.scaleFactor;
+            //_cursorLocation = _rectTransform.anchoredPosition;
+        }
     }
 
     private void UpdateMaskSnap()
@@ -55,16 +59,16 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         foreach (var mask in _masks)
         {
             var result = mask.CheckSnap(_rectTransform.position);
-            if (result.DidSnap)
+            if (result.ShouldSnap)
             {
                 Debug.Log($"Snap match: {result.SnappedType} {result.SnappedPoint}");
                 _currentSnap = new CurrentSnap() { Mask = mask, SnapPoint = result.SnappedPoint, SnapType = result.SnappedType };
+                _rectTransform.position = _currentSnap.Value.SnapPoint.position;
                 return;
             }
         }
 
         _currentSnap = null;
-        _rectTransform.anchoredPosition = _cursorLocation;
     }
 
     public void OnEndDrag(PointerEventData eventData)

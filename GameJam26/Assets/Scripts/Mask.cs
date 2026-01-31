@@ -25,7 +25,7 @@ public class Mask : MonoBehaviour
     [SerializeField] RectTransform MountPoints;
     [SerializeField] RectTransform MountObjContainer;
 
-    [SerializeField] public float SnapDistance = 100f;
+    [SerializeField] public float SnapDistance = 1f;
 
 
     public Dictionary<MaskPieceType, MaskPieceAnchor> MaskPieceAnchors
@@ -39,7 +39,7 @@ public class Mask : MonoBehaviour
 
     public struct CheckSnapResult
     {
-        public bool DidSnap;
+        public bool ShouldSnap;
         public float Distance;
         public MaskPieceType SnappedType;
         public RectTransform SnappedPoint;
@@ -62,7 +62,7 @@ public class Mask : MonoBehaviour
                 {
                     Debug.Log($"SNAPPED: {pieceTypeMount.Type} :: {fromPosition} :: {mountPoint} :: {dist}");
                     closest = new CheckSnapResult {
-                        DidSnap = true,
+                        ShouldSnap = true,
                         Distance = dist,
                         SnappedPoint = mountPoint,
                         SnappedType = pieceTypeMount.Type };
@@ -75,7 +75,7 @@ public class Mask : MonoBehaviour
             return closest.Value;
         }
 
-        return new CheckSnapResult { DidSnap = false };
+        return new CheckSnapResult { ShouldSnap = false };
     }
 
     public void MountPiece(MaskPiece piece, MaskPieceType type, Transform mountPoint)
