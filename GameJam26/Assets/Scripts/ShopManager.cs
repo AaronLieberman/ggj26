@@ -12,11 +12,13 @@ public class ShopManager : MonoBehaviour
     public float SpeedMultiplier = 1;
     public WaypointPath EnterPath;
     public WaypointPath ExitPath;
+    public string DebugCustomerToShow;
 
     GameObject _currentCustomer;
     float _timeRemaining;
     bool _customerWaiting;
     bool _customerLeaving;
+    string _lastDebugCustomerToShow;
 
     GameObject _nameObj;
     TextMeshProUGUI _nameText;
@@ -44,7 +46,11 @@ public class ShopManager : MonoBehaviour
     {
         if (isActive && _currentCustomer == null && !_customerLeaving)
         {
-            _currentCustomer = SpawnCustomer(_customers[Random.Range(0, _customers.Length)]);
+            var customerToSpawn = !string.IsNullOrWhiteSpace(DebugCustomerToShow)
+                ? _customers.FirstOrDefault(c => c.customerImageName == DebugCustomerToShow)
+                : null;
+            customerToSpawn ??= _customers[Random.Range(0, _customers.Length)];
+            _currentCustomer = SpawnCustomer(customerToSpawn);
         }
 
         if (_customerWaiting)
@@ -53,6 +59,13 @@ public class ShopManager : MonoBehaviour
             if (_timeRemaining <= 0)
                 CustomerLeave(false);
         }
+
+        if (DebugCustomerToShow != _lastDebugCustomerToShow)
+        {
+            CustomerLeave(false);
+        }
+
+        _lastDebugCustomerToShow = DebugCustomerToShow;
     }
 
     GameObject SpawnCustomer(CustomerData customerData)
@@ -80,7 +93,9 @@ public class ShopManager : MonoBehaviour
         _conversationText.SetText(customerData.customerDialogue);
         _conversationObj.SetActive(true);
 
-        float duration = customerData.time / SpeedMultiplier;
+        float duration = DebugCustomerToShow == customerData.customerName
+            ? 10000
+            : customerData.time / SpeedMultiplier;
         _customerWaiting = true;
         _timeRemaining = duration;
         _currentCustomer.GetComponent<Customer>().StartTimer(duration);
