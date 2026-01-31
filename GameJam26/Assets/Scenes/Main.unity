@@ -877,6 +877,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShopWindow
       objectReference: {fileID: 0}
+    - target: {fileID: 4769335653310061138, guid: 5dfe4db90e9a22d4cb7bec1f9050dc95, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 711
+      objectReference: {fileID: 0}
     - target: {fileID: 5262538919822290681, guid: 5dfe4db90e9a22d4cb7bec1f9050dc95, type: 3}
       propertyPath: m_Pivot.x
       value: 1

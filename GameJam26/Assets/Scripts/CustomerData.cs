@@ -19,4 +19,10 @@ public class CustomerData
     public CustomerStat maskBeauty;
     public CustomerStat maskAnonymity;
     // public List<StringIntPair> maskGoalTagCount;
+
+    public string gradeADialog;
+    public string gradeBDialog;
+    public string gradeCDialog;
+    public string gradeDDialog;
+    public string gradeFDialog;
 }

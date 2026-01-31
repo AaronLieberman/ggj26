@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Linq;
 
 [System.Serializable]
@@ -16,8 +17,14 @@ public class ShopManager : MonoBehaviour
     public Transform CustomerSpawnPoint;
     public float Speed = 1;
     public CustomerEntry[] Sprites;
-    
+    public float CustomerTimerDuration = 20f;
+
     GameObject _currentCustomer;
+    CustomerData _currentCustomerData;
+    float _timeRemaining;
+    bool _customerWaiting;
+    bool _customerLeaving;
+    EventHandler<Collider2D> _triggerHandler;
 
     CustomerData[] _customers = new CustomerData[]
     {
@@ -28,6 +35,8 @@ public class ShopManager : MonoBehaviour
             maskScary = { Min = 0, Max = 4 },
             maskGoofy = { Min = 3, Max = 10, Points = 50 },
             maskBeauty = { Min = 3, Max = 10, Points = 40 },
+            gradeADialog = "Oh my goodness, this is PERFECT! My nieces are going to love it!",
+            gradeFDialog = "I don't have all day... I'll just go without a mask.",
         },
         new() {
             customerName = "Francis Lyon",
@@ -36,19 +45,37 @@ public class ShopManager : MonoBehaviour
             maskScary = { Min = 0, Max = 4 },
             maskGoofy = { Min = 3, Max = 10, Points = 50 },
             maskBeauty = { Min = 3, Max = 10, Points = 40 },
+            gradeADialog = "Now THAT is a mask worthy of a bull fighter! Ole!",
+            gradeFDialog = "Forget it, I'll just face the bulls bare-faced.",
         }
     };
 
     void Update()
     {
-        if ( _currentCustomer == null )
+        if (_currentCustomer == null && _customerLeaving)
         {
-            _currentCustomer = SpawnCustomer(_customers[Random.Range(0, _customers.Length)]);
+            _customerLeaving = false;
+            transform.Find("Name").gameObject.SetActive(false);
+            transform.Find("Conversation").gameObject.SetActive(false);
+        }
+
+        if (_currentCustomer == null && !_customerLeaving)
+        {
+            _currentCustomer = SpawnCustomer(_customers[UnityEngine.Random.Range(0, _customers.Length)]);
+        }
+
+        if (_customerWaiting)
+        {
+            _timeRemaining -= Time.deltaTime;
+            if (_timeRemaining <= 0)
+                CustomerLeave(false);
         }
     }
 
     GameObject SpawnCustomer(CustomerData customerData)
     {
+        _currentCustomerData = customerData;
+
         GameObject created = Instantiate(Customer, CustomerSpawnPoint.position, CustomerSpawnPoint.rotation, CustomerSpawnPoint);
         created.GetComponent<Rigidbody2D>().AddForce(new Vector2(-Speed, 0.0f));
 
@@ -57,7 +84,12 @@ public class ShopManager : MonoBehaviour
         var name = transform.Find("Name");
         var conversation = transform.Find("Conversation");
 
-        transform.Find("CustomerStopLocation").GetComponent<GenericTrigger>().TriggerEnter2D += (_, collision) =>
+        var trigger = transform.Find("CustomerStopLocation").GetComponent<GenericTrigger>();
+
+        if (_triggerHandler != null)
+            trigger.TriggerEnter2D -= _triggerHandler;
+
+        _triggerHandler = (_, collision) =>
         {
             collision.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
 
@@ -68,8 +100,36 @@ public class ShopManager : MonoBehaviour
             var conversationText = conversation.Find("ConversationText");
             conversationText.GetComponent<TextMeshProUGUI>().SetText(customerData.customerDialogue);
             conversation.gameObject.SetActive(true);
+
+            _customerWaiting = true;
+            _timeRemaining = CustomerTimerDuration;
+            _currentCustomer.GetComponent<Customer>().StartTimer(CustomerTimerDuration);
         };
 
+        trigger.TriggerEnter2D += _triggerHandler;
+
         return created;
+    }
+
+    public void CustomerSatisfied()
+    {
+        if (!_customerWaiting) return;
+        CustomerLeave(true);
+    }
+
+    void CustomerLeave(bool satisfied)
+    {
+        _customerWaiting = false;
+
+        var conversation = transform.Find("Conversation");
+        var conversationText = conversation.Find("ConversationText");
+        string dialog = satisfied ? _currentCustomerData.gradeADialog : _currentCustomerData.gradeFDialog;
+        conversationText.GetComponent<TextMeshProUGUI>().SetText(dialog);
+
+        _customerLeaving = true;
+
+        transform.Find("CustomerDestroy").gameObject.SetActive(true);
+
+        _currentCustomer.GetComponent<Rigidbody2D>().AddForce(new Vector2(Speed, 0));
     }
 }
