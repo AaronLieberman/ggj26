@@ -113,6 +113,7 @@ public class ShopManager : MonoBehaviour
     {
         _customerWaiting = false;
 
+        _currentCustomer.GetComponent<Customer>().StopTimer();
         var data = _currentCustomer.GetComponent<Customer>().Data;
         string dialog = satisfied ? data.gradeADialog : data.gradeFDialog;
         _conversationText.SetText(dialog);
