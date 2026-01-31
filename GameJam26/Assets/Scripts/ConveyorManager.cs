@@ -1,56 +1,81 @@
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+
+[System.Serializable]
+public struct MaskPartEntry
+{
+    public string name;
+    public Sprite sprite;
+}
 
 public class ConveyorManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject maskPieceGameObject;
-    private Transform beltTransform;
-    private Transform beltSpawnPointTransform;
+    GameObject _maskPiecePrefab;
 
     [SerializeField]
-    private float speed;
+    MaskPartEntry[] _sprites;
 
     [SerializeField]
-    private float spawnDelaySeconds;
-    private float nextSpawnTime;
+    float _speed;
 
-    private bool isActive = false;
+    [SerializeField]
+    float _spawnDelaySeconds;
 
-    private void Awake()
+    Transform _beltTransform;
+    Transform _beltSpawnPointTransform;
+    float _nextSpawnTime;
+    bool _isActive;
+    MaskPartData[] _parts;
+
+    void Awake()
     {
-        beltTransform = transform.Find("Belt");
-        beltSpawnPointTransform = transform.Find("MaskPieceSpawnPoint");
+        _beltTransform = transform.Find("Belt");
+        _beltSpawnPointTransform = transform.Find("MaskPieceSpawnPoint");
+        _parts = MaskPartDataLoader.Load();
+
+        foreach (var part in _parts)
+        {
+            var entry = _sprites.SingleOrDefault(s => s.name == part.spriteName);
+            if (entry.sprite != null)
+                part.sprite = entry.sprite;
+        }
     }
 
     void Start()
     {
-        nextSpawnTime = Time.time;
+        _nextSpawnTime = Time.time;
     }
 
     void Update()
     {
-        if (isActive && nextSpawnTime <= Time.time)
-        {
+        if (_isActive && _nextSpawnTime <= Time.time)
             AddToConveyor();
-        }
     }
 
     void AddToConveyor()
     {
-        GameObject createdMaskPiece = Instantiate(maskPieceGameObject, beltSpawnPointTransform.position, beltSpawnPointTransform.rotation, beltTransform);
-        createdMaskPiece.GetComponent<Rigidbody2D>().AddForce(new Vector2(-speed, 0.0f));
+        var partData = _parts[Random.Range(0, _parts.Length)];
 
-        nextSpawnTime = Time.time + spawnDelaySeconds;
-        Debug.Log("Spawning mask piece.");
+        GameObject created = Instantiate(_maskPiecePrefab, _beltSpawnPointTransform.position, _beltSpawnPointTransform.rotation, _beltTransform);
+        created.GetComponent<Rigidbody2D>().AddForce(new Vector2(-_speed, 0.0f));
+
+        if (partData.sprite != null)
+            created.GetComponent<Image>().sprite = partData.sprite;
+
+        created.GetComponent<MaskPiece>().Data = partData;
+
+        _nextSpawnTime = Time.time + _spawnDelaySeconds;
     }
 
     public void ActivateManager()
     {
-        isActive = true;
+        _isActive = true;
     }
 
     public void DeactivateManager()
     {
-        isActive = false;
+        _isActive = false;
     }
 }
