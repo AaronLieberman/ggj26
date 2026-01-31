@@ -738,6 +738,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2224081262970114110, guid: 32271da344a29284e99f8d5ea006214b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810265137137073553, guid: 32271da344a29284e99f8d5ea006214b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5565483730136604138, guid: 32271da344a29284e99f8d5ea006214b, type: 3}
       propertyPath: m_Name
       value: MaskItem
