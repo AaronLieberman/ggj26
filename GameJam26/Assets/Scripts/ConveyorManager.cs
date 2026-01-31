@@ -14,6 +14,8 @@ public class ConveyorManager : MonoBehaviour
     private float spawnDelaySeconds;
     private float nextSpawnTime;
 
+    private bool isActive = false;
+
     private void Awake()
     {
         beltTransform = transform.Find("Belt");
@@ -27,7 +29,7 @@ public class ConveyorManager : MonoBehaviour
 
     void Update()
     {
-        if (nextSpawnTime <= Time.time)
+        if (isActive && nextSpawnTime <= Time.time)
         {
             AddToConveyor();
         }
@@ -40,5 +42,15 @@ public class ConveyorManager : MonoBehaviour
 
         nextSpawnTime = Time.time + spawnDelaySeconds;
         Debug.Log("Spawning mask piece.");
+    }
+
+    public void ActivateManager()
+    {
+        isActive = true;
+    }
+
+    public void DeactivateManager()
+    {
+        isActive = false;
     }
 }
