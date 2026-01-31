@@ -1,13 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
-[System.Serializable]
-public struct MaskPartEntry
-{
-    public string name;
-    public Sprite sprite;
-}
 
 public class ConveyorManager : MonoBehaviour
 {
@@ -15,7 +9,7 @@ public class ConveyorManager : MonoBehaviour
     GameObject _maskPiecePrefab;
 
     [SerializeField]
-    MaskPartEntry[] _sprites;
+    Sprite[] _sprites;
 
     [SerializeField]
     float _speed;
@@ -33,14 +27,20 @@ public class ConveyorManager : MonoBehaviour
     {
         _beltTransform = transform.Find("Belt");
         _beltSpawnPointTransform = transform.Find("MaskPieceSpawnPoint");
-        _parts = MaskPartDataLoader.Load();
+        var partData = MaskPartDataLoader.Load();
 
-        foreach (var part in _parts)
+        var partsList = new List<MaskPartData>();
+        foreach (var part in partData)
         {
             var entry = _sprites.SingleOrDefault(s => s.name == part.spriteName);
-            if (entry.sprite != null)
-                part.sprite = entry.sprite;
+            if (entry != null)
+            {
+                part.sprite = entry;
+                partsList.Add(part);
+            }
         }
+
+        _parts = partsList.ToArray();
     }
 
     void Start()
@@ -51,7 +51,9 @@ public class ConveyorManager : MonoBehaviour
     void Update()
     {
         if (_isActive && _nextSpawnTime <= Time.time)
+        {
             AddToConveyor();
+        }
     }
 
     void AddToConveyor()
