@@ -17,7 +17,7 @@ public class ShopManager : MonoBehaviour
     public Transform CustomerSpawnPoint;
     public float Speed = 1;
     public CustomerEntry[] Sprites;
-    public float CustomerTimerDuration = 20f;
+    public float SpeedMultiplier = 1;
 
     GameObject _currentCustomer;
     CustomerData _currentCustomerData;
@@ -33,32 +33,12 @@ public class ShopManager : MonoBehaviour
     GenericTrigger _stopTrigger;
     GameObject _destroyTrigger;
 
-    CustomerData[] _customers = new CustomerData[]
-    {
-        new() {
-            customerName = "Amanda Tea",
-            customerDialogue = "I'm going to High Tea with my nieces. I need a mask that will make them laugh, and looks very pretty. Bonus points if its animal themed, they love cats!",
-            customerImageName = "AmandaTea",
-            maskScary = { Min = 0, Max = 4 },
-            maskGoofy = { Min = 3, Max = 10, Points = 50 },
-            maskBeauty = { Min = 3, Max = 10, Points = 40 },
-            gradeADialog = "Oh my goodness, this is PERFECT! My nieces are going to love it!",
-            gradeFDialog = "I don't have all day... I'll just go without a mask.",
-        },
-        new() {
-            customerName = "Francis Lyon",
-            customerDialogue = "I'm going to Spain for the running of the bulls! I want to be a masked hero! Make me mysterious and manly! And make those bulls think twice about chasing me!",
-            customerImageName = "FrancisLyon",
-            maskScary = { Min = 0, Max = 4 },
-            maskGoofy = { Min = 3, Max = 10, Points = 50 },
-            maskBeauty = { Min = 3, Max = 10, Points = 40 },
-            gradeADialog = "Now THAT is a mask worthy of a bull fighter! Ole!",
-            gradeFDialog = "Forget it, I'll just face the bulls bare-faced.",
-        }
-    };
+    CustomerData[] _customers;
 
     void Awake()
     {
+        _customers = CustomerDataLoader.Load();
+
         var name = transform.Find("Name");
         _nameObj = name.gameObject;
         _nameText = name.Find("NameText").GetComponent<TextMeshProUGUI>();
@@ -115,9 +95,10 @@ public class ShopManager : MonoBehaviour
             _conversationText.SetText(customerData.customerDialogue);
             _conversationObj.SetActive(true);
 
+            float duration = customerData.time / SpeedMultiplier;
             _customerWaiting = true;
-            _timeRemaining = CustomerTimerDuration;
-            _currentCustomer.GetComponent<Customer>().StartTimer(CustomerTimerDuration);
+            _timeRemaining = duration;
+            _currentCustomer.GetComponent<Customer>().StartTimer(duration);
         };
 
         _stopTrigger.TriggerEnter2D += _triggerHandler;

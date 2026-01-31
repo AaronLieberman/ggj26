@@ -277,7 +277,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: a43c5a4de2c4e1d42b04abf697dac4bb, type: 3}
   - name: FrancisLyon
     sprite: {fileID: 21300000, guid: bf7ac72920692d2439a920529552131e, type: 3}
-  CustomerTimerDuration: 10
+  SpeedMultiplier: 1
 --- !u!1 &4157087930068239728
 GameObject:
   m_ObjectHideFlags: 0

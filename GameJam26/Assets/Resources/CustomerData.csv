@@ -1,0 +1,30 @@
+Customer Name,Amanda Tea,Francis Lyon
+Time,90,90
+Difficulty Tier,1,1
+Customer Sprite,,
+Intro Dialog,"I'm going to High Tea with my nieces. I need a mask that will make them laugh, and looks very pretty. Bonus points if its animal themed, they love cats!",I'm going to Spain for the running of the bulls! I want to be a masked hero! Make me mysterious and manly! And make those bulls think twice about chasing me!
+Scary Minimum,0,
+Scary Maximum,4,
+Scary Points Per,0,
+Goofy Minimum,3,
+Goofy Maximum,10,
+Goofy Points Per,50,
+Beauty Minimum,3,
+Beauty Maximum,10,
+Beauty Points Per,40,
+Anonymity Minimum,0,
+Anonymity Maximum,10,
+Anonymity Points Per,0,
+{Minimum Tags},Cat-0-9999-20:Animal-0-999-200,
+{Maximum Tags},,
+{Points Per Tag},200,
+Max Score,1100,
+Grade A Score Threshold,900,
+Grade B Score Threshold,600,
+Grade C Score Threshold,300,
+Grade D Score Threshold,100,
+Grade A Dialog,"Meow! Wonderful! My nieces are going to love it so much! I'll bring them here for their birthdays to buy their own masks!","¡Maravilloso! The beast this year will me ME! Hahahaha!"
+Grade B Dialog,"Wow! Good job, I'm going to look great at high tea! The only thing more flashy than me will be the macarons!","Roar! I'll be the campeón with this mask!"
+Grade C Dialog,"Very nice, I'll be happy to wear it to tea.","Ok! They might recognize me, but at least I'll look good wearing it."
+Grade D Dialog,"Well... I can probably find a hat to make it work.","I need something before my flight, so I'll take this one."
+Grade F Dialog,"Hmmm. At least no one will be able to recognize me when I wear it...","Sure, I'll take it, but I'm going to leave it for the bulls."
