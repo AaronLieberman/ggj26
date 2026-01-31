@@ -221,9 +221,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2274118770512b248a339a10ca78b8b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConveyorManager
-  maskPieceGameObject: {fileID: 6922485875019541830, guid: c0314a59b0249c14d835dd66aa531ba1, type: 3}
-  speed: 5000
-  spawnDelaySeconds: 7
+  _maskPiecePrefab: {fileID: 6922485875019541830, guid: c0314a59b0249c14d835dd66aa531ba1, type: 3}
+  _sprites:
+  - {fileID: 21300000, guid: f0a9a6b0e0d7f954cb40872ef4e1e278, type: 3}
+  - {fileID: 21300000, guid: 7e9c8fa1bc9f5234f848fe270d67271d, type: 3}
+  - {fileID: 21300000, guid: 47422703b37c21741b57a6fe68f19017, type: 3}
+  - {fileID: 21300000, guid: 91710a2049022ee46a985840264db9ce, type: 3}
+  - {fileID: 21300000, guid: 4cf51a02ce83b20498aea1179ce5e8d5, type: 3}
+  - {fileID: 21300000, guid: 7e69fd5e65eca054ea1d578815cb988f, type: 3}
+  - {fileID: 21300000, guid: 7132bf0feaf8d074aacf424ee1d881eb, type: 3}
+  - {fileID: 21300000, guid: 4ec9cc35323b71043ba27a4267ad9a8d, type: 3}
+  - {fileID: 21300000, guid: 3493216fede051a4eb7e367005cb13a1, type: 3}
+  - {fileID: 21300000, guid: a42a7a8308eae1a49bb39b165063bb99, type: 3}
+  - {fileID: 21300000, guid: 688cb3525e8f7914cb3b045679927566, type: 3}
+  - {fileID: 21300000, guid: e68531e938e188847b516d7c0246dde2, type: 3}
+  - {fileID: 21300000, guid: bc3bc0507bfdf944e98bdfa8b23d5edf, type: 3}
+  - {fileID: 21300000, guid: d5e19460a986da445b198292c9b051d6, type: 3}
+  - {fileID: 21300000, guid: f0a81f12f0bb2c44a8acd19f01a055f9, type: 3}
+  - {fileID: 21300000, guid: e0526f2abb7728944a63a1441daaf893, type: 3}
+  - {fileID: 21300000, guid: 10076f938073a4846b7b5f2b042b86cf, type: 3}
+  - {fileID: 21300000, guid: 5f6f55d1278f9f64395e068ede47e058, type: 3}
+  - {fileID: 21300000, guid: 41309d9fd6fe57748bed1b16fbe7829d, type: 3}
+  - {fileID: 21300000, guid: 3718828fa427ffc4eb12ccfb4963732e, type: 3}
+  - {fileID: 21300000, guid: 86bb4cfa758eedd409e554c4636fad5b, type: 3}
+  - {fileID: 21300000, guid: cae0d2e159cd4aa479399306d82ac8b9, type: 3}
+  - {fileID: 21300000, guid: ab0a379f6ca352e439a8aef0a2fc0adb, type: 3}
+  _speed: 30000
+  _spawnDelaySeconds: 3
 --- !u!1 &6864680718138246265
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,25 +1,98 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+
+public class MaskPieceAnchor
+{
+    public enum State
+    {
+        Empty,
+        Mounted
+    }
+
+    public State CurrentState = State.Empty;
+    public MaskPiece MountedPiece;
+    public Transform MountedPoint;
+
+    public MaskPieceType Type;
+    public List<RectTransform> MountPoints; 
+}
 
 public class Mask : MonoBehaviour
 {   
-    [SerializeField] Transform MountPoints;
-    [SerializeField] Transform MountObjContainer;
+    [SerializeField] RectTransform MountPoints;
+    [SerializeField] RectTransform MountObjContainer;
+
+    [SerializeField] public float SnapDistance = 100f;
 
 
-    [SerializeField] Transform[] MountPointsBaseHead;
-    [SerializeField] Transform[] MountPointsEyeLeft;
-    [SerializeField] Transform[] MountPointsEyeRight;
+    public Dictionary<MaskPieceType, MaskPieceAnchor> MaskPieceAnchors
+        = new Dictionary<MaskPieceType, MaskPieceAnchor>();
 
-    [SerializeField] Transform[] MountPointsHornLeft;
-    [SerializeField] Transform[] MountPointsHornRight;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-//        Instantiate(myPrefab).transform;
-//        MountPointsBaseHead.Append()
+        ResyncMounts();
     }
 
+
+    public struct CheckSnapResult
+    {
+        public bool DidSnap;
+        public float Distance;
+        public MaskPieceType SnappedType;
+        public RectTransform SnappedPoint;
+    }
+
+    public CheckSnapResult CheckSnap(Vector2 fromPosition)
+    {
+        CheckSnapResult? closest = null;
+
+        foreach (var pieceTypeMount in MaskPieceAnchors.Values
+                                            .Where(anchor => anchor.CurrentState != MaskPieceAnchor.State.Mounted))
+        {
+            foreach (var mountPoint in pieceTypeMount.MountPoints)
+            {
+                var dist = Vector2.Distance(
+                            fromPosition,
+                            mountPoint.position);
+                if ((dist < (closest?.Distance ?? 0))
+                    || dist < SnapDistance)
+                {
+                    Debug.Log($"SNAPPED: {pieceTypeMount.Type} :: {fromPosition} :: {mountPoint} :: {dist}");
+                    closest = new CheckSnapResult {
+                        DidSnap = true,
+                        Distance = dist,
+                        SnappedPoint = mountPoint,
+                        SnappedType = pieceTypeMount.Type };
+                }
+            }
+        }        
+
+        if (closest != null)
+        {
+            return closest.Value;
+        }
+
+        return new CheckSnapResult { DidSnap = false };
+    }
+
+    public void MountPiece(MaskPiece piece, MaskPieceType type, Transform mountPoint)
+    {
+        Debug.Log($"MOUNT: {piece} {type}");
+        var anchor = MaskPieceAnchors[type];
+        if (anchor.MountedPiece != null)
+        {
+            GameObject.Destroy(anchor.MountedPiece.gameObject);
+        }
+
+        anchor.CurrentState = MaskPieceAnchor.State.Mounted;   
+        piece.transform.SetParent(MountObjContainer);
+        piece.transform.position = mountPoint.position;
+        anchor.MountedPiece = piece;
+    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -29,27 +102,37 @@ public class Mask : MonoBehaviour
     [ContextMenu("Resync mounts")]
     public void ResyncMounts()
     {
-        var fields = this.GetType().GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
-        foreach (var f in fields)
-        {
-            if (!f.Name.StartsWith("MountPoints")) continue;
-            if (f.FieldType != typeof(Transform[])) continue;
+        MaskPieceAnchors.Clear();
 
-            string suffix = f.Name.Substring("MountPoints".Length);
-            var container = MountPoints.Find(suffix);
-            if (container == null)
+        foreach (MaskPieceType type in System.Enum.GetValues(typeof(MaskPieceType)))
+        {
+            string suffix = type.ToString();
+            var containersToTry = new string[] {suffix, suffix + "Left", suffix + "Right"};
+            var transforms = new List<RectTransform>();
+
+            foreach (var tryContainer in containersToTry) 
             {
-                Debug.LogWarning($"ResyncMounts: couldn't find child '{suffix}' under '{MountPoints.name}'. Setting '{f.Name}' to empty array.");
-                f.SetValue(this, new Transform[0]);
+                Debug.Log($"{tryContainer}");
+                var container = MountPoints.Find(tryContainer);
+
+                if (container != null)
+                {
+                    for (int i = 0; i < container.childCount; i++)
+                    {
+                        var t = container.GetChild(i);
+                        transforms.Add(t.GetComponent<RectTransform>());
+                    }
+                }
+            }
+
+            if (transforms.Count == 0)
+            {
                 continue;
             }
 
-            var list = new System.Collections.Generic.List<Transform>();
-            for (int i = 0; i < container.childCount; i++)
-                list.Add(container.GetChild(i));
-
-            f.SetValue(this, list.ToArray());
-            Debug.Log($"ResyncMounts: '{f.Name}' resynced with {list.Count} mounts from '{suffix}'.");
+            MaskPieceAnchors[type] = new MaskPieceAnchor { Type = type, MountedPiece = null, MountedPoint = null, MountPoints = transforms };
         }
     }
 }
+
+

@@ -3,19 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-[System.Serializable]
-public struct CustomerEntry
-{
-    public string name;
-    public Sprite sprite;
-}
-
 public class ShopManager : MonoBehaviour
 {
     public GameObject Customer;
     public Transform CustomerSpawnPoint;
     public float Speed = 400;
-    public CustomerEntry[] Sprites;
+    public Sprite[] Sprites;
     public float SpeedMultiplier = 1;
     public WaypointPath EnterPath;
     public WaypointPath ExitPath;
@@ -69,7 +62,7 @@ public class ShopManager : MonoBehaviour
         var spawnRect = ((RectTransform)CustomerSpawnPoint).anchoredPosition;
         rect.anchoredPosition = spawnRect;
 
-        created.GetComponent<Image>().sprite = Sprites.SingleOrDefault(a => a.name == customerData.customerImageName).sprite;
+        created.GetComponent<Image>().sprite = Sprites.SingleOrDefault(a => a.name == customerData.customerImageName);
         created.GetComponent<Customer>().Data = customerData;
 
         var follower = created.GetComponent<PathFollower>();
