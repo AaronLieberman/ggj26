@@ -26,6 +26,13 @@ public class ShopManager : MonoBehaviour
     bool _customerLeaving;
     EventHandler<Collider2D> _triggerHandler;
 
+    GameObject _nameObj;
+    TextMeshProUGUI _nameText;
+    GameObject _conversationObj;
+    TextMeshProUGUI _conversationText;
+    GenericTrigger _stopTrigger;
+    GameObject _destroyTrigger;
+
     CustomerData[] _customers = new CustomerData[]
     {
         new() {
@@ -50,13 +57,27 @@ public class ShopManager : MonoBehaviour
         }
     };
 
+    void Awake()
+    {
+        var name = transform.Find("Name");
+        _nameObj = name.gameObject;
+        _nameText = name.Find("NameText").GetComponent<TextMeshProUGUI>();
+
+        var conversation = transform.Find("Conversation");
+        _conversationObj = conversation.gameObject;
+        _conversationText = conversation.Find("ConversationText").GetComponent<TextMeshProUGUI>();
+
+        _stopTrigger = transform.Find("CustomerStopLocation").GetComponent<GenericTrigger>();
+        _destroyTrigger = transform.Find("CustomerDestroy").gameObject;
+    }
+
     void Update()
     {
         if (_currentCustomer == null && _customerLeaving)
         {
             _customerLeaving = false;
-            transform.Find("Name").gameObject.SetActive(false);
-            transform.Find("Conversation").gameObject.SetActive(false);
+            _nameObj.SetActive(false);
+            _conversationObj.SetActive(false);
         }
 
         if (_currentCustomer == null && !_customerLeaving)
@@ -81,32 +102,25 @@ public class ShopManager : MonoBehaviour
 
         created.GetComponent<Image>().sprite = Sprites.SingleOrDefault(a => a.name == customerData.customerImageName).sprite;
 
-        var name = transform.Find("Name");
-        var conversation = transform.Find("Conversation");
-
-        var trigger = transform.Find("CustomerStopLocation").GetComponent<GenericTrigger>();
-
         if (_triggerHandler != null)
-            trigger.TriggerEnter2D -= _triggerHandler;
+            _stopTrigger.TriggerEnter2D -= _triggerHandler;
 
         _triggerHandler = (_, collision) =>
         {
             collision.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
 
-            var nameText = name.Find("NameText");
-            nameText.GetComponent<TextMeshProUGUI>().SetText(customerData.customerName);
-            name.gameObject.SetActive(true);
+            _nameText.SetText(customerData.customerName);
+            _nameObj.SetActive(true);
 
-            var conversationText = conversation.Find("ConversationText");
-            conversationText.GetComponent<TextMeshProUGUI>().SetText(customerData.customerDialogue);
-            conversation.gameObject.SetActive(true);
+            _conversationText.SetText(customerData.customerDialogue);
+            _conversationObj.SetActive(true);
 
             _customerWaiting = true;
             _timeRemaining = CustomerTimerDuration;
             _currentCustomer.GetComponent<Customer>().StartTimer(CustomerTimerDuration);
         };
 
-        trigger.TriggerEnter2D += _triggerHandler;
+        _stopTrigger.TriggerEnter2D += _triggerHandler;
 
         return created;
     }
@@ -121,14 +135,12 @@ public class ShopManager : MonoBehaviour
     {
         _customerWaiting = false;
 
-        var conversation = transform.Find("Conversation");
-        var conversationText = conversation.Find("ConversationText");
         string dialog = satisfied ? _currentCustomerData.gradeADialog : _currentCustomerData.gradeFDialog;
-        conversationText.GetComponent<TextMeshProUGUI>().SetText(dialog);
+        _conversationText.SetText(dialog);
 
         _customerLeaving = true;
 
-        transform.Find("CustomerDestroy").gameObject.SetActive(true);
+        _destroyTrigger.SetActive(true);
 
         _currentCustomer.GetComponent<Rigidbody2D>().AddForce(new Vector2(Speed, 0));
     }
