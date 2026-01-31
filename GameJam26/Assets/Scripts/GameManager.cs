@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Starting game");
 
         StartCoroutine(FadeUI(startingGameCanvasGroup, 1.0f, 0.0f, startGameTransitionDuration));
+        startingGameCanvasGroup.interactable = false;
 
         shopManager.ActivateManager();
         conveyorManager.ActivateManager();
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Ending game");
 
         StartCoroutine(FadeUI(endingGameCanvasGroup, 0.0f, 1.0f, endGameTransitionDuration));
+        endingGameCanvasGroup.interactable = true;
 
         shopManager.DeactivateManager();
         conveyorManager.DeactivateManager();
@@ -65,17 +67,19 @@ public class GameManager : MonoBehaviour
         gameState = GameState.ENDED;
     }
 
-    private IEnumerator FadeUI(CanvasGroup canvasGroup, float startingAlpha, float endingAlpha, float transitionDurationSeconds)
+    private IEnumerator FadeUI(CanvasGroup canvasGroup, float startingAlpha, float endingAlpha, float duration)
     {
         float timeElapsed = 0f;
 
-        while (timeElapsed < transitionDurationSeconds)
+        while (timeElapsed < duration)
         {
-            float t = timeElapsed / transitionDurationSeconds;
-
-            canvasGroup.alpha = Mathf.Lerp(startingAlpha, endingAlpha, t);
             timeElapsed += Time.deltaTime;
+
+            float t = Mathf.Clamp01(timeElapsed / duration);
+            canvasGroup.alpha = Mathf.Lerp(startingAlpha, endingAlpha, t);
+
             yield return null;
         }
     }
+
 }
