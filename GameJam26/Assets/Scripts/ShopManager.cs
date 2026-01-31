@@ -1,8 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
     public GameObject Customer;
+    public Transform CustomerSpawnPoint;
+    public float Speed = 1;
     
     GameObject _currentCustomer;
 
@@ -18,21 +21,29 @@ public class ShopManager : MonoBehaviour
         }
     };
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         if ( _currentCustomer == null )
         {
-            _currentCustomer = SpawnCustomer();
+            _currentCustomer = SpawnCustomer(_customers[0]);
         }
     }
 
-    GameObject SpawnCustomer()
+    GameObject SpawnCustomer(CustomerData customerData)
     {
-        return null;
+        GameObject created = Instantiate(Customer, CustomerSpawnPoint.position, CustomerSpawnPoint.rotation, CustomerSpawnPoint);
+        created.GetComponent<Rigidbody2D>().AddForce(new Vector2(-Speed, 0.0f));
+
+        var name = transform.Find("Name");
+        var nameText = name.Find("NameText");
+        nameText.GetComponent<TextMeshProUGUI>().SetText(customerData.customerName);
+
+        transform.Find("CustomerStopLocation").GetComponent<GenericTrigger>().TriggerEnter2D += (_, collision) =>
+        {
+            collision.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            name.gameObject.SetActive(true);
+        };
+
+        return created;
     }
 }
