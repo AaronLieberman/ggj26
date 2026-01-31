@@ -1,0 +1,30 @@
+Customer Name,Amanda Tea,Doug Crown,Francis Lyon,Orange Steve Locksmee,(Jason) Bane
+Time,45,45,45,45,45
+Difficulty Tier,1,2,3,4,5
+Customer Sprite,AmandaTea,DougCrown,FrancisLyon,OrangeSteve,Bane
+Intro Dialog,"I'm going to high tea with my nieces. I need a mask that will make them laugh, and looks very pretty. Bonus points if its animal themed, they love cats!","People have told me I need to get outside of my comfort zone, so I'm going to try to become a luchador. I want a mask that is... just everything.",I'm going to Spain for the running of the bulls! I want to be a masked hero! Make me mysterious and manly! And make those bulls think twice about chasing me!,"I'm soft launching my content creator era, but I don't want to show my face. I need something that's totally on brand for me, this is going to become my new online identity. Lots of Main Character Energy, please!",*raspy breathing*
+Scary Minimum,0,2,1,0,6
+Scary Maximum,4,10,10,7,10
+Scary Points Per,0,20,30,3,40
+Goofy Minimum,3,3,0,1,0
+Goofy Maximum,10,10,9,9,6
+Goofy Points Per,50,20,0,6,0
+Beauty Minimum,3,1,0,1,0
+Beauty Maximum,10,10,0,9,7
+Beauty Points Per ,40,20,0,6,0
+Anonymity Minimum,0,3,6,4,7
+Anonymity Maximum,10,10,10,8,10
+Anonymity Points Per,0,20,60,6,60
+{Minimum Tags},Cat-0-9999-20:Animal-0-999-200,,,,
+{Maximum Tags},,,,,
+{Points Per Tag},200,,,,
+Max Score,1100,800,900,210,1000
+Grade A Score Threshold,900,640,720,168,800
+Grade B Score Threshold,600,480,540,126,600
+Grade C Score Threshold,300,320,360,84,400
+Grade D Score Threshold,100,160,180,42,200
+Grade A Dialog,Meow! Wonderful! My nieces are going to love it so much! I'll bring them here for their birthdays to buy their own masks!,AAA! This is outside of EVERYONE's comfort zone! I love it!,¡Maravilloso! The beast this year will me ME! Hahahaha!,Based. You're a chad! I'm going to call you Mask Chad from now on!,"No one cared for me, until I put on this mask."
+Grade B Dialog,"Wow! Good job, I'm going to look great at high tea! The only thing more flashy than me will be the macarons!",Lucha LIIIIBREE! Looks great!,Roar! I'll be the campeón with this mask!,Fab! This will live rent free in everyone's head! You ate this and left no crumbs.,I am Bane! I will break everyone! Thanks.
+Grade C Dialog,"Very nice, I'll be happy to wear it to tea.","It's a little bit of everything, so it'll do! Come to my first match on Día de Reyes!","Ok! They might recognize me, but at least I'll look good wearing it.","Delulu, I'll make it work.",Okay.
+Grade D Dialog,Well... I can probably find a hat to make it work.,"That's ok, I'm a starter luchadore, this will be my starter mask.","I need something before my flight, so I'll take this one.",Mid.,*disappointed breathing*
+Grade F Dialog,Hmmm. Maybe the girls can use it for bedazzling.,Ahem. I <i>will</i> feel uncomfortable wearing it...,"Sure, I'll take it, but I'm going to leave it for the bulls.",Wearing this makes me want to be unalive.,They're going to know who I am. This is terrible. I will break you!
