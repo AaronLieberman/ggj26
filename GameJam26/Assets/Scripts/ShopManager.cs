@@ -62,7 +62,7 @@ public class ShopManager : MonoBehaviour
         var spawnRect = ((RectTransform)CustomerSpawnPoint).anchoredPosition;
         rect.anchoredPosition = spawnRect;
 
-        created.GetComponent<Image>().sprite = Sprites.SingleOrDefault(a => a.name == customerData.customerImageName);
+        created.GetComponent<Image>().sprite = GetCustomerSprite(customerData.customerImageName);
         created.GetComponent<Customer>().Data = customerData;
 
         var follower = created.GetComponent<PathFollower>();
@@ -112,6 +112,11 @@ public class ShopManager : MonoBehaviour
             _nameObj.SetActive(false);
             _conversationObj.SetActive(false);
         });
+    }
+
+    public Sprite GetCustomerSprite(string customerSpriteName)
+    {
+        return Sprites.SingleOrDefault(a => a.name == customerSpriteName);
     }
 
     public void ActivateManager()

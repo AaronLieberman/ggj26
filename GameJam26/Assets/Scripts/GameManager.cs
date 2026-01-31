@@ -1,5 +1,8 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum GameState { STARTED, ENDED }
 
@@ -17,6 +20,9 @@ public class GameManager : MonoBehaviour
     private CanvasGroup startingGameCanvasGroup;
     private CanvasGroup endingGameCanvasGroup;
 
+    [SerializeField] private GameObject endingCustomerViewerPrefab;
+    private Transform endingCustomerHolder;
+
     private void Awake()
     {
         shopManager = Utilities.GetRootComponentRecursive<ShopManager>();
@@ -24,6 +30,8 @@ public class GameManager : MonoBehaviour
 
         startingGameCanvasGroup = GameObject.Find("StartingGameUI").GetComponent<CanvasGroup>();
         endingGameCanvasGroup = GameObject.Find("EndingGameUI").GetComponent<CanvasGroup>();
+
+        endingCustomerHolder = GameObject.Find("EndofGameCustomersHolder").transform;
 
         gameEndTime = Time.time + gameLengthSeconds;
     }
@@ -60,6 +68,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(FadeUI(endingGameCanvasGroup, 0.0f, 1.0f, endGameTransitionDuration));
         endingGameCanvasGroup.interactable = true;
+        PopulateEndingShopCustomers();
 
         shopManager.DeactivateManager();
         conveyorManager.DeactivateManager();
@@ -79,6 +88,24 @@ public class GameManager : MonoBehaviour
             canvasGroup.alpha = Mathf.Lerp(startingAlpha, endingAlpha, t);
 
             yield return null;
+        }
+    }
+
+    private void PopulateEndingShopCustomers()
+    {
+        // TODO: Replace with call to shop manager to receive customers received.
+        List<CustomerData> customers = new List<CustomerData>();
+        CustomerData mockCustomerData1 = new CustomerData();
+        mockCustomerData1.customerImageName = shopManager.Sprites[0].name;
+        customers.Add(mockCustomerData1);
+        CustomerData mockCustomerData2 = new CustomerData();
+        mockCustomerData2.customerImageName = shopManager.Sprites[1].name;
+        customers.Add(mockCustomerData2);
+
+        foreach (CustomerData customerData in customers)
+        {
+            GameObject endingCustomerViewer = Instantiate(endingCustomerViewerPrefab, Vector3.zero, Quaternion.identity, endingCustomerHolder);
+            endingCustomerViewer.GetComponent<Image>().sprite = shopManager.GetCustomerSprite(customerData.customerImageName);
         }
     }
 
