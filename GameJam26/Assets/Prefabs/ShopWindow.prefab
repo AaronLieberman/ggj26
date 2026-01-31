@@ -277,6 +277,12 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: a43c5a4de2c4e1d42b04abf697dac4bb, type: 3}
   - name: FrancisLyon
     sprite: {fileID: 21300000, guid: bf7ac72920692d2439a920529552131e, type: 3}
+  - name: Bane
+    sprite: {fileID: 21300000, guid: c3d509571a7568b429a552f3f065d911, type: 3}
+  - name: DougCrown
+    sprite: {fileID: 21300000, guid: 17ad09887feeab34abb99074ce7a267c, type: 3}
+  - name: OrangeSteve
+    sprite: {fileID: 21300000, guid: f8da3d3a648da2940a6bdce71f152f56, type: 3}
   SpeedMultiplier: 1
 --- !u!1 &4157087930068239728
 GameObject:
