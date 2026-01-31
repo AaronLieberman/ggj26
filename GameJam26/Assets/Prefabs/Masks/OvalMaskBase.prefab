@@ -90,10 +90,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4834092031763368784, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
       propertyPath: m_Name
-      value: Mask
+      value: OvalMaskBase
       objectReference: {fileID: 0}
+    - target: {fileID: 8033050200059271357, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 47422703b37c21741b57a6fe68f19017, type: 3}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2404991812863187979, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
