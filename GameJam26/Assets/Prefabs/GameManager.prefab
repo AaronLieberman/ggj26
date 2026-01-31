@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   gameLengthSeconds: 10
-  foregroundTransitionDuration: 5
+  startGameTransitionDuration: 5
+  endGameTransitionDuration: 0.5
