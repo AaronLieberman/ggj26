@@ -35,13 +35,19 @@ public class ShopManager : MonoBehaviour
         created.GetComponent<Rigidbody2D>().AddForce(new Vector2(-Speed, 0.0f));
 
         var name = transform.Find("Name");
-        var nameText = name.Find("NameText");
-        nameText.GetComponent<TextMeshProUGUI>().SetText(customerData.customerName);
+        var conversation = transform.Find("Conversation");
 
         transform.Find("CustomerStopLocation").GetComponent<GenericTrigger>().TriggerEnter2D += (_, collision) =>
         {
             collision.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+
+            var nameText = name.Find("NameText");
+            nameText.GetComponent<TextMeshProUGUI>().SetText(customerData.customerName);
             name.gameObject.SetActive(true);
+
+            var conversationText = conversation.Find("ConversationText");
+            conversationText.GetComponent<TextMeshProUGUI>().SetText(customerData.customerDialogue);
+            conversation.gameObject.SetActive(true);
         };
 
         return created;
