@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 209917357643131091}
   - component: {fileID: 1093197096645588788}
   m_Layer: 5
-  m_Name: Name
+  m_Name: NamePlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,6 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb9f54043d814ea49aefc0dafbe83e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  NamePlate: {fileID: 704588757818426013}
+  ConversationPlate: {fileID: 6048886264718847976}
   Customer: {fileID: 1295229449753606059, guid: d65d05d1ca2da00458c528d5f9f3eb4a, type: 3}
   CustomerSpawnPoint: {fileID: 8228971060270556263}
   Speed: 300
@@ -281,6 +283,7 @@ MonoBehaviour:
   SpeedMultiplier: 1
   EnterPath: {fileID: 7499866842688971633}
   ExitPath: {fileID: 8151036830563014658}
+  DebugCustomerToShow: 
 --- !u!1 &3156905216247496262
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +594,7 @@ GameObject:
   - component: {fileID: 2569136849125798633}
   - component: {fileID: 8215358841258471255}
   m_Layer: 5
-  m_Name: Conversation
+  m_Name: ConversationPlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

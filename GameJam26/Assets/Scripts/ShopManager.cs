@@ -5,6 +5,9 @@ using System.Linq;
 
 public class ShopManager : MonoBehaviour
 {
+    public GameObject NamePlate;
+    public GameObject ConversationPlate;
+
     public GameObject Customer;
     public Transform CustomerSpawnPoint;
     public float Speed = 400;
@@ -14,17 +17,15 @@ public class ShopManager : MonoBehaviour
     public WaypointPath ExitPath;
     public string DebugCustomerToShow;
 
-    public Customer CurrentCustomer { get { return _currentCustomer?.GetComponent<Customer>(); } }
+    public Customer CurrentCustomer { get { return _currentCustomer; } }
 
-    GameObject _currentCustomer;
+    Customer _currentCustomer;
     float _timeRemaining;
     bool _customerWaiting;
     bool _customerLeaving;
     string _lastDebugCustomerToShow;
 
-    GameObject _nameObj;
     TextMeshProUGUI _nameText;
-    GameObject _conversationObj;
     TextMeshProUGUI _conversationText;
 
     CustomerData[] _customers;
@@ -34,14 +35,12 @@ public class ShopManager : MonoBehaviour
     void Awake()
     {
         _customers = CustomerDataLoader.Load();
+    }
 
-        var name = transform.Find("Name");
-        _nameObj = name.gameObject;
-        _nameText = name.Find("NameText").GetComponent<TextMeshProUGUI>();
-
-        var conversation = transform.Find("Conversation");
-        _conversationObj = conversation.gameObject;
-        _conversationText = conversation.Find("ConversationText").GetComponent<TextMeshProUGUI>();
+    void Start()
+    {
+        _nameText = NamePlate.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
+        _conversationText = ConversationPlate.transform.Find("ConversationText").GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -62,7 +61,7 @@ public class ShopManager : MonoBehaviour
                 CustomerLeave(false);
         }
 
-        if (DebugCustomerToShow != _lastDebugCustomerToShow)
+        if (_lastDebugCustomerToShow != null && DebugCustomerToShow != _lastDebugCustomerToShow)
         {
             CustomerLeave(false);
         }
@@ -70,7 +69,7 @@ public class ShopManager : MonoBehaviour
         _lastDebugCustomerToShow = DebugCustomerToShow;
     }
 
-    GameObject SpawnCustomer(CustomerData customerData)
+    Customer SpawnCustomer(CustomerData customerData)
     {
         GameObject created = Instantiate(Customer, transform);
         var rect = created.GetComponent<RectTransform>();
@@ -84,23 +83,23 @@ public class ShopManager : MonoBehaviour
         follower.Speed = Speed;
         follower.Follow(EnterPath, () => CustomerArrived(customerData));
 
-        return created;
+        return created.GetComponent<Customer>();
     }
 
     void CustomerArrived(CustomerData customerData)
     {
         _nameText.SetText(customerData.customerName);
-        _nameObj.SetActive(true);
+        NamePlate.SetActive(true);
 
         _conversationText.SetText(customerData.customerDialogue);
-        _conversationObj.SetActive(true);
+        ConversationPlate.SetActive(true);
 
         float duration = DebugCustomerToShow == customerData.customerName
             ? 10000
             : customerData.time / SpeedMultiplier;
         _customerWaiting = true;
         _timeRemaining = duration;
-        _currentCustomer.GetComponent<Customer>().StartTimer(duration);
+        _currentCustomer.StartTimer(duration);
     }
 
     public void CustomerSatisfied()
@@ -113,8 +112,8 @@ public class ShopManager : MonoBehaviour
     {
         _customerWaiting = false;
 
-        _currentCustomer.GetComponent<Customer>().StopTimer();
-        var data = _currentCustomer.GetComponent<Customer>().Data;
+        _currentCustomer.StopTimer();
+        var data = _currentCustomer.Data;
         string dialog = satisfied ? data.gradeADialog : data.gradeFDialog;
         _conversationText.SetText(dialog);
 
@@ -127,8 +126,8 @@ public class ShopManager : MonoBehaviour
             Destroy(_currentCustomer);
             _currentCustomer = null;
             _customerLeaving = false;
-            _nameObj.SetActive(false);
-            _conversationObj.SetActive(false);
+            NamePlate.SetActive(false);
+            ConversationPlate.SetActive(false);
         });
     }
 

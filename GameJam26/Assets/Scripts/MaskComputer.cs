@@ -8,8 +8,8 @@ public class MaskComputer : MonoBehaviour
 
     void Start()
     {
-        _mask = transform.Find("Mask").GetComponent<Mask>();
-        _shopManager = transform.Find("ShopManager").GetComponent<ShopManager>();
+        _mask = Utilities.GetRootComponentRecursive<Mask>();
+        _shopManager = Utilities.GetRootComponentRecursive<ShopManager>();
     }
 
     void Update()
