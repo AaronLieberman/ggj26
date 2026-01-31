@@ -103,3 +103,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathFollower
   Speed: 400
+  BobAmount: 5
+  BobSpeed: 50

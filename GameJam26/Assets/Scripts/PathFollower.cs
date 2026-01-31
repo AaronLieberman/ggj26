@@ -4,8 +4,12 @@ using UnityEngine;
 public class PathFollower : MonoBehaviour
 {
     public float Speed = 400f;
+    public float BobAmount = 8f;
+    public float BobSpeed = 4f;
 
     RectTransform _rect;
+    float _bobTime;
+    Vector2 _basePosition;
     WaypointPath _path;
     int _waypointIndex;
     Action _onComplete;
@@ -20,6 +24,8 @@ public class PathFollower : MonoBehaviour
         _path = path;
         _onComplete = onComplete;
         _waypointIndex = 0;
+        _bobTime = 0f;
+        _basePosition = _rect.anchoredPosition;
 
         if (_path == null || _path.Waypoints == null || _path.Waypoints.Length == 0)
         {
@@ -39,10 +45,15 @@ public class PathFollower : MonoBehaviour
     {
         if (_path == null) return;
 
-        var target = _path.Waypoints[_waypointIndex].anchoredPosition;
-        _rect.anchoredPosition = Vector2.MoveTowards(_rect.anchoredPosition, target, Speed * Time.deltaTime);
+        _bobTime += Time.deltaTime;
+        float bobOffset = Mathf.Sin(_bobTime * BobSpeed) * BobAmount;
 
-        if (Vector2.Distance(_rect.anchoredPosition, target) < 0.1f)
+        var target = _path.Waypoints[_waypointIndex].anchoredPosition;
+        _basePosition = Vector2.MoveTowards(_basePosition, target, Speed * Time.deltaTime);
+
+        _rect.anchoredPosition = new Vector2(_basePosition.x, _basePosition.y + bobOffset);
+
+        if (Vector2.Distance(_basePosition, target) < 0.1f)
         {
             _waypointIndex++;
             if (_waypointIndex >= _path.Waypoints.Length)
