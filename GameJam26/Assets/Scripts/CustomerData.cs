@@ -28,6 +28,7 @@ public class CustomerData
     public string customerDialogue;
     public string customerImageName;
     public Sprite customerImage;
+    public string maskBase;
     public float time;
     public int difficultyTier;
     public CustomerStat maskScary;
