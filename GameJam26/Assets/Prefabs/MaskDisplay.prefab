@@ -260,10 +260,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mask
       objectReference: {fileID: 0}
-    - target: {fileID: 4834092031763368784, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5124025395371847835, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -279,10 +275,6 @@ PrefabInstance:
     - target: {fileID: 5412658568800164405, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
       propertyPath: m_SortingLayer
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5433473900527439792, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
-      propertyPath: m_SortingLayer
-      value: 32709
       objectReference: {fileID: 0}
     - target: {fileID: 5530099984771538207, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
       propertyPath: m_SortingLayer
@@ -389,8 +381,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 4943400871192522699, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2b99321cec14654cace5a3c370a5940, type: 3}

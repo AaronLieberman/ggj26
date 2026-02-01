@@ -86,6 +86,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     public void OnBeginDrag(PointerEventData eventData)
     {
         _physics.linearVelocity = Vector2.zero;
+        _physics.angularVelocity = 0f;
 
         RefreshMountPoints();
         this.transform.SetParent(OriginalParent, true);
