@@ -15,6 +15,10 @@ public class ScoreCalculator : MonoBehaviour
     {
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
         var mask = GameObject.Find("MaskDisplay").GetComponentInChildren<Mask>();
+        if (mask == null)
+        {
+            return false;
+        }
         var activeMaskParts = MaskPiece.GetActiveMaskPartData(mask);
 
         var mountPoints = mask.GetComponentsInChildren<MountPoint>();
@@ -38,6 +42,10 @@ public class ScoreCalculator : MonoBehaviour
     {
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
         var mask = GameObject.Find("MaskDisplay").GetComponentInChildren<Mask>();
+        if (mask == null)
+        {
+            return 0;
+        }
         var activeMaskParts = MaskPiece.GetActiveMaskPartData(mask);
 
         int maskScary = activeMaskParts.Sum(p => p.scaryStat) * customerData.maskScary.Points;

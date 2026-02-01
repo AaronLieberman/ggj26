@@ -15,7 +15,6 @@ public class Customer : MonoBehaviour
     public CustomerData Data { get; set; }
     public CustomerResult CustomerResult { get; set; }
 
-    UnityEngine.Vector2? _firstMaskLocation = null;
     float _totalTime;
     float _timeRemaining;
 
@@ -26,36 +25,30 @@ public class Customer : MonoBehaviour
         TimerFront.gameObject.SetActive(false);
         TimerBack.gameObject.SetActive(false);
 
-        foreach (var prefab in MaskPrefabs)
+        foreach (var maskPrefab in MaskPrefabs)
         {
-            _maskPrefabMap[prefab.gameObject.name] = prefab;
+            _maskPrefabMap[maskPrefab.gameObject.name] = maskPrefab;
         }
 
-        var curMask = GameObject.Find("MaskDisplay").transform.GetComponentInChildren<Mask>();
-
-        if (_firstMaskLocation == null)
-        {
-            _firstMaskLocation = curMask.transform.position;
-        }
-
+        var maskDisplay = GameObject.Find("MaskDisplay");
         string targetName = Data.customMaskPrefab;
-        string curName = curMask.GetPrefabDefinition()?.name ?? curMask.gameObject.name;
+        var oldMask = maskDisplay.transform.GetComponentInChildren<Mask>();
 
-        if (curName != targetName)
+        Debug.Log($"Replace mask with {targetName} prefab");
+        string prefabName = _maskPrefabMap.TryGetValue(targetName, out var prefab)
+                            ? prefab.name
+                            : _maskPrefabMap.Values.First().name;
+
+        var maskPosition = GameObject.Find("MaskPosition");
+
+        var go = Object.Instantiate(_maskPrefabMap[prefabName], maskDisplay.transform);
+        go.transform.position = maskPosition.transform.position;
+        if (oldMask != null )
         {
-            Debug.Log($"Replace mask {curMask.gameObject.name} with {targetName} prefab");
-            string prefabName = _maskPrefabMap.TryGetValue(targetName, out var prefab)
-                                ? prefab.name
-                                : _maskPrefabMap.Values.First().name;
-
-    		var go = Object.Instantiate(_maskPrefabMap[prefabName], curMask.transform.parent);
-            go.transform.position = _firstMaskLocation.Value;
-            curMask.transform.SetParent(GameObject.Find("MaskExit").transform, false);
-            curMask.transform.position = _firstMaskLocation.Value;
-            curMask.FlyOff();
-            curMask.enabled = false;
+            oldMask.transform.SetParent(GameObject.Find("MaskExit").transform, true);
+            oldMask.FlyOff();
+            oldMask.enabled = false;
         }
-
     }
 
     void Update()

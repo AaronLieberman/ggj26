@@ -23,6 +23,7 @@ public class MaskDisplayManager : MonoBehaviour
 
     public void ClearMaskDisplay()
     {
+        displayMask = transform.GetComponentInChildren<Mask>();
         foreach (MaskPiece maskPiece in MaskPiece.GetActiveMaskParts(displayMask.GetComponent<Mask>()))
         {
             GameObject.Destroy(maskPiece.gameObject);

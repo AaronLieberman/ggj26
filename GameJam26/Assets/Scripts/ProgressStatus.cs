@@ -23,6 +23,10 @@ public class ProgressStatus : MonoBehaviour
 
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
         var mask = GameObject.Find("MaskDisplay").GetComponentInChildren<Mask>();
+        if (mask == null)
+        {
+            return;
+        }
         var activeMaskParts = MaskPiece.GetActiveMaskPartData(mask);
 
         var mountPoints = mask.GetComponentsInChildren<MountPoint>();
