@@ -41,7 +41,6 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         _canvasGroup = GetComponent<CanvasGroup>();
         _physics = GetComponent<Rigidbody2D>();
 
-        RefreshMountPoints();
     }
 
     public void Start()
@@ -55,14 +54,17 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         _type = Data.slot;
     
         _nonDragVelocity = _physics.linearVelocity;
+
+        RefreshMountPoints();
     }
 
     public void RefreshMountPoints()
     {
         _mountPoints = FindObjectsByType<MountPoint>(FindObjectsSortMode.None)
             .Where(p => p.Type == _type
-                //&& Data.isLeft == p.IsLeft
-                && p.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0)
+                && p.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0
+                && ((Data.Notflipped && !p.IsRight) || (!Data.Notflipped == p.IsRight)) //I'm sorry. The NoFlipped variable is confusing. Claude is my scapegoat.
+                )
             .ToArray();
     }
 

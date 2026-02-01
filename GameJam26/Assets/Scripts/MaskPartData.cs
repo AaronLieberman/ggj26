@@ -24,7 +24,7 @@ public class MaskPartData
     public int artRequestPriority;
     public bool spawnsInPairs;
     public List<string> tags = new ();
-    public bool isLeft = true;
+    public bool Notflipped = true;
 
     public MaskPartData Clone()
     {
@@ -40,7 +40,7 @@ public class MaskPartData
         copy.artRequestPriority = artRequestPriority;
         copy.spawnsInPairs = spawnsInPairs;
         copy.tags = tags.ToList();
-        copy.isLeft = isLeft;
+        copy.Notflipped = Notflipped;
         return copy;
     }
 }
