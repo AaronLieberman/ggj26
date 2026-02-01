@@ -93,19 +93,33 @@ public class GameManager : MonoBehaviour
 
     private void PopulateEndingShopCustomers()
     {
-        // TODO: Replace with call to shop manager to receive customers received.
-        List<CustomerData> customers = new List<CustomerData>();
-        CustomerData mockCustomerData1 = new CustomerData();
-        mockCustomerData1.customerImageName = shopManager.Sprites[0].name;
-        customers.Add(mockCustomerData1);
-        CustomerData mockCustomerData2 = new CustomerData();
-        mockCustomerData2.customerImageName = shopManager.Sprites[1].name;
-        customers.Add(mockCustomerData2);
+        // TODO: Replace with call to shop manager to receive customers results.
+        List<CustomerResult> customerResults = new List<CustomerResult>();
+        CustomerData customerData1 = new CustomerData();
+        customerData1.customerImageName = shopManager.Sprites[0].name;
+        customerResults.Add(
+            new CustomerResult(
+                customerData1,
+                null,
+                false
+            )
+        );
 
-        foreach (CustomerData customerData in customers)
+        CustomerData customerData2 = new CustomerData();
+        customerData2.customerImageName = shopManager.Sprites[1].name;
+        customerResults.Add(
+            new CustomerResult(
+                customerData2,
+                null,
+                true
+            )
+        );
+
+        foreach (CustomerResult customerResult in customerResults)
         {
             GameObject endingCustomerViewer = Instantiate(endingCustomerViewerPrefab, Vector3.zero, Quaternion.identity, endingCustomerHolder);
-            endingCustomerViewer.GetComponent<Image>().sprite = shopManager.GetCustomerSprite(customerData.customerImageName);
+            endingCustomerViewer.GetComponent<Image>().sprite = shopManager.GetCustomerSprite(customerResult.CustomerData.customerImageName);
+            endingCustomerViewer.transform.Find("CustomerSatisfactionUI").GetComponent<Image>().color = customerResult.Satisfied ? Color.green : Color.red;
         }
     }
 
