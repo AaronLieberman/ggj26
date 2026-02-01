@@ -60,8 +60,9 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         if (Data == null)
         {
-            UnityEngine.Debug.LogError("No data on MaskPiece!");
-            GameObject.Destroy(this.gameObject);
+            // NOTE: Commenting this out as it causes issues for customer and end of game refs since they don't need the Data.
+            //UnityEngine.Debug.LogError("No data on MaskPiece!");
+            //GameObject.Destroy(this.gameObject);
             return;
         }
 
