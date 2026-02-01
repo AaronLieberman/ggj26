@@ -6,7 +6,8 @@ public enum MaskPartSlot
     Nose,
     Mouth,
     Eye,
-    Horn
+    Horn,
+    Ear
 }
 
 public class MaskPartData
@@ -19,6 +20,7 @@ public class MaskPartData
     public int goofyStat;
     public int beautyStat;
     public int anonymityStat;
+    public int artRequestPriority;
     public bool spawnsInPairs;
     public List<string> tags = new();
 }
