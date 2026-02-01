@@ -120,6 +120,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
             _canvasGroup.blocksRaycasts = false;
         }
     }
+
     public void OnPointerUp(PointerEventData eventData)
     {
         if (_canvasGroup != null)

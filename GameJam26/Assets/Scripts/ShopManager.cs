@@ -97,7 +97,7 @@ public class ShopManager : MonoBehaviour
 
     Customer SpawnCustomer(CustomerData customerData)
     {
-        GameObject created = Instantiate(Customer, CustomerBox.transform, true);
+        GameObject created = Instantiate(Customer, CustomerBox.transform);
         var rect = created.GetComponent<RectTransform>();
         var spawnRect = ((RectTransform)CustomerSpawnPoint).anchoredPosition;
         rect.anchoredPosition = spawnRect;
