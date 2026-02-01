@@ -124,7 +124,14 @@ public void AttachMountHints()
             GameObject hint = Instantiate(this.gameObject, mount.transform.parent);
             hint.transform.localPosition = Vector3.zero;
             hint.transform.localRotation = Quaternion.identity;
-            hint.transform.localScale = Vector3.one;
+            if (Data.NotFlipped)
+            {
+                hint.transform.localScale = Vector3.one;
+            }
+            else
+            {
+                hint.transform.localScale = new Vector3(-1, 1, 1);
+            }
             hint.name = this.name + "_hint";
 
             var comp = hint.gameObject.GetComponent<MaskPiece>();
@@ -207,12 +214,14 @@ public void AttachMountHints()
         this.transform.SetParent(closest.transform, false);
         this.transform.localPosition = Vector3.zero;
         this.transform.localRotation = Quaternion.identity;
-        this.transform.localScale = Vector3.one;
-
-        //if (closest.transform.parent.name.Contains("Left"))
-        //{
-        //    this.transform.localScale = new Vector3(-1, 1, 1);
-        //}
+        if (Data.NotFlipped)
+        {
+            transform.localScale = Vector3.one;
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
 
         return closest;
     }
