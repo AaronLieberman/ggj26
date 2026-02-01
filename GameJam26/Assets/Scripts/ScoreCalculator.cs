@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using System;
 
 public class ScoreCalculator : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class ScoreCalculator : MonoBehaviour
         var mask = GameObject.Find("MaskDisplay").GetComponentInChildren<Mask>();
         var activeMaskParts = MaskPiece.GetActiveMaskPartData(mask);
 
-        int numberOfSlots = mask.GetComponentsInChildren<MountPoint>()
-            .Select(mp => mp.Type).Distinct().Count();
+        var mountPoints = mask.GetComponentsInChildren<MountPoint>();
+        int numberOfSlots = mountPoints.Select(mp => Tuple.Create(mp.Type, mp.Handedness)).Distinct().Count();
 
         int maskScary = activeMaskParts.Sum(p => p.scaryStat);
         int maskGoofy = activeMaskParts.Sum(p => p.goofyStat);

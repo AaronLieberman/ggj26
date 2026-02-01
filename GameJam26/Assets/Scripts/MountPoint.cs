@@ -10,7 +10,11 @@ public class MountPoint : MonoBehaviour
 
 
     public MaskPartSlot Type { get { return _type; } }
-    public bool IsLeft { get
+    public Handedness Handedness { get { return _handedness; } }
+
+    public bool IsLeft
+    {
+        get
         {
             return _handedness == Handedness.Left;
         }

@@ -25,25 +25,25 @@ public class ProgressStatus : MonoBehaviour
         var mask = GameObject.Find("MaskDisplay").GetComponentInChildren<Mask>();
         var activeMaskParts = MaskPiece.GetActiveMaskPartData(mask);
 
-        int numberOfSlots = mask.GetComponentsInChildren<MountPoint>()
-            .Select(mp => mp.Type).Distinct().Count();
+        var mountPoints = mask.GetComponentsInChildren<MountPoint>();
+        int numberOfSlots = mountPoints.Select(mp => Tuple.Create(mp.Type, mp.Handedness)).Distinct().Count();
 
-        float maskBeauty = activeMaskParts.Sum(p => p.beautyStat) / numberOfSlots;
+        float maskBeauty = (float)activeMaskParts.Sum(p => p.beautyStat) / numberOfSlots;
         BarBeauty.SetArrowMin(customerData.maskBeauty.Min);
         BarBeauty.SetArrowMax(customerData.maskBeauty.Max);
         BarBeauty.SetMeter(maskBeauty);
 
-        float maskScary = activeMaskParts.Sum(p => p.scaryStat) / numberOfSlots;
+        float maskScary = (float)activeMaskParts.Sum(p => p.scaryStat) / numberOfSlots;
         BarScary.SetArrowMin(customerData.maskScary.Min);
         BarScary.SetArrowMax(customerData.maskScary.Max);
         BarScary.SetMeter(maskScary);
 
-        float maskGoofy = activeMaskParts.Sum(p => p.goofyStat) / numberOfSlots;
+        float maskGoofy = (float)activeMaskParts.Sum(p => p.goofyStat) / numberOfSlots;
         BarGoofy.SetArrowMin(customerData.maskGoofy.Min);
         BarGoofy.SetArrowMax(customerData.maskGoofy.Max);
         BarGoofy.SetMeter(maskGoofy);
 
-        float maskAnonymity = activeMaskParts.Sum(p => p.anonymityStat) / numberOfSlots;
+        float maskAnonymity = (float)activeMaskParts.Sum(p => p.anonymityStat) / numberOfSlots;
         BarAnon.SetArrowMin(customerData.maskAnonymity.Min);
         BarAnon.SetArrowMax(customerData.maskAnonymity.Max);
         BarAnon.SetMeter(maskAnonymity);
