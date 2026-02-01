@@ -44,5 +44,6 @@ public class Customer : MonoBehaviour
     public void StopTimer()
     {
         TimerFront.gameObject.SetActive(false);
+        TimerBack.gameObject.SetActive(false);
     }
 }
