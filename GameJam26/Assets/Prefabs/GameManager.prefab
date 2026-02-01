@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4601d7c75bbf14045b6e5d6f5c0403b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  customersToServe: 5
+  customersToServe: 3
   startGameTransitionDuration: 5
   endGameTransitionDuration: 0.5
+  endingMaskPieceScaling: {x: 0.45, y: 0.45}
   endingCustomerViewerPrefab: {fileID: 6351986831198142498, guid: 7fddcae09ef018048859f061da9717ad, type: 3}

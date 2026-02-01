@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     private CanvasGroup startingGameCanvasGroup;
     private CanvasGroup endingGameCanvasGroup;
 
-    [SerializeField] private Vector2 endingMaskPieceSizes;
+    [SerializeField] private Vector2 endingMaskPieceScaling;
     [SerializeField] private GameObject endingCustomerViewerPrefab;
     private Transform endingCustomerHolder;
 
@@ -130,11 +130,7 @@ public class GameManager : MonoBehaviour
             endingCustomerViewer.transform.Find("CustomerSatisfactionUI").GetComponent<Image>().color = customerResult.Satisfied ? Color.green : Color.red;
 
             GameObject endingCustomerMask = Instantiate(customerResult.CustomerMask, Vector3.zero, Quaternion.identity, endingCustomerViewer.transform);
-            MaskPiece[] maskPieces = MaskPiece.GetActiveMaskParts(endingCustomerMask.GetComponent<Mask>());
-            foreach (MaskPiece maskPiece in maskPieces)
-            {
-                maskPiece.GetComponent<RectTransform>().sizeDelta = endingMaskPieceSizes;
-            }
+            endingCustomerMask.transform.Find("MountPoints").GetComponent<RectTransform>().localScale = endingMaskPieceScaling;
         }
     }
 

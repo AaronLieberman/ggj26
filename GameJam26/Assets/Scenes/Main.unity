@@ -347,18 +347,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2667469046109522154, guid: fc044421914db8c42b5a0fb34df3520d, type: 3}
-      propertyPath: customersToServe
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2667469046109522154, guid: fc044421914db8c42b5a0fb34df3520d, type: 3}
-      propertyPath: endingMaskPieceSizes.x
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2667469046109522154, guid: fc044421914db8c42b5a0fb34df3520d, type: 3}
-      propertyPath: endingMaskPieceSizes.y
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 8532041669897793615, guid: fc044421914db8c42b5a0fb34df3520d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -876,6 +864,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2263701178550957970}
     m_Modifications:
+    - target: {fileID: 3408500857009344620, guid: b4f3e9aa6d9e8f24e997a6c4e3546d42, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3408500857009344620, guid: b4f3e9aa6d9e8f24e997a6c4e3546d42, type: 3}
       propertyPath: m_BlocksRaycasts
       value: 0
