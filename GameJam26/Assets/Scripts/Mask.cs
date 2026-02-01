@@ -112,7 +112,7 @@ public class Mask : MonoBehaviour
 
             foreach (var tryContainer in containersToTry) 
             {
-                Debug.Log($"{tryContainer}");
+                Debug.Log($"Resync mount: container: {tryContainer}");
                 var container = MountPoints.Find(tryContainer);
 
                 if (container != null)

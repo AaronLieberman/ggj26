@@ -349,7 +349,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2667469046109522154, guid: fc044421914db8c42b5a0fb34df3520d, type: 3}
       propertyPath: gameLengthSeconds
-      value: 10
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 8532041669897793615, guid: fc044421914db8c42b5a0fb34df3520d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1188,18 +1188,6 @@ PrefabInstance:
     - target: {fileID: 1766144808479710636, guid: 5ff815c748cc37543a819df846935d41, type: 3}
       propertyPath: m_Name
       value: BuildProgress
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245200292544056241, guid: 5ff815c748cc37543a819df846935d41, type: 3}
-      propertyPath: ExitPath
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245200292544056241, guid: 5ff815c748cc37543a819df846935d41, type: 3}
-      propertyPath: EnterPath
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245200292544056241, guid: 5ff815c748cc37543a819df846935d41, type: 3}
-      propertyPath: CustomerSpawnPoint
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7668236100958981289, guid: 5ff815c748cc37543a819df846935d41, type: 3}
       propertyPath: m_Pivot.x
