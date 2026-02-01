@@ -26,6 +26,7 @@ public class ShopManager : MonoBehaviour
     bool _customerWaiting;
     bool _customerLeaving;
     string _lastDebugCustomerToShow;
+    MaskDisplayManager _maskDisplayManager;
 
     TextMeshProUGUI _nameText;
     TextMeshProUGUI _conversationText;
@@ -37,6 +38,7 @@ public class ShopManager : MonoBehaviour
     void Awake()
     {
         _customers = CustomerDataLoader.Load();
+        _maskDisplayManager = Utilities.GetRootComponentRecursive<MaskDisplayManager>();
     }
 
     void Start()
@@ -119,6 +121,8 @@ public class ShopManager : MonoBehaviour
 
     void CustomerLeave(bool satisfied)
     {
+        _maskDisplayManager.ClearMaskDisplay();
+
         _customerWaiting = false;
 
         _currentCustomer.StopTimer();

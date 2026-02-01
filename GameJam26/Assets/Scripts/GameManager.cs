@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     private ShopManager shopManager;
     private ConveyorManager conveyorManager;
+    private MaskDisplayManager maskDisplayManager;
 
     [SerializeField] private int customersToServe;
     private int customersServed = 0;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         shopManager = Utilities.GetRootComponentRecursive<ShopManager>();
         conveyorManager = Utilities.GetRootComponentRecursive<ConveyorManager>();
+        maskDisplayManager = Utilities.GetRootComponentRecursive<MaskDisplayManager>();
 
         startingGameCanvasGroup = GameObject.Find("StartingGameUI").GetComponent<CanvasGroup>();
         endingGameCanvasGroup = GameObject.Find("EndingGameUI").GetComponent<CanvasGroup>();
@@ -148,6 +150,8 @@ public class GameManager : MonoBehaviour
             customerMask.GetComponent<RectTransform>().offsetMin = Vector2.zero;
             customerMask.GetComponent<RectTransform>().offsetMax = Vector2.zero;
             customerMask.GetComponent<RectTransform>().sizeDelta = customerMaskSizing;
+
+            maskDisplayManager.ClearMaskDisplay();
         }
     }
 
