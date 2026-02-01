@@ -116,6 +116,11 @@ public class GameManager : MonoBehaviour
         int totalScore = 0;
         foreach (CustomerResult customerResult in customerResults)
         {
+            if (customerResult.CustomerData == null)
+            {
+                continue;
+            }
+
             GameObject endingCustomerViewer = Instantiate(endingCustomerViewerPrefab, Vector3.zero, Quaternion.identity, endingCustomerHolder);
             endingCustomerViewer.GetComponent<Image>().sprite = shopManager.GetCustomerSprite(customerResult.CustomerData.customerImageName);
             endingCustomerViewer.transform.Find("CustomerSatisfactionUI").GetComponent<Image>().sprite 
