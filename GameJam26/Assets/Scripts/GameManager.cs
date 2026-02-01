@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (gameState != GameState.ENDED && customersServed >= customersToServe && !shopManager.CustomerExists())
+        if (gameState != GameState.ENDED && customersServed >= customersToServe && !shopManager.CustomerExists)
         {
             EndGame();
         }
@@ -131,6 +131,18 @@ public class GameManager : MonoBehaviour
 
             GameObject endingCustomerMask = Instantiate(customerResult.CustomerMask, Vector3.zero, Quaternion.identity, endingCustomerViewer.transform);
             endingCustomerMask.transform.Find("MountPoints").GetComponent<RectTransform>().localScale = endingMaskPieceScaling;
+        }
+    }
+
+    public void DeliverMask()
+    {
+        if (shopManager.MaskIsDeliverable)
+        {
+            GameObject maskGameObject = GameObject.Find("MaskDisplay").transform.Find("Mask").gameObject;
+            Transform customerTransform = shopManager.CurrentCustomer.transform;
+            GameObject customerMask = Instantiate(maskGameObject, Vector3.zero, Quaternion.identity, customerTransform);
+            customerMask.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+            customerMask.GetComponent<RectTransform>().offsetMax = Vector2.zero;
         }
     }
 

@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-using System;
 
 public class ShopManager : MonoBehaviour
 {
@@ -19,6 +18,8 @@ public class ShopManager : MonoBehaviour
     public string DebugCustomerToShow;
 
     public Customer CurrentCustomer { get { return _currentCustomer; } }
+    public bool CustomerExists { get { return _currentCustomer != null; } }
+    public bool MaskIsDeliverable { get { return _customerWaiting && !CurrentCustomer.transform.Find("Mask(Clone)"); } }
 
     Customer _currentCustomer;
     float _timeRemaining;
@@ -142,11 +143,6 @@ public class ShopManager : MonoBehaviour
     public Sprite GetCustomerSprite(string customerSpriteName)
     {
         return Sprites.SingleOrDefault(a => a.name == customerSpriteName);
-    }
-
-    public bool CustomerExists()
-    {
-        return _currentCustomer != null;
     }
 
     public void ActivateManager()
