@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
     {
         if (shopManager.MaskIsDeliverable)
         {
-            GameObject maskGameObject = GameObject.Find("MaskDisplay").transform.Find("Mask").gameObject;
+            GameObject maskGameObject = GameObject.Find("MaskDisplay").transform.GetComponentInChildren<Mask>().gameObject;
             Transform customerTransform = shopManager.CurrentCustomer.transform;
             GameObject customerMask = Instantiate(maskGameObject, Vector3.zero, Quaternion.identity, customerTransform);
             customerMask.GetComponent<RectTransform>().offsetMin = Vector2.zero;

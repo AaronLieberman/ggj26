@@ -132,7 +132,7 @@ public class ShopManager : MonoBehaviour
         follower.Speed = Speed;
         follower.Follow(ExitPath, () =>
         {
-            Destroy(_currentCustomer);
+            //Destroy(_currentCustomer);
             _currentCustomer = null;
             _customerLeaving = false;
             NamePlate.SetActive(false);
