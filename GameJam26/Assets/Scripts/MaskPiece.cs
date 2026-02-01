@@ -47,8 +47,8 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
     {
         if (Data == null)
         {
-            UnityEngine.Debug.LogError("No data on MaskPiece!");
-            GameObject.Destroy(this.gameObject);
+            //UnityEngine.Debug.LogError("No data on MaskPiece!");
+            //GameObject.Destroy(this.gameObject);
             return;
         }
         _type = Data.slot;
