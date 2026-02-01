@@ -32,6 +32,8 @@ public class Customer : MonoBehaviour
         _timeRemaining = duration;
 
         TimerFront.gameObject.SetActive(true);
+        TimerBack.gameObject.SetActive(true);
+
         TimerFront.type = Image.Type.Filled;
         TimerFront.fillMethod = Image.FillMethod.Radial360;
         TimerFront.fillOrigin = (int)Image.Origin360.Top;

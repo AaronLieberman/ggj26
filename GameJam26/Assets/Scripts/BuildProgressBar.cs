@@ -27,13 +27,13 @@ public class BuildProgressBar : MonoBehaviour
 
     public void SetMeter(float t)
     {
-        t = Mathf.Clamp01(t);
+        t = Mathf.Clamp01(t / 10);
         _meterRect.anchorMax = new Vector2(t, _meterRect.anchorMax.y);
     }
 
     public void SetArrowMin(float t)
     {
-        t = Mathf.Clamp01(t);
+        t = Mathf.Clamp01(t / 10);
         _arrowMinValue = t;
         float x = t * (1f - ArrowWidth);
         _arrowMinRect.anchorMin = new Vector2(x, _arrowMinRect.anchorMin.y);
@@ -43,7 +43,7 @@ public class BuildProgressBar : MonoBehaviour
 
     public void SetArrowMax(float t)
     {
-        t = Mathf.Clamp01(t);
+        t = Mathf.Clamp01(t / 10);
         _arrowMaxValue = t;
         float x = t * (1f - ArrowWidth);
         _arrowMaxRect.anchorMin = new Vector2(x, _arrowMaxRect.anchorMin.y);
