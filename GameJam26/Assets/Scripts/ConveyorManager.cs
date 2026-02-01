@@ -77,7 +77,7 @@ public class ConveyorManager : MonoBehaviour
         {
             partData = _overrideSpawnNext;
             _overrideSpawnNext = null;
-            partData.Notflipped = false;
+            partData.NotFlipped = false;
         }
 
         Vector3 randomOffset = new Vector3(Random.Range(0, spawnPositionVariation.x), Random.Range(0, spawnPositionVariation.y), Random.Range(0, spawnPositionVariation.z));
@@ -85,7 +85,7 @@ public class ConveyorManager : MonoBehaviour
 
         GameObject created = Instantiate(_maskPiecePrefab, adjustedPosition, _beltSpawnPointTransform.rotation, _beltTransform);
         created.GetComponent<Rigidbody2D>().AddForce(new Vector2(-_speed, 0.0f));
-        if (!partData.Notflipped)
+        if (!partData.NotFlipped)
         {
             created.transform.localScale = new(-created.transform.localScale.x, created.transform.localScale.y, created.transform.localScale.z);
         }

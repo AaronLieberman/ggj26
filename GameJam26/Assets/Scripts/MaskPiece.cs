@@ -12,7 +12,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler
+public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
 {
     public MaskPartData Data { get; set; }
 
@@ -60,12 +60,24 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
 
     public void RefreshMountPoints()
     {
-        _mountPoints = FindObjectsByType<MountPoint>(FindObjectsSortMode.None)
-            .Where(p => p.Type == _type
-                && p.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0
-                && ((Data.Notflipped && !p.IsRight) || (!Data.Notflipped == p.IsRight)) //I'm sorry. The NoFlipped variable is confusing. Claude is my scapegoat.
-                )
-            .ToArray();
+        if (Data.NotFlipped) //I'm sorry. The NotFlipped variable is confusing. Claude is my scapegoat.
+        {
+            _mountPoints = FindObjectsByType<MountPoint>(FindObjectsSortMode.None)
+                .Where(mountPoint => mountPoint.Type == _type
+                    && mountPoint.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0
+                    && (mountPoint.IsLeft || mountPoint.IsCenter ) 
+                    )
+                .ToArray();
+        }
+        else
+        {
+            _mountPoints = FindObjectsByType<MountPoint>(FindObjectsSortMode.None)
+                .Where(mountPoint => mountPoint.Type == _type
+                     && mountPoint.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0
+                     && mountPoint.IsRight
+                    )
+                .ToArray();
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -87,6 +99,17 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         {
             _canvasGroup.blocksRaycasts = false;
         }
+    }
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (_canvasGroup != null)
+        {
+            _canvasGroup.blocksRaycasts = true;
+        }
+
+        DetachMountHints();
+
+        //_physics.linearVelocity = _nonDragVelocity;
     }
 
     public void AttachMountHints()
@@ -215,4 +238,8 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         return mask.GetComponentsInChildren<MaskPiece>();
     }
 
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        
+    }
 }
