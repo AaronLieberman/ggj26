@@ -8,6 +8,7 @@ public class BuildProgressBar : MonoBehaviour
     public GameObject ArrowMax;
 
     const float ArrowWidth = 0.1f;
+    const float MeterWidth = 0.1f;
 
     RectTransform _arrowMinRect;
     RectTransform _arrowMaxRect;
@@ -28,7 +29,9 @@ public class BuildProgressBar : MonoBehaviour
     public void SetMeter(float t)
     {
         t = Mathf.Clamp01(t / 10);
-        _meterRect.anchorMax = new Vector2(t, _meterRect.anchorMax.y);
+        float x = t * (1f - MeterWidth);
+        _meterRect.anchorMin = new Vector2(x, _meterRect.anchorMin.y);
+        _meterRect.anchorMax = new Vector2(x + MeterWidth, _meterRect.anchorMax.y);
     }
 
     public void SetArrowMin(float t)
