@@ -49,7 +49,7 @@ public class Customer : MonoBehaviour
 
     		var go = Object.Instantiate(_maskPrefabMap[prefabName], curMask.transform.parent);
             go.transform.position = _firstMaskLocation.Value;
-            curMask.transform.parent = GameObject.Find("MaskExit").transform;
+            curMask.transform.SetParent(GameObject.Find("MaskExit").transform, false);
             curMask.transform.position = _firstMaskLocation.Value;
             curMask.FlyOff();
             curMask.enabled = false;
