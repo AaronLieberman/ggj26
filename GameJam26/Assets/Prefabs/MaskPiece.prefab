@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4825135925351763184}
   - component: {fileID: 2730246314249647154}
   - component: {fileID: 7689698986451107689}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: MaskPiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 15
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

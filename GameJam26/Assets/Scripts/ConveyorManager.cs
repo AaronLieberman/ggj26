@@ -12,9 +12,6 @@ public class ConveyorManager : MonoBehaviour
     Sprite[] _sprites;
 
     [SerializeField]
-    float _speed;
-
-    [SerializeField]
     float _spawnDelaySeconds;
 
     [SerializeField]
@@ -84,7 +81,6 @@ public class ConveyorManager : MonoBehaviour
         Vector3 adjustedPosition = _beltSpawnPointTransform.position + randomOffset;
 
         GameObject created = Instantiate(_maskPiecePrefab, adjustedPosition, _beltSpawnPointTransform.rotation, _beltTransform);
-        created.GetComponent<Rigidbody2D>().AddForce(new Vector2(-_speed, 0.0f));
         if (!partData.NotFlipped)
         {
             created.transform.localScale = new(-created.transform.localScale.x, created.transform.localScale.y, created.transform.localScale.z);
