@@ -1,11 +1,13 @@
 using System.ComponentModel;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Diagnostics;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     public MaskPartData Data { get; set; }
@@ -14,7 +16,10 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     Transform _originalParent;
     private RectTransform _rectTransform;
     private Canvas _canvas;
+    private Rigidbody2D _physics;
     private CanvasGroup _canvasGroup;
+    Vector2 _dragPos;
+    Vector2 _nonDragVelocity;
 
     public MaskPieceType Type { get { return _type; } }
     public Transform OriginalParent { get { return _originalParent; } }
@@ -25,6 +30,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         _originalParent = this.transform.parent;
 
         // TODO is this the best way to find name?
+        /*
         foreach (MaskPieceType type in System.Enum.GetValues(typeof(MaskPieceType)))
         {
             if (this.gameObject.name.StartsWith(type.ToString()))
@@ -33,13 +39,40 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
                 break;
             }
         }
+        */
+
 
         Debug.Log($"MaskPiece type:{_type} {name}");
         _rectTransform = GetComponent<RectTransform>();
         _canvas = GetComponentInParent<Canvas>();
         _canvasGroup = GetComponent<CanvasGroup>();
+        _physics = GetComponent<Rigidbody2D>();
 
         RefreshMountPoints();
+    }
+
+    public void Start()
+    {
+        switch (Data.slot.ToString())
+        {
+            case "Nose":
+                _type = MaskPieceType.Nose;
+                break;
+            case "Mouth":
+                _type = MaskPieceType.Mouth;
+                break;
+            case "Eye":
+                _type = MaskPieceType.Eyes;
+                break;
+            case "Horn":
+                _type = MaskPieceType.Horns;
+                break;
+            default:
+                _type = MaskPieceType.Base;
+                break;
+        }
+
+        _nonDragVelocity = _physics.linearVelocity;
     }
 
     public void RefreshMountPoints()
@@ -50,10 +83,10 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
                             .ToArray();
     }
 
-    Vector2 _dragPos;
-
     public void OnBeginDrag(PointerEventData eventData)
     {
+        _physics.linearVelocity = Vector2.zero;
+
         RefreshMountPoints();
         this.transform.SetParent(OriginalParent, true);
         _dragPos = _rectTransform.anchoredPosition;
@@ -123,5 +156,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         {
             _canvasGroup.blocksRaycasts = true;
         }
+
+        //_physics.linearVelocity = _nonDragVelocity;
     }
 }

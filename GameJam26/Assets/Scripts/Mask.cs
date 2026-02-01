@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class Mask : MonoBehaviour
 {   
-    [SerializeField] RectTransform MountPoints;
-    [SerializeField] RectTransform MountObjContainer;
-
     void Awake()
     {
     }
