@@ -3,13 +3,13 @@ using UnityEngine;
 public class MountPoint : MonoBehaviour
 {
     [SerializeField]
-    MaskPieceType _type;
+    MaskPartSlot _type;
 
     [SerializeField]
     Handedness _handedness;
 
 
-    public MaskPieceType Type { get { return _type; } }
+    public MaskPartSlot Type { get { return _type; } }
     public bool IsLeft { get
         {
             return _handedness == Handedness.Left;
@@ -34,15 +34,6 @@ public class MountPoint : MonoBehaviour
 
     void Awake()
     {
-        //// TODO is this the best way to find name?
-        //foreach (MaskPieceType type in System.Enum.GetValues(typeof(MaskPieceType)))
-        //{
-        //    if (this.transform.parent.gameObject.name.StartsWith(type.ToString()))
-        //    {
-        //        _type = type;
-        //        break;
-        //    }
-        //}
         Debug.Log($"MountPoint type:{_type} {name}");
     }
 

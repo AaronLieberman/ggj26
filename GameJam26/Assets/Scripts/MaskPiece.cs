@@ -12,11 +12,11 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
     public MaskPartData Data { get; set; }
 
-    MaskPieceType _type;
+    MaskPartSlot _type;
     Transform _originalParent;
     private RectTransform _rectTransform;
     private Canvas _canvas;
@@ -25,7 +25,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     Vector2 _dragPos;
     Vector2 _nonDragVelocity;
 
-    public MaskPieceType Type { get { return _type; } }
+    public MaskPartSlot Type { get { return _type; } }
     public Transform OriginalParent { get { return _originalParent; } }
     public MountPoint[] _mountPoints;
     public List<GameObject> _mountHints = new List<GameObject>();
@@ -33,18 +33,6 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     private void Awake()
     {
         _originalParent = this.transform.parent;
-
-        // TODO is this the best way to find name?
-        /*
-        foreach (MaskPieceType type in System.Enum.GetValues(typeof(MaskPieceType)))
-        {
-            if (this.gameObject.name.StartsWith(type.ToString()))
-            {
-                _type = type;
-                break;
-            }
-        }
-        */
 
 
         UnityEngine.Debug.Log($"MaskPiece type:{_type} {name}");
@@ -60,31 +48,12 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         if (Data == null)
         {
-            // NOTE: Commenting this out as it causes issues for customer and end of game refs since they don't need the Data.
-            //UnityEngine.Debug.LogError("No data on MaskPiece!");
-            //GameObject.Destroy(this.gameObject);
+            UnityEngine.Debug.LogError("No data on MaskPiece!");
+            GameObject.Destroy(this.gameObject);
             return;
         }
-
-        switch (Data.slot.ToString())
-        {
-            case "Nose":
-                _type = MaskPieceType.Nose;
-                break;
-            case "Mouth":
-                _type = MaskPieceType.Mouth;
-                break;
-            case "Eye":
-                _type = MaskPieceType.Eyes;
-                break;
-            case "Horn":
-                _type = MaskPieceType.Horns;
-                break;
-            default:
-                _type = MaskPieceType.Base;
-                break;
-        }
-
+        _type = Data.slot;
+    
         _nonDragVelocity = _physics.linearVelocity;
     }
 
@@ -97,7 +66,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
             .ToArray();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         _physics.linearVelocity = Vector2.zero;
         _physics.angularVelocity = 0f;
@@ -164,12 +133,12 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         MountPoint closest = FindClosest();
 
-        _dragPos += (eventData.delta / _canvas.scaleFactor);
+        _dragPos += eventData.delta / _canvas.scaleFactor;
         if (closest == null)
         {
-            this.transform.SetParent(OriginalParent, false);
+            transform.SetParent(OriginalParent, false);
             _rectTransform.anchoredPosition = _dragPos;
-            this.transform.SetAsLastSibling();
+            transform.SetAsLastSibling();
         }
     }
 
@@ -236,4 +205,5 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         return mask.GetComponentsInChildren<MaskPiece>();
     }
+
 }

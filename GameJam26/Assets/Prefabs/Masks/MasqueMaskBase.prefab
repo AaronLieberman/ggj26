@@ -94,7 +94,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _type
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _handedness
@@ -405,7 +405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _type
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2596259961721041272, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
@@ -539,7 +539,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _type
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _handedness
@@ -677,7 +677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _type
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _handedness
@@ -811,7 +811,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _type
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8512156075030184199, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_Name
@@ -921,7 +921,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _type
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _handedness
@@ -1059,7 +1059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _type
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2596259961721041272, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
