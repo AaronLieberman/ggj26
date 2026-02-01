@@ -126,11 +126,11 @@ public void AttachMountHints()
             hint.transform.localRotation = Quaternion.identity;
             if (Data.NotFlipped)
             {
-                hint.transform.localScale = Vector3.one;
+                hint.transform.localScale = new Vector3(0.5f, 0.5f, 1.0f);
             }
             else
             {
-                hint.transform.localScale = new Vector3(-1, 1, 1);
+                hint.transform.localScale = new Vector3(-0.5f, 0.5f, 1.0f);
             }
             hint.name = this.name + "_hint";
 
@@ -178,6 +178,15 @@ public void AttachMountHints()
             transform.SetParent(OriginalParent, false);
             _rectTransform.anchoredPosition = _dragPos;
             transform.SetAsLastSibling();
+
+            if (Data.NotFlipped)
+            {
+                transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
+            else
+            {
+                transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            }
         }
     }
     public void OnEndDrag(PointerEventData eventData)
@@ -216,11 +225,11 @@ public void AttachMountHints()
         this.transform.localRotation = Quaternion.identity;
         if (Data.NotFlipped)
         {
-            transform.localScale = Vector3.one;
+            transform.localScale = new Vector3(0.5f, 0.5f, 1.0f);
         }
         else
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-0.5f, 0.5f, 1.0f);
         }
 
         return closest;
