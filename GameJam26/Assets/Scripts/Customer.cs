@@ -1,20 +1,60 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Customer : MonoBehaviour
 {
+    [SerializeField] public GameObject[] MaskPrefabs;
+
     public Image TimerFront;
     public Image TimerBack;
 
     public CustomerData Data { get; set; }
 
+    UnityEngine.Vector2? _firstMaskLocation = null;
     float _totalTime;
     float _timeRemaining;
+
+    Dictionary<string, GameObject> _maskPrefabMap = new Dictionary<string, GameObject>();
 
     void Start()
     {
         TimerFront.gameObject.SetActive(false);
         TimerBack.gameObject.SetActive(false);
+
+        foreach (var prefab in MaskPrefabs)
+        {
+            _maskPrefabMap[prefab.gameObject.name] = prefab;
+        }
+
+        var curMask = GameObject.Find("MaskDisplay").transform.GetComponentInChildren<Mask>();
+
+        if (_firstMaskLocation == null)
+        {
+            _firstMaskLocation = curMask.transform.position;
+        }
+
+        string targetName = Data.customMaskPrefab;
+        string curName = curMask.GetPrefabDefinition()?.name ?? curMask.gameObject.name;
+
+        if (curName != targetName)
+        {
+            Debug.Log($"Replace mask {curMask.gameObject.name} with {targetName} prefab");
+            string prefabName = _maskPrefabMap.TryGetValue(targetName, out var prefab)
+                                ? prefab.name
+                                : _maskPrefabMap.Values.First().name;
+
+    		var go = Object.Instantiate(_maskPrefabMap[prefabName], curMask.transform.parent);
+            go.transform.position = _firstMaskLocation.Value;
+            curMask.transform.parent = GameObject.Find("MaskExit").transform;
+            curMask.transform.position = _firstMaskLocation.Value;
+            curMask.FlyOff();
+            curMask.enabled = false;
+        }
+
     }
 
     void Update()

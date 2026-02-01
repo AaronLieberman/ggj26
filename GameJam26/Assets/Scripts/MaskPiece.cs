@@ -70,6 +70,8 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        GetComponent<Rigidbody2D>().simulated = false;
+
         _physics.linearVelocity = Vector2.zero;
         _physics.angularVelocity = 0f;
 
@@ -191,6 +193,11 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         }
 
         DetachMountHints();
+
+        if (this._rectTransform.parent == OriginalParent)
+        {
+            GetComponent<Rigidbody2D>().simulated = true;
+        }
 
         //_physics.linearVelocity = _nonDragVelocity;
     }

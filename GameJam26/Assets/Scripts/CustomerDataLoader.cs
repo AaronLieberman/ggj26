@@ -66,7 +66,7 @@ public static class CustomerDataLoader
             case "Time": c.time = ParseFloat(value); break;
             case "Difficulty Tier": c.difficultyTier = ParseInt(value); break;
             case "Customer Sprite": c.customerImageName = value; break;
-            case "Mask Base": c.maskBase = value; break;
+            case "Mask Base": c.customMaskPrefab = value; break;
             case "Intro Dialog": c.customerDialogue = value; break;
             case "Scary Minimum": c.maskScary.Min = ParseInt(value); break;
             case "Scary Maximum": c.maskScary.Max = ParseInt(value); break;

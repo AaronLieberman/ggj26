@@ -91,6 +91,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb22db18573e0b0418b66ce07b1090b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  MaskPrefabs:
+  - {fileID: 1050648818034162520, guid: b5aebde0d8b7e1a4fb3c1bd4f7d0c45d, type: 3}
+  - {fileID: 6614118789177185073, guid: a556380594a52bf469cb8f8cad5eb17c, type: 3}
+  - {fileID: 3244012270311996705, guid: dda76bcd6d8f5884799f051300d86055, type: 3}
+  - {fileID: 8374627101565762200, guid: 696cfc7033ac7a944a21bf012325b6fb, type: 3}
   TimerFront: {fileID: 2550117390215981079}
   TimerBack: {fileID: 988469792531465990}
 --- !u!114 &6057947825843993993

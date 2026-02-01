@@ -27,6 +27,7 @@ public class CustomerData
     public string customerName;
     public string customerDialogue;
     public string customerImageName;
+    public string customMaskPrefab;
     public Sprite customerImage;
     public string maskBase;
     public float time;

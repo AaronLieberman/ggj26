@@ -107,4 +107,18 @@ public static class Utilities
 		}
 		return newIndex;
 	}
+
+	public static void ApplyTransform(this Transform target, Transform src)
+    {
+        target.localPosition = src.localPosition;
+        target.localRotation = src.localRotation;
+        target.localScale = src.localScale;
+    }
+
+	public static GameObject InstantiateWithTransform(GameObject prefab, Transform parent, Transform src)
+	{
+		var go = Object.Instantiate(prefab, parent);
+		go.transform.ApplyTransform(src);
+		return go;
+	}	
 }
