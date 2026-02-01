@@ -25,6 +25,18 @@ public class CheatInspectorEditor : Editor
         {
             shopManager.DebugCustomerToShow = "AmandaTea";
         }
+        if (GUILayout.Button("Set Next Customer Doug Crown"))
+        {
+            shopManager.DebugCustomerToShow = "DougCrown";
+        }
+        if (GUILayout.Button("Set Next Customer Orange Steve"))
+        {
+            shopManager.DebugCustomerToShow = "OrangeSteve";
+        }
+        if (GUILayout.Button("Set Next Customer Amanda Tea"))
+        {
+            shopManager.DebugCustomerToShow = "Bane";
+        }
 
         GUILayout.Label("Set Next Customer Timer Speed Multiplier. Currently: " + shopManager.SpeedMultiplier);
         GUILayout.BeginHorizontal();
