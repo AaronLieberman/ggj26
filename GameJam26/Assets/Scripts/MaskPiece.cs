@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -86,11 +89,11 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void RefreshMountPoints()
     {
-        _mountPoints = Object.FindObjectsByType<MountPoint>(FindObjectsSortMode.None)
-                            .Where(p => p.Type == _type
-                                    //&& Data.isLeft == p.IsLeft
-                                    && p.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0)
-                            .ToArray();
+        _mountPoints = FindObjectsByType<MountPoint>(FindObjectsSortMode.None)
+            .Where(p => p.Type == _type
+                //&& Data.isLeft == p.IsLeft
+                && p.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0)
+            .ToArray();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -223,10 +226,11 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     public static MaskPartData[] GetActiveMaskPartData(Mask mask)
     {
         var maskPieces = mask.GetComponentsInChildren<MaskPiece>();
-        var maskPartData = maskPieces.Select(piece => piece.Data);
+        var maskPartData = maskPieces
+            .Where(piece => piece.Data != null) // filter out the fake ones like the ones at the anchor points
+            .Select(piece => piece.Data);
         return maskPartData.ToArray();
     }
-
     public static MaskPiece[] GetActiveMaskParts(Mask mask)
     {
         return mask.GetComponentsInChildren<MaskPiece>();
