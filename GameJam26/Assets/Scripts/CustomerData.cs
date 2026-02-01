@@ -8,9 +8,10 @@ public struct CustomerStat
     public int Max;
     public int Points;
 
-    public readonly bool InRange(int value, int scaler = 1)
+    public readonly bool InRange(float value, int numMaskParts = 1)
     {
-        return value >= Min * scaler && value <= Max * scaler;
+        float extraTolerance = 0.25f;
+        return (value + extraTolerance) >= Min * numMaskParts && (value - extraTolerance) <= Max * numMaskParts;
     }
 }
 

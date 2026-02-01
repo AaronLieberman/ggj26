@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using System;
 
 public class ProgressStatus : MonoBehaviour
 {
@@ -27,22 +28,22 @@ public class ProgressStatus : MonoBehaviour
         int numberOfSlots = mask.GetComponentsInChildren<MountPoint>()
             .Select(mp => mp.Type).Distinct().Count();
 
-        int maskBeauty = activeMaskParts.Sum(p => p.beautyStat) / numberOfSlots;
+        float maskBeauty = activeMaskParts.Sum(p => p.beautyStat) / numberOfSlots;
         BarBeauty.SetArrowMin(customerData.maskBeauty.Min);
         BarBeauty.SetArrowMax(customerData.maskBeauty.Max);
         BarBeauty.SetMeter(maskBeauty);
 
-        int maskScary = activeMaskParts.Sum(p => p.scaryStat) / numberOfSlots;
+        float maskScary = activeMaskParts.Sum(p => p.scaryStat) / numberOfSlots;
         BarScary.SetArrowMin(customerData.maskScary.Min);
         BarScary.SetArrowMax(customerData.maskScary.Max);
         BarScary.SetMeter(maskScary);
 
-        int maskGoofy = activeMaskParts.Sum(p => p.goofyStat) / numberOfSlots;
+        float maskGoofy = activeMaskParts.Sum(p => p.goofyStat) / numberOfSlots;
         BarGoofy.SetArrowMin(customerData.maskGoofy.Min);
         BarGoofy.SetArrowMax(customerData.maskGoofy.Max);
         BarGoofy.SetMeter(maskGoofy);
 
-        int maskAnonymity = activeMaskParts.Sum(p => p.anonymityStat) / numberOfSlots;
+        float maskAnonymity = activeMaskParts.Sum(p => p.anonymityStat) / numberOfSlots;
         BarAnon.SetArrowMin(customerData.maskAnonymity.Min);
         BarAnon.SetArrowMax(customerData.maskAnonymity.Max);
         BarAnon.SetMeter(maskAnonymity);

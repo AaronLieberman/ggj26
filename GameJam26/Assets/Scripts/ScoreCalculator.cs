@@ -3,43 +3,41 @@ using UnityEngine;
 
 public class ScoreCalculator : MonoBehaviour
 {
-    Mask _mask;
     ShopManager _shopManager;
 
     void Start()
     {
-        _mask = Utilities.GetRootComponentRecursive<Mask>();
         _shopManager = Utilities.GetRootComponentRecursive<ShopManager>();
-    }
-
-    void Update()
-    {
     }
 
     public bool GetActiveMaskAcceptable()
     {
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
-        var activeMaskParts = MaskPiece.GetActiveMaskPartData(_mask);
+        var mask = GameObject.Find("MaskDisplay").GetComponentInChildren<Mask>();
+        var activeMaskParts = MaskPiece.GetActiveMaskPartData(mask);
+
+        int numberOfSlots = mask.GetComponentsInChildren<MountPoint>()
+            .Select(mp => mp.Type).Distinct().Count();
 
         int maskScary = activeMaskParts.Sum(p => p.scaryStat);
         int maskGoofy = activeMaskParts.Sum(p => p.goofyStat);
         int maskBeauty = activeMaskParts.Sum(p => p.beautyStat);
         int maskAnonymity = activeMaskParts.Sum(p => p.anonymityStat);
 
-        int numberOfSlots = _mask.GetComponentsInChildren<MountPoint>()
-            .Select(mp => mp.Type).Distinct().Count();
+        bool maskScaryInRange = customerData.maskScary.InRange(maskScary, numberOfSlots);
+        bool maskGoofyInRange = customerData.maskGoofy.InRange(maskGoofy, numberOfSlots);
+        bool maskBeautyInRange = customerData.maskBeauty.InRange(maskBeauty, numberOfSlots);
+        bool maskAnonymityInRange = customerData.maskAnonymity.InRange(maskAnonymity, numberOfSlots);
 
-        return customerData.maskScary.InRange(maskScary, numberOfSlots) &&
-            customerData.maskGoofy.InRange(maskGoofy, numberOfSlots) &&
-            customerData.maskBeauty.InRange(maskBeauty, numberOfSlots) &&
-            customerData.maskAnonymity.InRange(maskAnonymity, numberOfSlots);
+        return maskScaryInRange && maskGoofyInRange && maskBeautyInRange && maskAnonymityInRange;
     }
 
     // make sure to test GetMaskAcceptable first before using this
     public int GetActiveMaskScore()
     {
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
-        var activeMaskParts = MaskPiece.GetActiveMaskPartData(_mask);
+        var mask = GameObject.Find("MaskDisplay").GetComponentInChildren<Mask>();
+        var activeMaskParts = MaskPiece.GetActiveMaskPartData(mask);
 
         int maskScary = activeMaskParts.Sum(p => p.scaryStat) * customerData.maskScary.Points;
         int maskGoofy = activeMaskParts.Sum(p => p.goofyStat) * customerData.maskScary.Points;

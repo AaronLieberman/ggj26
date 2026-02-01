@@ -30,17 +30,17 @@ public class BuildProgressBar : MonoBehaviour
     {
         t = Mathf.Clamp01(t / 10);
         float x = t * (1f - MeterWidth);
-        _meterRect.anchorMin = new Vector2(x, _meterRect.anchorMin.y);
-        _meterRect.anchorMax = new Vector2(x + MeterWidth, _meterRect.anchorMax.y);
+        _meterRect.anchorMin = new Vector2(x - (t >= 0.05 ? MeterWidth / 2 : 0), _meterRect.anchorMin.y);
+        _meterRect.anchorMax = new Vector2(x + (t <= 0.95 ? MeterWidth / 2 : 0), _meterRect.anchorMax.y);
     }
 
     public void SetArrowMin(float t)
     {
         t = Mathf.Clamp01(t / 10);
         _arrowMinValue = t;
-        float x = t * (1f - ArrowWidth);
-        _arrowMinRect.anchorMin = new Vector2(x, _arrowMinRect.anchorMin.y);
-        _arrowMinRect.anchorMax = new Vector2(x + ArrowWidth, _arrowMinRect.anchorMax.y);
+        _arrowMinRect.anchorMin = new Vector2(t - ArrowWidth / 2, _arrowMinRect.anchorMin.y);
+        _arrowMinRect.anchorMax = new Vector2(t + ArrowWidth / 2, _arrowMinRect.anchorMax.y);
+        ArrowMin.SetActive(t >= 0.05);
         UpdateRange();
     }
 
@@ -48,16 +48,16 @@ public class BuildProgressBar : MonoBehaviour
     {
         t = Mathf.Clamp01(t / 10);
         _arrowMaxValue = t;
-        float x = t * (1f - ArrowWidth);
-        _arrowMaxRect.anchorMin = new Vector2(x, _arrowMaxRect.anchorMin.y);
-        _arrowMaxRect.anchorMax = new Vector2(x + ArrowWidth, _arrowMaxRect.anchorMax.y);
+        _arrowMaxRect.anchorMin = new Vector2(t - ArrowWidth / 2, _arrowMaxRect.anchorMin.y);
+        _arrowMaxRect.anchorMax = new Vector2(t + ArrowWidth / 2, _arrowMaxRect.anchorMax.y);
+        ArrowMax.SetActive(t <= 0.95);
         UpdateRange();
     }
 
     void UpdateRange()
     {
-        float minX = _arrowMinValue * (1f - ArrowWidth) + ArrowWidth * 0.5f;
-        float maxX = _arrowMaxValue * (1f - ArrowWidth) + ArrowWidth * 0.5f;
+        float minX = _arrowMinValue;
+        float maxX = _arrowMaxValue;
         _rangeRect.anchorMin = new Vector2(minX, _rangeRect.anchorMin.y);
         _rangeRect.anchorMax = new Vector2(maxX, _rangeRect.anchorMax.y);
     }
