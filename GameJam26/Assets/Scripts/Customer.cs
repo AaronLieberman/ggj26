@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class Customer : MonoBehaviour
 {
     public Image TimerFront;
+    public Image TimerBack;
 
     public CustomerData Data { get; set; }
 
@@ -13,6 +14,7 @@ public class Customer : MonoBehaviour
     void Start()
     {
         TimerFront.gameObject.SetActive(false);
+        TimerBack.gameObject.SetActive(false);
     }
 
     void Update()

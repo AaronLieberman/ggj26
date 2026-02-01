@@ -51,6 +51,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressBar (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1443566744231414182, guid: 991e2aefe7852884cbde01eb77882132, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2733630754874546578, guid: 991e2aefe7852884cbde01eb77882132, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -152,6 +156,10 @@ PrefabInstance:
     - target: {fileID: 1443566744231414182, guid: 991e2aefe7852884cbde01eb77882132, type: 3}
       propertyPath: m_Name
       value: ProgressBar (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1443566744231414182, guid: 991e2aefe7852884cbde01eb77882132, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2733630754874546578, guid: 991e2aefe7852884cbde01eb77882132, type: 3}
       propertyPath: m_Pivot.x
@@ -255,6 +263,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressBar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1443566744231414182, guid: 991e2aefe7852884cbde01eb77882132, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2733630754874546578, guid: 991e2aefe7852884cbde01eb77882132, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -356,6 +368,10 @@ PrefabInstance:
     - target: {fileID: 1443566744231414182, guid: 991e2aefe7852884cbde01eb77882132, type: 3}
       propertyPath: m_Name
       value: ProgressBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1443566744231414182, guid: 991e2aefe7852884cbde01eb77882132, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2733630754874546578, guid: 991e2aefe7852884cbde01eb77882132, type: 3}
       propertyPath: m_Pivot.x
