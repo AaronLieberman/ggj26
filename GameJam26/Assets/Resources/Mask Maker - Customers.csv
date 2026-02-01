@@ -2,7 +2,7 @@ Customer Name,Amanda Tea,Doug Crown,Francis Lyon,Orange Steve Locksmee,(Jason) B
 Time,45,45,45,45,45
 Difficulty Tier,1,2,3,4,5
 Customer Sprite,AmandaTea,DougCrown,FrancisLyon,OrangeSteve,Bane
-Mask Base,,,,,
+Mask Base,MasqueMaskBase,OvalMaskBase,RoundMaskBase,BirdMaskBase,OvalMaskBase
 Intro Dialog,"I'm going to <voffset=0.5em>high tea</voffset> with my nieces. I need a mask that will make them laugh, and looks <gradient=""VeryPrettyGradient"">very pretty</gradient>. Bonus points if its animal themed, they love cats!","People have told me I need to get outside of my comfort zone, so I'm going to try to become a luchador. I want a mask that is... just everything.",I'm going to Spain for the running of the bulls! I want to be a masked hero! Make me mysterious and manly! And make those bulls think twice about chasing me!,"I'm soft launching my content creator era, but I don't want to show my face. I need something that's totally on brand for me, this is going to become my new online identity. Lots of Main Character Energy, please!",*raspy breathing*
 Scary Minimum,0,2,1,0,6
 Scary Maximum,4,10,10,7,10
