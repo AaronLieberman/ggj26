@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
     private ShopManager shopManager;
     private ConveyorManager conveyorManager;
 
-    [SerializeField] private int gameLengthSeconds;
-    private float gameEndTime;
+    [SerializeField] private int customersToServe;
+    private int customersServed = 0;
     private GameState gameState;
 
     [SerializeField] private float startGameTransitionDuration;
@@ -32,8 +32,6 @@ public class GameManager : MonoBehaviour
         endingGameCanvasGroup = GameObject.Find("EndingGameUI").GetComponent<CanvasGroup>();
 
         endingCustomerHolder = GameObject.Find("EndofGameCustomersHolder").transform;
-
-        gameEndTime = Time.time + gameLengthSeconds;
     }
 
     private void Start()
@@ -43,7 +41,15 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (gameState != GameState.ENDED && gameEndTime <= Time.time)
+        if (gameState == GameState.STARTED && customersServed < customersToServe)
+        {
+            if (shopManager.AttemptCustomerSpawn())
+            {
+                customersServed++;
+            }
+        }
+
+        if (gameState != GameState.ENDED && customersServed >= customersToServe && !shopManager.CustomerExists())
         {
             EndGame();
         }

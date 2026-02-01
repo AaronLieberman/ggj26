@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public class ShopManager : MonoBehaviour
 {
@@ -45,15 +46,6 @@ public class ShopManager : MonoBehaviour
 
     void Update()
     {
-        if (isActive && _currentCustomer == null && !_customerLeaving)
-        {
-            var customerToSpawn = !string.IsNullOrWhiteSpace(DebugCustomerToShow)
-                ? _customers.FirstOrDefault(c => c.customerImageName == DebugCustomerToShow)
-                : null;
-            customerToSpawn ??= _customers[Random.Range(0, _customers.Length)];
-            _currentCustomer = SpawnCustomer(customerToSpawn);
-        }
-
         if (_customerWaiting)
         {
             _timeRemaining -= Time.deltaTime;
@@ -67,6 +59,22 @@ public class ShopManager : MonoBehaviour
         }
 
         _lastDebugCustomerToShow = DebugCustomerToShow;
+    }
+
+    public bool AttemptCustomerSpawn()
+    {
+        if (isActive && _currentCustomer == null && !_customerLeaving)
+        {
+            var customerToSpawn = !string.IsNullOrWhiteSpace(DebugCustomerToShow)
+                ? _customers.FirstOrDefault(c => c.customerImageName == DebugCustomerToShow)
+                : null;
+            customerToSpawn ??= _customers[UnityEngine.Random.Range(0, _customers.Length)];
+            _currentCustomer = SpawnCustomer(customerToSpawn);
+
+            return true;
+        }
+
+        return false;
     }
 
     Customer SpawnCustomer(CustomerData customerData)
@@ -134,6 +142,11 @@ public class ShopManager : MonoBehaviour
     public Sprite GetCustomerSprite(string customerSpriteName)
     {
         return Sprites.SingleOrDefault(a => a.name == customerSpriteName);
+    }
+
+    public bool CustomerExists()
+    {
+        return _currentCustomer != null;
     }
 
     public void ActivateManager()
