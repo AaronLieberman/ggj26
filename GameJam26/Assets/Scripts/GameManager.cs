@@ -150,5 +150,4 @@ public class GameManager : MonoBehaviour
             customerMask.GetComponent<RectTransform>().sizeDelta = customerMaskSizing;
         }
     }
-
 }

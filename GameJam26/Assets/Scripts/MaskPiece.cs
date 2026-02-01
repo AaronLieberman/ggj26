@@ -133,12 +133,12 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
     {
         MountPoint closest = FindClosest();
 
-        _dragPos += (eventData.delta / _canvas.scaleFactor);
+        _dragPos += eventData.delta / _canvas.scaleFactor;
         if (closest == null)
         {
-            this.transform.SetParent(OriginalParent, false);
+            transform.SetParent(OriginalParent, false);
             _rectTransform.anchoredPosition = _dragPos;
-            this.transform.SetAsLastSibling();
+            transform.SetAsLastSibling();
         }
     }
 
