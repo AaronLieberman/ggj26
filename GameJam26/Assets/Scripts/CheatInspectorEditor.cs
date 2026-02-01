@@ -10,14 +10,14 @@ public class CheatInspectorEditor : Editor
 
     private void OnEnable()
     {
-        ShopManager shopManager = FindObjectOfType<ShopManager>();
+        ShopManager shopManager = FindFirstObjectByType<ShopManager>();
 
         speedMultiplier = shopManager.Speed;
 
     }
     public override void OnInspectorGUI()
     {
-        ShopManager shopManager = FindObjectOfType<ShopManager>();
+        ShopManager shopManager = FindFirstObjectByType<ShopManager>();
 
         //DrawDefaultInspector();
 
