@@ -12,7 +12,7 @@ public class CheatInspectorEditor : Editor
     {
         ShopManager shopManager = FindFirstObjectByType<ShopManager>();
 
-        speedMultiplier = shopManager.Speed;
+        speedMultiplier = shopManager.SpeedMultiplier;
 
     }
     public override void OnInspectorGUI()
@@ -33,11 +33,11 @@ public class CheatInspectorEditor : Editor
         {
             shopManager.DebugCustomerToShow = "FrancisLyon";
         }
-        if (GUILayout.Button(" ext Customer Orange Steve"))
+        if (GUILayout.Button("Next Customer Orange Steve"))
         {
             shopManager.DebugCustomerToShow = "OrangeSteve";
         }
-        if (GUILayout.Button(" ext Customer (Jason) Bane"))
+        if (GUILayout.Button("Next Customer (Jason) Bane"))
         {
             shopManager.DebugCustomerToShow = "Bane";
         }
