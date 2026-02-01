@@ -17,11 +17,15 @@ public class ConveyorManager : MonoBehaviour
     [SerializeField]
     float _spawnDelaySeconds;
 
+    [SerializeField]
+    Vector3 spawnPositionVariation;
+
     Transform _beltTransform;
     Transform _beltSpawnPointTransform;
     float _nextSpawnTime;
     bool _isActive;
     MaskPartData[] _parts;
+    List<MaskPartData> queuedPairs = new List<MaskPartData>();
 
     void Awake()
     {
@@ -58,11 +62,30 @@ public class ConveyorManager : MonoBehaviour
 
     void AddToConveyor()
     {
-        var partData = _parts[Random.Range(0, _parts.Length)];
+        MaskPartData partData;
+        if (queuedPairs.Count == 0)
+        {
+            partData = _parts[Random.Range(0, _parts.Length)];
+            if (partData.spawnsInPairs)
+            {
+                queuedPairs.Add(partData);
+            }
+        }
+        else
+        {
+            partData = queuedPairs.FirstOrDefault();
+            queuedPairs.RemoveAt(0);
+            partData.isLeft = false;
+        }
 
-        GameObject created = Instantiate(_maskPiecePrefab, _beltSpawnPointTransform.position, _beltSpawnPointTransform.rotation, _beltTransform);
+        Vector3 randomOffset = new Vector3(Random.Range(0, spawnPositionVariation.x), Random.Range(0, spawnPositionVariation.y), Random.Range(0, spawnPositionVariation.z));
+        Vector3 adjustedPosition = _beltSpawnPointTransform.position + randomOffset;
+
+
+
+        GameObject created = Instantiate(_maskPiecePrefab, adjustedPosition, _beltSpawnPointTransform.rotation, _beltTransform);
         created.GetComponent<Rigidbody2D>().AddForce(new Vector2(-_speed, 0.0f));
-
+        created.transform.localScale = new(created.transform.localScale.x, -created.transform.localScale.y, created.transform.localScale.z);
         if (partData.sprite != null)
             created.GetComponent<Image>().sprite = partData.sprite;
 

@@ -23,4 +23,5 @@ public class MaskPartData
     public int artRequestPriority;
     public bool spawnsInPairs;
     public List<string> tags = new();
+    public bool isLeft = true;
 }
