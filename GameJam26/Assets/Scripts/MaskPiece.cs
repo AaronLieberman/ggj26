@@ -20,6 +20,9 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
     [SerializeField]
     Vector3 maskPieceDisplayScale;
 
+    [SerializeField]
+    float maskSnappingDistance;
+
     public MaskPartData Data { get; set; }
 
     MaskPartSlot _type;
@@ -276,7 +279,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
                     mountPoint.transform.position);
 
             if ((closest == null
-                    && dist < 100f)
+                    && dist < maskSnappingDistance)
                 || dist < closestDist)
             {
                 closest = mountPoint;

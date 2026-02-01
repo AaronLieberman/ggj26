@@ -165,5 +165,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskPiece
   maskPieceScale: {x: 2, y: 2, z: 2}
   maskPieceDisplayScale: {x: 1, y: 1, z: 1}
+  maskSnappingDistance: 25
   _mountPoints: []
   _mountHints: []
