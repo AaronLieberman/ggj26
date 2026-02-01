@@ -16,7 +16,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 {
     public MaskPartData Data { get; set; }
 
-    MaskPieceType _type;
+    MaskPartSlot _type;
     Transform _originalParent;
     private RectTransform _rectTransform;
     private Canvas _canvas;
@@ -25,7 +25,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     Vector2 _dragPos;
     Vector2 _nonDragVelocity;
 
-    public MaskPieceType Type { get { return _type; } }
+    public MaskPartSlot Type { get { return _type; } }
     public Transform OriginalParent { get { return _originalParent; } }
     public MountPoint[] _mountPoints;
     public List<GameObject> _mountHints = new List<GameObject>();
@@ -65,26 +65,8 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
             //GameObject.Destroy(this.gameObject);
             return;
         }
-
-        switch (Data.slot.ToString())
-        {
-            case "Nose":
-                _type = MaskPieceType.Nose;
-                break;
-            case "Mouth":
-                _type = MaskPieceType.Mouth;
-                break;
-            case "Eye":
-                _type = MaskPieceType.Eyes;
-                break;
-            case "Horn":
-                _type = MaskPieceType.Horns;
-                break;
-            default:
-                _type = MaskPieceType.Base;
-                break;
-        }
-
+        _type = Data.slot;
+    
         _nonDragVelocity = _physics.linearVelocity;
     }
 
