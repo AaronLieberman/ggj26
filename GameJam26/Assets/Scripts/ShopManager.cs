@@ -7,6 +7,7 @@ public class ShopManager : MonoBehaviour
 {
     public GameObject NamePlate;
     public GameObject ConversationPlate;
+    public GameObject CustomerBox; // for display order
 
     public GameObject Customer;
     public Transform CustomerSpawnPoint;
@@ -28,6 +29,7 @@ public class ShopManager : MonoBehaviour
     string _lastDebugCustomerToShow;
     MaskDisplayManager _maskDisplayManager;
     ScoreCalculator _scoreCalculator;
+    int _nextCustomerToSpawn = 0;
 
     TextMeshProUGUI _nameText;
     TextMeshProUGUI _conversationText;
@@ -39,6 +41,16 @@ public class ShopManager : MonoBehaviour
     void Awake()
     {
         _customers = CustomerDataLoader.Load();
+
+        for (int i = _customers.Length - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            var temp = _customers[i];
+            _customers[i] = _customers[j];
+            _customers[j] = temp;
+        }
+        _customers = _customers.OrderBy(c => c.difficultyTier).ToArray();
+
         _maskDisplayManager = Utilities.GetRootComponentRecursive<MaskDisplayManager>();
         _scoreCalculator = Utilities.GetRootComponentRecursive<ScoreCalculator>();
     }
@@ -73,7 +85,8 @@ public class ShopManager : MonoBehaviour
             var customerToSpawn = !string.IsNullOrWhiteSpace(DebugCustomerToShow)
                 ? _customers.FirstOrDefault(c => c.customerImageName == DebugCustomerToShow)
                 : null;
-            customerToSpawn ??= _customers[UnityEngine.Random.Range(0, _customers.Length)];
+            customerToSpawn ??= _customers[_nextCustomerToSpawn % _customers.Length];
+            _nextCustomerToSpawn++;
             _currentCustomer = SpawnCustomer(customerToSpawn);
 
             return true;
@@ -84,7 +97,7 @@ public class ShopManager : MonoBehaviour
 
     Customer SpawnCustomer(CustomerData customerData)
     {
-        GameObject created = Instantiate(Customer, transform);
+        GameObject created = Instantiate(Customer, CustomerBox.transform, true);
         var rect = created.GetComponent<RectTransform>();
         var spawnRect = ((RectTransform)CustomerSpawnPoint).anchoredPosition;
         rect.anchoredPosition = spawnRect;

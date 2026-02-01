@@ -87,7 +87,9 @@ public class ConveyorManager : MonoBehaviour
         }
         
         created.GetComponent<Image>().sprite = partData.sprite;
-        created.GetComponent<MaskPiece>().Data = partData;
+        var maskPiece = created.GetComponent<MaskPiece>();
+        maskPiece.Data = partData;
+        maskPiece.ApplySpriteSize(partData.sprite);
 
         _nextSpawnTime = Time.time + _spawnDelaySeconds;
     }

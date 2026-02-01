@@ -22,6 +22,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
     private Canvas _canvas;
     private Rigidbody2D _physics;
     private CanvasGroup _canvasGroup;
+    BoxCollider2D _collider;
     Vector2 _dragPos;
     Vector2 _nonDragVelocity;
 
@@ -40,7 +41,20 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         _canvas = GetComponentInParent<Canvas>();
         _canvasGroup = GetComponent<CanvasGroup>();
         _physics = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<BoxCollider2D>();
+    }
 
+    public void ApplySpriteSize(Sprite sprite)
+    {
+        float w = sprite.rect.width;
+        float h = sprite.rect.height;
+        _rectTransform.sizeDelta = new Vector2(w, h);
+
+        if (_collider != null)
+        {
+            _collider.offset = Vector2.zero;
+            _collider.size = new Vector2(w, h);
+        }
     }
 
     public void Start()
