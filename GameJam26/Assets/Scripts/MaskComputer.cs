@@ -16,17 +16,10 @@ public class MaskComputer : MonoBehaviour
     {
     }
 
-    public MaskPartData[] GetActiveMaskParts()
-    {
-        var maskPieces = _mask.GetComponentsInChildren<MaskPiece>();
-        var maskPartData = maskPieces.Select(piece => piece.Data);
-        return maskPartData.ToArray();
-    }
-
     public bool GetActiveMaskAcceptable()
     {
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
-        var activeMaskParts = GetActiveMaskParts();
+        var activeMaskParts = MaskPiece.GetActiveMaskPartData(_mask);
 
         int maskScary = activeMaskParts.Sum(p => p.scaryStat);
         int maskGoofy = activeMaskParts.Sum(p => p.goofyStat);
@@ -45,7 +38,7 @@ public class MaskComputer : MonoBehaviour
     public int GetActiveMaskScore()
     {
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
-        var activeMaskParts = GetActiveMaskParts();
+        var activeMaskParts = MaskPiece.GetActiveMaskPartData(_mask);
 
         int maskScary = activeMaskParts.Sum(p => p.scaryStat) * customerData.maskScary.Points;
         int maskGoofy = activeMaskParts.Sum(p => p.goofyStat) * customerData.maskScary.Points;

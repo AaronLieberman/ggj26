@@ -160,4 +160,16 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
         //_physics.linearVelocity = _nonDragVelocity;
     }
+
+    public static MaskPartData[] GetActiveMaskPartData(Mask mask)
+    {
+        var maskPieces = mask.GetComponentsInChildren<MaskPiece>();
+        var maskPartData = maskPieces.Select(piece => piece.Data);
+        return maskPartData.ToArray();
+    }
+
+    public static MaskPiece[] GetActiveMaskParts(Mask mask)
+    {
+        return mask.GetComponentsInChildren<MaskPiece>();
+    }
 }

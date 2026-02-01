@@ -351,6 +351,14 @@ PrefabInstance:
       propertyPath: customersToServe
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2667469046109522154, guid: fc044421914db8c42b5a0fb34df3520d, type: 3}
+      propertyPath: endingMaskPieceSizes.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667469046109522154, guid: fc044421914db8c42b5a0fb34df3520d, type: 3}
+      propertyPath: endingMaskPieceSizes.y
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8532041669897793615, guid: fc044421914db8c42b5a0fb34df3520d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1225,13 +1233,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2615286521944537068, guid: 0f711c4780dac9647ab8208ceca55036, type: 3}
-    - {fileID: 8473840467516548951, guid: 0f711c4780dac9647ab8208ceca55036, type: 3}
-    - {fileID: 8556055279691547237, guid: 0f711c4780dac9647ab8208ceca55036, type: 3}
-    - {fileID: 3624548732503356920, guid: 0f711c4780dac9647ab8208ceca55036, type: 3}
-    - {fileID: 4929362258432416328, guid: 0f711c4780dac9647ab8208ceca55036, type: 3}
-    - {fileID: 5552381826215472529, guid: 0f711c4780dac9647ab8208ceca55036, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7236114929242498322, guid: 0f711c4780dac9647ab8208ceca55036, type: 3}
       insertIndex: -1
