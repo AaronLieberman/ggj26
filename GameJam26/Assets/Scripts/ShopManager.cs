@@ -27,7 +27,7 @@ public class ShopManager : MonoBehaviour
     bool _customerLeaving;
     string _lastDebugCustomerToShow;
     MaskDisplayManager _maskDisplayManager;
-    MaskComputer _maskComputer;
+    ScoreCalculator _scoreCalculator;
 
     TextMeshProUGUI _nameText;
     TextMeshProUGUI _conversationText;
@@ -40,7 +40,7 @@ public class ShopManager : MonoBehaviour
     {
         _customers = CustomerDataLoader.Load();
         _maskDisplayManager = Utilities.GetRootComponentRecursive<MaskDisplayManager>();
-        _maskComputer = Utilities.GetRootComponentRecursive<MaskComputer>();
+        _scoreCalculator = Utilities.GetRootComponentRecursive<ScoreCalculator>();
     }
 
     void Start()
@@ -127,7 +127,7 @@ public class ShopManager : MonoBehaviour
         _currentCustomer.CustomerResult = new CustomerResult(
             _currentCustomer.Data,
             customerMask ? customerMask.gameObject : null,
-            customerMask ? _maskComputer.GetActiveMaskScore() : 0
+            customerMask ? _scoreCalculator.GetActiveMaskScore() : 0
         );
 
         _maskDisplayManager.ClearMaskDisplay();
