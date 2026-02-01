@@ -21,8 +21,11 @@ public class GameManager : MonoBehaviour
     private CanvasGroup endingGameCanvasGroup;
 
     [SerializeField] private Vector2 endingMaskPieceScaling;
+    [SerializeField] private Vector2 endingMaskSizing;
     [SerializeField] private GameObject endingCustomerViewerPrefab;
     private Transform endingCustomerHolder;
+
+    [SerializeField] private Vector2 customerMaskSizing;
 
     private void Awake()
     {
@@ -130,6 +133,7 @@ public class GameManager : MonoBehaviour
             endingCustomerViewer.transform.Find("CustomerSatisfactionUI").GetComponent<Image>().color = customerResult.Satisfied ? Color.green : Color.red;
 
             GameObject endingCustomerMask = Instantiate(customerResult.CustomerMask, Vector3.zero, Quaternion.identity, endingCustomerViewer.transform);
+            endingCustomerMask.GetComponent<RectTransform>().sizeDelta = endingMaskSizing;
             endingCustomerMask.transform.Find("MountPoints").GetComponent<RectTransform>().localScale = endingMaskPieceScaling;
         }
     }
@@ -143,6 +147,7 @@ public class GameManager : MonoBehaviour
             GameObject customerMask = Instantiate(maskGameObject, Vector3.zero, Quaternion.identity, customerTransform);
             customerMask.GetComponent<RectTransform>().offsetMin = Vector2.zero;
             customerMask.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+            customerMask.GetComponent<RectTransform>().sizeDelta = customerMaskSizing;
         }
     }
 
