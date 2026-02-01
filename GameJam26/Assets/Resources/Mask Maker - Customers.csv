@@ -3,7 +3,7 @@ Time,45,45,45,45,45
 Difficulty Tier,1,2,3,4,5
 Customer Sprite,AmandaTea,DougCrown,FrancisLyon,OrangeSteve,Bane
 Mask Base,MasqueMaskBase,OvalMaskBase,RoundMaskBase,BirdMaskBase,OvalMaskBase
-Intro Dialog,"I'm going to <voffset=0.5em>high tea</voffset> with my nieces. I need a mask that will make them laugh, and looks <gradient=""VeryPrettyGradient"">very pretty</gradient>. Bonus points if its animal themed, they love cats!","People have told me I need to get outside of my comfort zone, so I'm going to try to become a luchador. I want a mask that is... just everything.",I'm going to Spain for the running of the bulls! I want to be a masked hero! Make me mysterious and manly! And make those bulls think twice about chasing me!,"I'm soft launching my content creator era, but I don't want to show my face. I need something that's totally on brand for me, this is going to become my new online identity. Lots of Main Character Energy, please!",*raspy breathing*
+Intro Dialog,"I'm going to <voffset=0.25em>high tea</voffset> with my nieces. I need a mask that will make them laugh, and looks <gradient=""VeryPrettyGradient"">very pretty</gradient>. Bonus points if its animal themed, they love cats!","People have told me I need to get outside of my comfort zone, so I'm going to try to become a <color=""green"">luc<color=""white"">ha<color=""red"">dor</color>. I want a mask that is... just everything.",I'm going to Spain for the running of the bulls! I want to be a masked hero! Make me mysterious and manly! And make those bulls think twice about chasing me!,"I'm soft launching my content creator era, but I don't want to show my face. I need something that's totally on brand for me, this is going to become my new online identity. Lots of Main Character Energy, please!",*raspy breathing*
 Scary Minimum,0,2,1,0,6
 Scary Maximum,4,10,10,7,10
 Scary Points Per,0,20,30,3,40
@@ -11,9 +11,9 @@ Goofy Minimum,3,3,0,1,0
 Goofy Maximum,10,10,9,9,6
 Goofy Points Per,50,20,0,6,0
 Beauty Minimum,3,1,0,1,0
-Beauty Maximum,10,10,0,9,7
+Beauty Maximum,10,10,10,9,7
 Beauty Points Per ,40,20,0,6,0
-Anonymity Minimum,0,3,6,4,7
+Anonymity Minimum,0,3,5,4,7
 Anonymity Maximum,10,10,10,8,10
 Anonymity Points Per,0,20,60,6,60
 {Minimum Tags},Cat-0-9999-20:Animal-0-999-200,,,,
