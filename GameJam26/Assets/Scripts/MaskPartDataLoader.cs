@@ -73,6 +73,7 @@ public static class MaskPartDataLoader
         switch (label)
         {
             case "Part Name": p.partName = value; break;
+            case "Art Request Priority": p.artRequestPriority = ParseInt(value); break;
             case "Sprite Name": p.spriteName = value; break;
             case "Slot": p.slot = ParseSlot(value); break;
             case "Scary Stat": p.scaryStat = ParseInt(value); break;
@@ -91,6 +92,7 @@ public static class MaskPartDataLoader
             "Mouth" => MaskPartSlot.Mouth,
             "Eye" => MaskPartSlot.Eye,
             "Horn" => MaskPartSlot.Horn,
+            "Ear" => MaskPartSlot.Ear,
             _ => MaskPartSlot.Nose
         };
     }

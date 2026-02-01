@@ -1,14 +1,15 @@
-Part Name,Bull Horns,Glitter Fish Eyes,Jack's Grin,Bear Ear,Fox Ear,Pig Ear,Cat Eye,Creepy Eye,Void Eye,Googly Eye,Human Eye,Dazed Eye,Cute Mouth,Frown Mouth,Scary Mouth,Smile Mouth,Surprised Mouth,Cat Nose,Clown Nose,Human Nose,Pig Nose
-Image Preview,,,,,,,,,,,,,,,,,,,,,
-Sprite Name,Horn_Bull,Eye_Glitterfish,Mouth_Pumpkin,Ear_Bear,Ear_Fox,Ear_Pig,Eye_Cat,Eye_Creepy,Eye_Dark,Eye_Googly,Eye_Human,Eye_Swirly,Mouth_Cute,Mouth_Frown,Mouth_Scary,Mouth_Smile,Mouth_Surprised,Nose_Cat,Nose_Clown,Nose_Human,Nose_Pig
-Slot,Horn,Eye,Mouth,Horn,Horn,Horn,Eye,Eye,Eye,Eye,Eye,Eye,Mouth,Mouth,Mouth,Mouth,Mouth,Nose,Nose,Nose,Nose
-Scary Stat,5,0,5,0,0,,,,,,,,,,,,,,,,
-Goofy Stat,3,5,4,5,3,,,,,,,,,,,,,,,,
-Beauty Stat,1,9,0,0,8,,,,,,,,,,,,,,,,
-Anonymity Stat,2,2,0,0,0,,,,,,,,,,,,,,,,
-Spawns In Pairs,Yes,Yes,No,Yes,Yes,,,,,,,,,,,,,,,,
-Tags,Animal,Animal,Halloween,Animal,Animal,,,,,,,,,,,,,,,,
-,Muscular,Ethereal,Fairy,,,,,,,,,,,,,,,,,,
-,Brown,Fairy,Black,,,,,,,,,,,,,,,,,,
-,,Green,Orange,,,,,,,,,,,,,,,,,,
-,,Blue,Villian,,,,,,,,,,,,,,,,,,
+Part Name,Bull Horns,Glitter Fish Eyes,Jack's Grin,Bear Ear,Fox Ear,Pig Ear,Cat Eye,Creepy Eye,Void Eye,Googly Eye,Human Eye,Dazed Eye,Cute Mouth,Frown Mouth,Scary Mouth,Smile Mouth,Surprised Mouth,Cat Nose,Honker,Human Nose,Pig Nose,Cucumber Eyes,Feather Mane,Flower Headdress,Skeleton Mouth,Skeleton Nose,Bejeweled Eyes,Spider Eyes,Spikes,Snake Headdress (Medusa),Antlers,Bejeweled Nose,Lipstick,Heart Eyes,Diamond Eyes,Star Eyes
+Art Request Priority,,3,,,,,,,,,,,,,,,,,,,,,2,3,4,,1,6,5,7,6,3,,,8,9
+Image Preview,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Sprite Name,Horn_Bull,Eye_Glitterfish,Mouth_Pumpkin,Ear_Bear,Ear_Fox,Ear_Pig,Eye_Cat,Eye_Creepy,Eye_Dark,Eye_Googly,Eye_Human,Eye_Swirly,Mouth_Cute,Mouth_Frown,Mouth_Scary,Mouth_Smile,Mouth_Surprised,Nose_Cat,Nose_Clown,Nose_Human,Nose_Pig,Eye_Cucumber,,,,Nose_Skeleton,,,,,,,Mouth_Lipstick,Eye_Heart,,
+Slot,Horn,Eye,Mouth,Horn,Horn,Horn,Eye,Eye,Eye,Eye,Eye,Eye,Mouth,Mouth,Mouth,Mouth,Mouth,Nose,Nose,Nose,Nose,Eye,Ear,Horn,Mouth,Nose,Eye,Eye,Horn,Horn,Horn,Nose,Mouth,Eye,Eye,Eye
+Scary Stat,5,0,5,4,2,7,8,10,9,4,0,6,0,6,10,0,3,3,5,0,8,1,,,,,,,,,,,,,,
+Goofy Stat,3,5,4,5,3,4,3,3,2,10,0,10,8,2,3,3,6,8,10,0,7,8,,,,,,,,,,,,,,
+Beauty Stat,1,9,0,2,8,0,4,0,0,3,5,0,8,0,0,6,2,6,0,5,0,2,,,,,,,,,,,,,,
+Anonymity Stat,2,2,0,5,3,5,2,4,0,5,10,4,2,7,4,10,7,4,6,10,6,5,,,,,,,,,,,,,,
+Spawns In Pairs,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,Yes,,,,,,,,,,,,,,
+Tags,Animal,Animal,Halloween,Animal,Animal,Animal,Animal,,Magic,,,Halloween,Cute,,Halloween,,,Animal,,,Animal,Food,,,,,,,,,,,,,,
+,Muscular,Ethereal,Fairy,Cute,Cat,Muscular,Cat,,Halloween,,,,Animal,,,,,Cat,,,,,,,,,,,,,,,,,,
+,Brown,Fairy,Black,,Fairy,,Internet,,Ethereal,,,,,,,,,Cute,,,,,,,,,,,,,,,,,,
+,,Green,Orange,,Cute,,Cute,,Black,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,Blue,Villian,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
