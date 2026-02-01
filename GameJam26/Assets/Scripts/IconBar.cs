@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class IconBar : MonoBehaviour
 {
     [SerializeField] GameObject IconPrefab;
+    [SerializeField] GameObject IconEndPrefab;
     [SerializeField] GridLayoutGroup Container;
     [SerializeField, Range(0, 20)] int InitialCount = 0;
 
@@ -36,35 +37,36 @@ public class IconBar : MonoBehaviour
             return;
         }
 
-        if (count > currentCount)
+        for (int i = 0; i < currentCount ; i++)
         {
-            for (int i = 0; i < count - currentCount; i++)
+            GameObject icon = _spawnedIcons[_spawnedIcons.Count - 1];
+            _spawnedIcons.RemoveAt(_spawnedIcons.Count - 1);
+            if (Application.isPlaying)
             {
-                GameObject icon = Instantiate(IconPrefab, Container.transform);
-                _spawnedIcons.Add(icon);
+                Destroy(icon);
             }
-        }
-        else
-        {
-            for (int i = 0; i < currentCount - count; i++)
+            else
             {
-                GameObject icon = _spawnedIcons[_spawnedIcons.Count - 1];
-                _spawnedIcons.RemoveAt(_spawnedIcons.Count - 1);
-                if (Application.isPlaying)
-                {
-                    Destroy(icon);
-                }
-                else
-                {
 #if UNITY_EDITOR
-                    //Destroy(icon);
-                    //UnityEditor.Undo.DestroyObjectImmediate(icon);
+                //Destroy(icon);
+                //UnityEditor.Undo.DestroyObjectImmediate(icon);
 #else
-                    DestroyImmediate(icon);
+                DestroyImmediate(icon);
 #endif
-                }
             }
         }
+
+        if (count == 0)
+        {
+            return;
+        }
+
+        for (int i = 0 ; i < count - 1 ; i++)
+        {
+            _spawnedIcons.Add(Instantiate(IconPrefab, Container.transform));
+        }
+
+        _spawnedIcons.Add(Instantiate(IconEndPrefab, Container.transform));
 
         //LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform.parent);
     }

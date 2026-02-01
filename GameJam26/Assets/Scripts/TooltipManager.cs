@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Audio.ProcessorInstance;
 
 [RequireComponent(typeof(CanvasGroup))]
 class TooltipManager : MonoBehaviour 
@@ -18,7 +19,7 @@ class TooltipManager : MonoBehaviour
     private RectTransform _canvasRect;
     private Camera _canvasCamera;
     private Vector2 _lastMousePos = Vector2.zero;
-
+    private MaskPiece _showingOnPiece;
     private void Awake()
     {
         Instance = this;
@@ -79,6 +80,12 @@ class TooltipManager : MonoBehaviour
 
     public void ShowTooltipOnPiece(MaskPiece piece)
     {
+        if (_showingOnPiece == piece)
+        {
+            return;
+        }
+
+        _showingOnPiece = piece;
         _canvasGroup.alpha = 1;
 
         if (PieceStatsTooltip == null)
@@ -106,6 +113,8 @@ class TooltipManager : MonoBehaviour
     public void HideAll()
     {
         _canvasGroup.alpha = 0;
+        _showingOnPiece = null;
+
     }
 
     static Vector2 ClampTooltipLocalPoint(RectTransform tooltipRect, RectTransform canvasRect, Vector2 localPoint, float padding)
