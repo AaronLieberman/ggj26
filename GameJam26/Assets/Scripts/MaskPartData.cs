@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum MaskPartSlot
@@ -22,6 +23,24 @@ public class MaskPartData
     public int anonymityStat;
     public int artRequestPriority;
     public bool spawnsInPairs;
-    public List<string> tags = new();
+    public List<string> tags = new ();
     public bool isLeft = true;
+
+    public MaskPartData Clone()
+    {
+        MaskPartData copy = new();
+        copy.partName = partName;
+        copy.spriteName = spriteName;
+        copy.sprite = sprite;
+        copy.slot = slot;
+        copy.scaryStat = scaryStat;
+        copy.goofyStat = goofyStat;
+        copy.beautyStat = beautyStat;
+        copy.anonymityStat = anonymityStat;
+        copy.artRequestPriority = artRequestPriority;
+        copy.spawnsInPairs = spawnsInPairs;
+        copy.tags = tags.ToList();
+        copy.isLeft = isLeft;
+        return copy;
+    }
 }

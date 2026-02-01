@@ -8,12 +8,10 @@ public class ProgressStatus : MonoBehaviour
     public BuildProgressBar BarGoofy;
     public BuildProgressBar BarAnon;
 
-    Mask _mask;
     ShopManager _shopManager;
 
     void Start()
     {
-        _mask = Utilities.GetRootComponentRecursive<Mask>();
         _shopManager = Utilities.GetRootComponentRecursive<ShopManager>();
     }
 
@@ -25,7 +23,8 @@ public class ProgressStatus : MonoBehaviour
         }
 
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
-        var activeMaskParts = MaskPiece.GetActiveMaskPartData(_mask);
+        var mask = GameObject.Find("MaskDisplay").transform.Find("Mask").GetComponent<Mask>();
+        var activeMaskParts = MaskPiece.GetActiveMaskPartData(mask);
 
         int maskBeauty = activeMaskParts.Sum(p => p.beautyStat);
         BarBeauty.SetArrowMin(customerData.maskBeauty.Min);

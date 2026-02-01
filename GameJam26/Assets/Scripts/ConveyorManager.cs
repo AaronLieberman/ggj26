@@ -25,7 +25,7 @@ public class ConveyorManager : MonoBehaviour
     float _nextSpawnTime;
     bool _isActive;
     MaskPartData[] _parts;
-    List<MaskPartData> queuedPairs = new List<MaskPartData>();
+    MaskPartData _overrideSpawnNext;
 
     void Awake()
     {
@@ -63,35 +63,34 @@ public class ConveyorManager : MonoBehaviour
     void AddToConveyor()
     {
         MaskPartData partData;
-        if (queuedPairs.Count == 0)
+
+        if (_overrideSpawnNext == null)
         {
-            partData = _parts[Random.Range(0, _parts.Length)];
+            // need to clone because we can modify isLeft
+            partData = _parts[Random.Range(0, _parts.Length)].Clone();
             if (partData.spawnsInPairs)
             {
-                queuedPairs.Add(partData);
+                _overrideSpawnNext = partData;
             }
         }
         else
         {
-            partData = queuedPairs.FirstOrDefault();
-            queuedPairs.RemoveAt(0);
+            partData = _overrideSpawnNext;
+            _overrideSpawnNext = null;
             partData.isLeft = false;
         }
 
         Vector3 randomOffset = new Vector3(Random.Range(0, spawnPositionVariation.x), Random.Range(0, spawnPositionVariation.y), Random.Range(0, spawnPositionVariation.z));
         Vector3 adjustedPosition = _beltSpawnPointTransform.position + randomOffset;
 
-
-
         GameObject created = Instantiate(_maskPiecePrefab, adjustedPosition, _beltSpawnPointTransform.rotation, _beltTransform);
         created.GetComponent<Rigidbody2D>().AddForce(new Vector2(-_speed, 0.0f));
-        if (partData.isLeft == false)
+        if (!partData.isLeft)
         {
             created.transform.localScale = new(-created.transform.localScale.x, created.transform.localScale.y, created.transform.localScale.z);
         }
-        if (partData.sprite != null)
-            created.GetComponent<Image>().sprite = partData.sprite;
-
+        
+        created.GetComponent<Image>().sprite = partData.sprite;
         created.GetComponent<MaskPiece>().Data = partData;
 
         _nextSpawnTime = Time.time + _spawnDelaySeconds;
