@@ -109,10 +109,15 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
 
         DetachMountHints();
 
+        if (this._rectTransform.parent == OriginalParent)
+        {
+            GetComponent<Rigidbody2D>().simulated = true;
+        }
+
         //_physics.linearVelocity = _nonDragVelocity;
     }
 
-    public void AttachMountHints()
+public void AttachMountHints()
     {
         foreach (var mount in _mountPoints)
         {
@@ -168,6 +173,10 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
             transform.SetAsLastSibling();
         }
     }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+
+    }
 
     private MountPoint FindClosest()
     {
@@ -208,23 +217,6 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         return closest;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if (_canvasGroup != null)
-        {
-            _canvasGroup.blocksRaycasts = true;
-        }
-
-        DetachMountHints();
-
-        if (this._rectTransform.parent == OriginalParent)
-        {
-            GetComponent<Rigidbody2D>().simulated = true;
-        }
-
-        //_physics.linearVelocity = _nonDragVelocity;
-    }
-
     public static MaskPartData[] GetActiveMaskPartData(Mask mask)
     {
         var maskPieces = mask.GetComponentsInChildren<MaskPiece>();
@@ -236,10 +228,5 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
     public static MaskPiece[] GetActiveMaskParts(Mask mask)
     {
         return mask.GetComponentsInChildren<MaskPiece>();
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        
     }
 }
