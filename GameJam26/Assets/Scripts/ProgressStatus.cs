@@ -23,7 +23,11 @@ public class ProgressStatus : MonoBehaviour
         }
 
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
-        var mask = GameObject.Find("MaskDisplay").transform.Find("Mask").GetComponent<Mask>();
+        var mask = Utilities.GetRootComponentRecursive<Mask>();
+        // var md = GameObject.Find("MaskDisplay");
+        // var m = md.transform.Find("Mask");
+        // var c = md.GetComponent<Mask>();
+        // var mask = GameObject.Find("MaskDisplay").transform.Find("Mask").GetComponent<Mask>();
         var activeMaskParts = MaskPiece.GetActiveMaskPartData(mask);
 
         int maskBeauty = activeMaskParts.Sum(p => p.beautyStat);
