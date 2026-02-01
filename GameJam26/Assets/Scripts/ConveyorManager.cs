@@ -85,7 +85,10 @@ public class ConveyorManager : MonoBehaviour
 
         GameObject created = Instantiate(_maskPiecePrefab, adjustedPosition, _beltSpawnPointTransform.rotation, _beltTransform);
         created.GetComponent<Rigidbody2D>().AddForce(new Vector2(-_speed, 0.0f));
-        created.transform.localScale = new(created.transform.localScale.x, -created.transform.localScale.y, created.transform.localScale.z);
+        if (partData.isLeft == false)
+        {
+            created.transform.localScale = new(-created.transform.localScale.x, created.transform.localScale.y, created.transform.localScale.z);
+        }
         if (partData.sprite != null)
             created.GetComponent<Image>().sprite = partData.sprite;
 
