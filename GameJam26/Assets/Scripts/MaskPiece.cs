@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
@@ -83,7 +84,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         {
             _mountPoints = FindObjectsByType<MountPoint>(FindObjectsSortMode.None)
                 .Where(mountPoint => mountPoint.Type == _type
-                    && mountPoint.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0
+                    //&& mountPoint.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0
                     && (mountPoint.IsLeft || mountPoint.IsCenter ) 
                     )
                 .ToArray();
@@ -92,7 +93,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         {
             _mountPoints = FindObjectsByType<MountPoint>(FindObjectsSortMode.None)
                 .Where(mountPoint => mountPoint.Type == _type
-                     && mountPoint.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0
+                     //&& mountPoint.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0
                      && mountPoint.IsRight
                     )
                 .ToArray();
@@ -136,10 +137,52 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         //_physics.linearVelocity = _nonDragVelocity;
     }
 
-public void AttachMountHints()
+    public void AttachMountHints()
     {
         foreach (var mount in _mountPoints)
         {
+            // Attach non-placeable hint
+            if (mount.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length != 0)
+            {
+                GameObject nonPlaceableHint = Instantiate(this.gameObject, mount.transform.parent);
+                nonPlaceableHint.transform.localPosition = Vector3.zero;
+                nonPlaceableHint.transform.localRotation = Quaternion.identity;
+                if (Data.NotFlipped)
+                {
+                    nonPlaceableHint.transform.localScale = maskPieceDisplayScale;
+                }
+                else
+                {
+                    nonPlaceableHint.transform.localScale = new Vector3(-maskPieceDisplayScale.x, maskPieceDisplayScale.y, maskPieceDisplayScale.z);
+                }
+                nonPlaceableHint.name = this.name + "_nonPlaceableHint";
+
+                var comp1 = nonPlaceableHint.gameObject.GetComponent<MaskPiece>();
+                if (comp1 != null)
+                {
+                    Destroy(comp1);
+                }
+
+                var imgs1 = new List<Image>(nonPlaceableHint.GetComponentsInChildren<Image>());
+                var rootImg1 = nonPlaceableHint.GetComponent<Image>();
+                if (rootImg1 != null && !imgs1.Contains(rootImg1))
+                    imgs1.Insert(0, rootImg1);
+
+                foreach (var img in imgs1)
+                {
+                    var pulse = img.AddComponent<UIPulse>();
+                    pulse.pulseColor = new UnityEngine.Color(255, 0, 0);
+                    pulse.baseIntensity = 0.3f;
+                    pulse.intensity = 0.3f;
+                    pulse.speed = 1.0f;
+                }
+                nonPlaceableHint.transform.SetParent(mount.transform, false);
+                _mountHints.Add(nonPlaceableHint);
+
+                continue;
+            }
+
+            // Attach placeable hint
             GameObject hint = Instantiate(this.gameObject, mount.transform.parent);
             hint.transform.localPosition = Vector3.zero;
             hint.transform.localRotation = Quaternion.identity;
@@ -167,7 +210,7 @@ public void AttachMountHints()
             foreach (var img in imgs)
             {
                 var pulse = img.AddComponent<UIPulse>();
-                pulse.pulseColor = new Color(255, 0, 255);
+                pulse.pulseColor = new UnityEngine.Color(255, 0, 255);
                 pulse.baseIntensity = 0.3f;
                 pulse.intensity = 0.3f;
                 pulse.speed = 1.0f;
@@ -221,9 +264,15 @@ public void AttachMountHints()
         var fromPosition = Mouse.current.position.ReadValue();
         foreach (var mountPoint in _mountPoints)
         {
+            UIPulse[] nonPlaceableHints = mountPoint.transform.parent.GetComponentsInChildren<UIPulse>().Where(hint => hint.name.Contains("_nonPlaceableHint")).ToArray();
+            if (nonPlaceableHints.Length != 0)
+            {
+                continue;
+            }
+
             var dist = Vector2.Distance(
-                        fromPosition,
-                        mountPoint.transform.position);
+                    fromPosition,
+                    mountPoint.transform.position);
 
             if ((closest == null
                     && dist < 100f)
