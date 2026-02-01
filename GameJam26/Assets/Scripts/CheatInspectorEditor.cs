@@ -21,23 +21,23 @@ public class CheatInspectorEditor : Editor
 
         //DrawDefaultInspector();
 
-        if (GUILayout.Button("Next Customer Amanda Tea"))
+        if (GUILayout.Button("Next Customer Amanda Tea - Masque"))
         {
             shopManager.DebugCustomerToShow = "AmandaTea";
         }
-        if (GUILayout.Button("Next Customer Doug Crown"))
+        if (GUILayout.Button("Next Customer Doug Crown - Oval"))
         {
             shopManager.DebugCustomerToShow = "DougCrown";
         }
-        if (GUILayout.Button("Next Customer Francis Lyon"))
+        if (GUILayout.Button("Next Customer Francis Lyon - Round"))
         {
             shopManager.DebugCustomerToShow = "FrancisLyon";
         }
-        if (GUILayout.Button("Next Customer Orange Steve"))
+        if (GUILayout.Button("Next Customer Orange Steve - Bird"))
         {
             shopManager.DebugCustomerToShow = "OrangeSteve";
         }
-        if (GUILayout.Button("Next Customer (Jason) Bane"))
+        if (GUILayout.Button("Next Customer (Jason) Bane - Oval"))
         {
             shopManager.DebugCustomerToShow = "Bane";
         }
