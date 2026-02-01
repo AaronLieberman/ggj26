@@ -1,8 +1,9 @@
-using System.ComponentModel;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -24,6 +25,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     public MaskPieceType Type { get { return _type; } }
     public Transform OriginalParent { get { return _originalParent; } }
     public MountPoint[] _mountPoints;
+    public List<GameObject> _mountHints = new List<GameObject>();
 
     private void Awake()
     {
@@ -42,7 +44,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         */
 
 
-        Debug.Log($"MaskPiece type:{_type} {name}");
+        UnityEngine.Debug.Log($"MaskPiece type:{_type} {name}");
         _rectTransform = GetComponent<RectTransform>();
         _canvas = GetComponentInParent<Canvas>();
         _canvasGroup = GetComponent<CanvasGroup>();
@@ -53,6 +55,13 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void Start()
     {
+        if (Data == null)
+        {
+            UnityEngine.Debug.LogError("No data on MaskPiece!");
+            GameObject.Destroy(this.gameObject);
+            return;
+        }
+
         switch (Data.slot.ToString())
         {
             case "Nose":
@@ -79,6 +88,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         _mountPoints = Object.FindObjectsByType<MountPoint>(FindObjectsSortMode.None)
                             .Where(p => p.Type == _type
+                                    && Data.isLeft == p.IsLeft
                                     && p.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0)
                             .ToArray();
     }
@@ -93,15 +103,62 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         _dragPos = _rectTransform.anchoredPosition;
         this.transform.SetAsLastSibling();
 
+        DetachMountHints();
+        AttachMountHints();
+
         if (_canvasGroup != null)
         {
             _canvasGroup.blocksRaycasts = false;
         }
     }
 
+    public void AttachMountHints()
+    {
+        foreach (var mount in _mountPoints)
+        {
+            GameObject hint = Instantiate(this.gameObject, mount.transform.parent);
+            hint.transform.localPosition = Vector3.zero;
+            hint.transform.localRotation = Quaternion.identity;
+            hint.transform.localScale = Vector3.one;
+            hint.name = this.name + "_hint";
+
+            var comp = hint.gameObject.GetComponent<MaskPiece>();
+            if (comp != null)
+            {
+                Destroy(comp);
+            }
+
+            var imgs = new List<Image>(hint.GetComponentsInChildren<Image>());
+            var rootImg = hint.GetComponent<Image>();
+            if (rootImg != null && !imgs.Contains(rootImg))
+                imgs.Insert(0, rootImg);
+
+            foreach (var img in imgs)
+            {
+                var pulse = img.AddComponent<UIPulse>();
+                pulse.pulseColor = new Color(255, 0, 255);
+                pulse.baseIntensity = 0.3f;
+                pulse.intensity = 0.3f;
+                pulse.speed = 0.5f;
+            }
+            hint.transform.SetParent(mount.transform, false);     
+            _mountHints.Add(hint);             
+        }
+    }
+
+    public void DetachMountHints()
+    {
+        foreach (var hint in _mountHints)
+        {
+            GameObject.Destroy(hint);
+        }
+
+        _mountHints.Clear();
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
-        MountPoint? closest = FindClosest();
+        MountPoint closest = FindClosest();
 
         _dragPos += (eventData.delta / _canvas.scaleFactor);
         if (closest == null)
@@ -112,10 +169,10 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         }
     }
 
-    private MountPoint? FindClosest()
+    private MountPoint FindClosest()
     {
         float closestDist = 0f;
-        MountPoint? closest = null;
+        MountPoint closest = null;
 
         var fromPosition = Mouse.current.position.ReadValue();
         foreach (var mountPoint in _mountPoints)
@@ -143,10 +200,10 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         this.transform.localRotation = Quaternion.identity;
         this.transform.localScale = Vector3.one;
 
-        if (closest.transform.parent.name.Contains("Left"))
-        {
-            this.transform.localScale = new Vector3(-1, 1, 1);
-        }
+        //if (closest.transform.parent.name.Contains("Left"))
+        //{
+        //    this.transform.localScale = new Vector3(-1, 1, 1);
+        //}
 
         return closest;
     }
@@ -157,6 +214,8 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         {
             _canvasGroup.blocksRaycasts = true;
         }
+
+        DetachMountHints();
 
         //_physics.linearVelocity = _nonDragVelocity;
     }
