@@ -101,7 +101,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
-        MountPoint? closest = FindClosest();
+        MountPoint closest = FindClosest();
 
         _dragPos += (eventData.delta / _canvas.scaleFactor);
         if (closest == null)
@@ -112,10 +112,10 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         }
     }
 
-    private MountPoint? FindClosest()
+    private MountPoint FindClosest()
     {
         float closestDist = 0f;
-        MountPoint? closest = null;
+        MountPoint closest = null;
 
         var fromPosition = Mouse.current.position.ReadValue();
         foreach (var mountPoint in _mountPoints)
