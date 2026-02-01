@@ -33,7 +33,7 @@ public class CheatInspectorEditor : Editor
         {
             shopManager.DebugCustomerToShow = "OrangeSteve";
         }
-        if (GUILayout.Button("Set Next Customer Amanda Tea"))
+        if (GUILayout.Button("Set Next Customer (Jason) Bane"))
         {
             shopManager.DebugCustomerToShow = "Bane";
         }
