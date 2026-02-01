@@ -75,7 +75,7 @@ public class ConveyorManager : MonoBehaviour
         }
         else
         {
-            partData = _overrideSpawnNext;
+            partData = _overrideSpawnNext.Clone();
             _overrideSpawnNext = null;
             partData.NotFlipped = false;
         }
