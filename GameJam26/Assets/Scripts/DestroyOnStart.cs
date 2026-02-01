@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EditorPlaceholder : MonoBehaviour
+public class DestroyOnStart : MonoBehaviour
 {
 	[SerializeField] private bool destroyInsteadOfHide = true;
 

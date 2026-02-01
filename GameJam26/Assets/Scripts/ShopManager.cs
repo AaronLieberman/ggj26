@@ -7,6 +7,7 @@ public class ShopManager : MonoBehaviour
 {
     public GameObject NamePlate;
     public GameObject ConversationPlate;
+    public GameObject CustomerBox; // for display order
 
     public GameObject Customer;
     public Transform CustomerSpawnPoint;
@@ -84,7 +85,7 @@ public class ShopManager : MonoBehaviour
 
     Customer SpawnCustomer(CustomerData customerData)
     {
-        GameObject created = Instantiate(Customer, transform);
+        GameObject created = Instantiate(Customer, CustomerBox.transform, true);
         var rect = created.GetComponent<RectTransform>();
         var spawnRect = ((RectTransform)CustomerSpawnPoint).anchoredPosition;
         rect.anchoredPosition = spawnRect;

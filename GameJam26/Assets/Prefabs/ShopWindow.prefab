@@ -272,6 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   NamePlate: {fileID: 704588757818426013}
   ConversationPlate: {fileID: 6048886264718847976}
+  CustomerBox: {fileID: 5002441760052231123}
   Customer: {fileID: 1295229449753606059, guid: d65d05d1ca2da00458c528d5f9f3eb4a, type: 3}
   CustomerSpawnPoint: {fileID: 8228971060270556263}
   Speed: 300
