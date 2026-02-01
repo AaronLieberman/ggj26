@@ -5,6 +5,11 @@ public class MountPoint : MonoBehaviour
     MaskPieceType _type;
 
     public MaskPieceType Type { get { return _type; } }
+    public bool IsLeft { get
+        {
+            return !this.transform.parent.name.ToLower().Contains("right");
+        }
+    }
 
     void Awake()
     {
