@@ -16,6 +16,6 @@ public class MaskDisplayManager : MonoBehaviour
 
     private void Update()
     {
-        maskDeliveryButton.interactable = shopManager.MaskIsDeliverable && maskComputer.GetActiveMaskAcceptable();
+        maskDeliveryButton.interactable = shopManager.MaskIsDeliverable /*&& maskComputer.GetActiveMaskAcceptable()*/;
     }
 }
