@@ -88,7 +88,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         _mountPoints = Object.FindObjectsByType<MountPoint>(FindObjectsSortMode.None)
                             .Where(p => p.Type == _type
-                                    && Data.isLeft == p.IsLeft
+                                    //&& Data.isLeft == p.IsLeft
                                     && p.transform.parent.GetComponentsInChildren<MaskPiece>(false).Length == 0)
                             .ToArray();
     }
