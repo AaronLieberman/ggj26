@@ -148,6 +148,8 @@ public class GameManager : MonoBehaviour
             customerMask.GetComponent<RectTransform>().offsetMin = Vector2.zero;
             customerMask.GetComponent<RectTransform>().offsetMax = Vector2.zero;
             customerMask.GetComponent<RectTransform>().sizeDelta = customerMaskSizing;
+
+            Utilities.GetRootComponentRecursive<ShopManager>().CustomerSatisfied();
         }
     }
 }
