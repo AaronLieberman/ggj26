@@ -26,7 +26,8 @@ public class MaskComputer : MonoBehaviour
         int maskBeauty = activeMaskParts.Sum(p => p.beautyStat);
         int maskAnonymity = activeMaskParts.Sum(p => p.anonymityStat);
 
-        int numberOfSlots = 6; // TODO get from current mask base
+        int numberOfSlots = _mask.GetComponentsInChildren<MountPoint>()
+            .Select(mp => mp.Type).Distinct().Count();
 
         return customerData.maskScary.InRange(maskScary, numberOfSlots) &&
             customerData.maskGoofy.InRange(maskGoofy, numberOfSlots) &&
