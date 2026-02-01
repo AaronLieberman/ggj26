@@ -101,12 +101,13 @@ public class GameManager : MonoBehaviour
     {
         // TODO: Replace with call to shop manager to receive customers results.
         List<CustomerResult> customerResults = new List<CustomerResult>();
+        GameObject maskGameObject = Utilities.GetRootComponentRecursive<Mask>().gameObject;
         CustomerData customerData1 = new CustomerData();
         customerData1.customerImageName = shopManager.Sprites[0].name;
         customerResults.Add(
             new CustomerResult(
                 customerData1,
-                null,
+                maskGameObject,
                 false
             )
         );
@@ -116,7 +117,7 @@ public class GameManager : MonoBehaviour
         customerResults.Add(
             new CustomerResult(
                 customerData2,
-                null,
+                maskGameObject,
                 true
             )
         );
@@ -124,6 +125,7 @@ public class GameManager : MonoBehaviour
         foreach (CustomerResult customerResult in customerResults)
         {
             GameObject endingCustomerViewer = Instantiate(endingCustomerViewerPrefab, Vector3.zero, Quaternion.identity, endingCustomerHolder);
+            Instantiate(customerResult.CustomerMask, Vector3.zero, Quaternion.identity, endingCustomerViewer.transform);
             endingCustomerViewer.GetComponent<Image>().sprite = shopManager.GetCustomerSprite(customerResult.CustomerData.customerImageName);
             endingCustomerViewer.transform.Find("CustomerSatisfactionUI").GetComponent<Image>().color = customerResult.Satisfied ? Color.green : Color.red;
         }
