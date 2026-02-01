@@ -990,14 +990,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8541859780543046988, guid: 5dfe4db90e9a22d4cb7bec1f9050dc95, type: 3}
-      propertyPath: SpeedMultiplier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8541859780543046988, guid: 5dfe4db90e9a22d4cb7bec1f9050dc95, type: 3}
-      propertyPath: DebugCustomerToShow
-      value: OrangeSteve
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
