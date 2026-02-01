@@ -163,5 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0af0bf1987aa77458aceed05fdebe18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaskPiece
+  maskPieceScale: {x: 2, y: 2, z: 2}
+  maskPieceDisplayScale: {x: 1, y: 1, z: 1}
   _mountPoints: []
   _mountHints: []

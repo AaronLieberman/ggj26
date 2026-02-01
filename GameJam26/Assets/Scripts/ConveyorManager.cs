@@ -17,6 +17,9 @@ public class ConveyorManager : MonoBehaviour
     [SerializeField]
     Vector3 spawnPositionVariation;
 
+    [SerializeField]
+    Vector3 _maskPieceScale;
+
     Transform _beltTransform;
     Transform _beltSpawnPointTransform;
     float _nextSpawnTime;
@@ -81,6 +84,7 @@ public class ConveyorManager : MonoBehaviour
         Vector3 adjustedPosition = _beltSpawnPointTransform.position + randomOffset;
 
         GameObject created = Instantiate(_maskPiecePrefab, adjustedPosition, _beltSpawnPointTransform.rotation, _beltTransform);
+        created.transform.localScale = _maskPieceScale;
         if (!partData.NotFlipped)
         {
             created.transform.localScale = new(-created.transform.localScale.x, created.transform.localScale.y, created.transform.localScale.z);

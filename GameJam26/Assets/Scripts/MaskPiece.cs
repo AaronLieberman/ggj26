@@ -14,6 +14,11 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
 {
+    [SerializeField]
+    Vector3 maskPieceScale;
+    [SerializeField]
+    Vector3 maskPieceDisplayScale;
+
     public MaskPartData Data { get; set; }
 
     MaskPartSlot _type;
@@ -140,11 +145,11 @@ public void AttachMountHints()
             hint.transform.localRotation = Quaternion.identity;
             if (Data.NotFlipped)
             {
-                hint.transform.localScale = new Vector3(0.5f, 0.5f, 1.0f);
+                hint.transform.localScale = maskPieceDisplayScale;
             }
             else
             {
-                hint.transform.localScale = new Vector3(-0.5f, 0.5f, 1.0f);
+                hint.transform.localScale = new Vector3(-maskPieceDisplayScale.x, maskPieceDisplayScale.y, maskPieceDisplayScale.z);
             }
             hint.name = this.name + "_hint";
 
@@ -165,7 +170,7 @@ public void AttachMountHints()
                 pulse.pulseColor = new Color(255, 0, 255);
                 pulse.baseIntensity = 0.3f;
                 pulse.intensity = 0.3f;
-                pulse.speed = 0.5f;
+                pulse.speed = 1.0f;
             }
             hint.transform.SetParent(mount.transform, false);     
             _mountHints.Add(hint);             
@@ -195,11 +200,11 @@ public void AttachMountHints()
 
             if (Data.NotFlipped)
             {
-                transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                transform.localScale = maskPieceScale;
             }
             else
             {
-                transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                transform.localScale = new Vector3(-maskPieceScale.x, maskPieceScale.y, maskPieceScale.z);
             }
         }
     }
@@ -239,11 +244,11 @@ public void AttachMountHints()
         this.transform.localRotation = Quaternion.identity;
         if (Data.NotFlipped)
         {
-            transform.localScale = new Vector3(0.5f, 0.5f, 1.0f);
+            transform.localScale = maskPieceDisplayScale;
         }
         else
         {
-            transform.localScale = new Vector3(-0.5f, 0.5f, 1.0f);
+            transform.localScale = new Vector3(-maskPieceDisplayScale.x, maskPieceDisplayScale.y, maskPieceDisplayScale.z);
         }
 
         return closest;
