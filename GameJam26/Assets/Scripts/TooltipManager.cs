@@ -11,7 +11,7 @@ class TooltipManager : MonoBehaviour
     public static TooltipManager Instance;
 
     [SerializeField] public PieceTooltip PieceStatsTooltip;
-    [SerializeField] public float PieceY = 400;
+    [SerializeField] public float TooltipYOffset = 140;
 
     private RectTransform _rectTransform;
     private CanvasGroup _canvasGroup;
@@ -47,6 +47,11 @@ class TooltipManager : MonoBehaviour
 #endif
         _rectTransform.position = mousePos;
 
+        if (_showingOnPiece != null && PieceStatsTooltip != null)
+        {
+            PieceStatsTooltip.transform.position = mousePos + new Vector2(0, TooltipYOffset);
+        }
+
         if (_lastMousePos == mousePos
             || mouseDown)
         {
@@ -70,15 +75,15 @@ class TooltipManager : MonoBehaviour
 
             if (RectTransformUtility.RectangleContainsScreenPoint(rt, mousePos, cam))
             {
-                ShowTooltipOnPiece(piece);
+                ShowTooltipOnPiece(piece, mousePos);
                 return;
             }
-        }        
+        }
 
         HideAll();
     }
 
-    public void ShowTooltipOnPiece(MaskPiece piece)
+    public void ShowTooltipOnPiece(MaskPiece piece, Vector2 mousePos)
     {
         if (_showingOnPiece == piece)
         {
@@ -94,12 +99,8 @@ class TooltipManager : MonoBehaviour
         }
 
         UnityEngine.Debug.Log($"Showing tooltip for piece: {piece.name}");
-        PieceStatsTooltip.transform.position = new Vector3(
-            piece.transform.position.x,
-            PieceY,
-            piece.transform.position.z);
+        PieceStatsTooltip.transform.position = mousePos + new Vector2(0, TooltipYOffset);
         PieceStatsTooltip.Data = piece.Data;
-
     }
 
     public void HideIfShowingPiece(MaskPiece piece)

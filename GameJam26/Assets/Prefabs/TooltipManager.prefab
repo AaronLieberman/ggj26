@@ -811,7 +811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TooltipManager
   PieceStatsTooltip: {fileID: 5518661368991784853}
-  PieceY: 280
+  TooltipYOffset: 140
 --- !u!225 &1599302002338940035
 CanvasGroup:
   m_ObjectHideFlags: 0
