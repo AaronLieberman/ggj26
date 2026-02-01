@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   customersToServe: 3
-  startGameTransitionDuration: 5
+  startGameTransitionDuration: 2
   endGameTransitionDuration: 0.5
   endingMaskPieceScaling: {x: 0.45, y: 0.45}
   endingCustomerViewerPrefab: {fileID: 6351986831198142498, guid: 7fddcae09ef018048859f061da9717ad, type: 3}
