@@ -92,6 +92,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
+      propertyPath: _handedness
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2596259961721041272, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -612,6 +616,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
+      propertyPath: _handedness
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2596259961721041272, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -742,6 +750,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
+      propertyPath: _handedness
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2596259961721041272, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -871,6 +883,10 @@ PrefabInstance:
     - target: {fileID: 1946598224395448814, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
+      propertyPath: _handedness
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2596259961721041272, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
@@ -1171,6 +1187,10 @@ PrefabInstance:
     - target: {fileID: 1946598224395448814, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
+      propertyPath: _handedness
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2596259961721041272, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
