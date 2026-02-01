@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class MaskComputer : MonoBehaviour
+public class ScoreCalculator : MonoBehaviour
 {
     Mask _mask;
     ShopManager _shopManager;
