@@ -58,6 +58,7 @@ public class PathFollower : MonoBehaviour
             _waypointIndex++;
             if (_waypointIndex >= _path.Waypoints.Length)
             {
+                _rect.anchoredPosition = new Vector2(_basePosition.x, _basePosition.y);
                 var callback = _onComplete;
                 _path = null;
                 _onComplete = null;
