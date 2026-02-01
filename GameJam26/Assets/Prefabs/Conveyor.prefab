@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8458339496291466620}
   - component: {fileID: 4420312507867960129}
-  - component: {fileID: 4530387474959745501}
+  - component: {fileID: 321294149042237605}
+  - component: {fileID: 4034955957465611291}
   - component: {fileID: 5008822058774316352}
   - component: {fileID: 884588075560703643}
   m_Layer: 5
@@ -47,7 +48,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550018354512713643}
   m_CullTransparentMesh: 1
---- !u!114 &4530387474959745501
+--- !u!114 &321294149042237605
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,9 +57,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 550018354512713643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -67,16 +68,26 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c713bdec0ced573488a98d14a7c92df2, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 2800000, guid: c713bdec0ced573488a98d14a7c92df2, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!114 &4034955957465611291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550018354512713643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d17cd4855a16974d88acd4a29b85f7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConveyorBeltScroller
+  _pixelsPerUnit: -0.5
 --- !u!61 &5008822058774316352
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -292,6 +303,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4cf51a02ce83b20498aea1179ce5e8d5, type: 3}
   - {fileID: 21300000, guid: 7e69fd5e65eca054ea1d578815cb988f, type: 3}
   - {fileID: 21300000, guid: 7132bf0feaf8d074aacf424ee1d881eb, type: 3}
+  - {fileID: 21300000, guid: db5e42b36d180794e9bc6426b0497d7f, type: 3}
   - {fileID: 21300000, guid: 4ec9cc35323b71043ba27a4267ad9a8d, type: 3}
   - {fileID: 21300000, guid: 3493216fede051a4eb7e367005cb13a1, type: 3}
   - {fileID: 21300000, guid: 895292ffdfa8ae848b09c4627b87008d, type: 3}
@@ -302,7 +314,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4733b53bcb883794786640f801b9c836, type: 3}
   - {fileID: 21300000, guid: e68531e938e188847b516d7c0246dde2, type: 3}
   - {fileID: 21300000, guid: bc3bc0507bfdf944e98bdfa8b23d5edf, type: 3}
+  - {fileID: 21300000, guid: 6fedf179c00a0ee4aab0d7d370b49451, type: 3}
   - {fileID: 21300000, guid: d4b1849857de709448669785cfd79a7d, type: 3}
+  - {fileID: 21300000, guid: 957b8e758990efa4ea4c83832586f9ce, type: 3}
+  - {fileID: 21300000, guid: dc4f3a916309a1a449be51bf38787590, type: 3}
+  - {fileID: 21300000, guid: faf2994d678586a4a9cb0279aca4f459, type: 3}
   - {fileID: 21300000, guid: d5e19460a986da445b198292c9b051d6, type: 3}
   - {fileID: 21300000, guid: f0a81f12f0bb2c44a8acd19f01a055f9, type: 3}
   - {fileID: 21300000, guid: 7b9b415699d407e42b4dc48e7b1b78b3, type: 3}

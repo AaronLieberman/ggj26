@@ -278,7 +278,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6275025628198810795}
+    m_TransformParent: {fileID: 850134102217464369}
     m_Modifications:
     - target: {fileID: 196270941735151299, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
@@ -368,6 +368,10 @@ PrefabInstance:
       propertyPath: _type
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
+      propertyPath: _handedness
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2596259961721041272, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -394,7 +398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8512156075030184199, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_Name
-      value: Mount Point (Left Eye)
+      value: Mount Point (Right Eye)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -518,10 +522,10 @@ PrefabInstance:
       addedObject: {fileID: 1229892182716845783}
     - targetCorrespondingSourceObject: {fileID: 6934379466972054883, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4524937993849634978}
+      addedObject: {fileID: 5341541314047538201}
     - targetCorrespondingSourceObject: {fileID: 4387292855236619257, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5341541314047538201}
+      addedObject: {fileID: 4524937993849634978}
     - targetCorrespondingSourceObject: {fileID: 5602624368551178795, guid: b2b99321cec14654cace5a3c370a5940, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1075015712090153860}
@@ -964,7 +968,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 850134102217464369}
+    m_TransformParent: {fileID: 6275025628198810795}
     m_Modifications:
     - target: {fileID: 196270941735151299, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
@@ -1056,7 +1060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2240854070412081313, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: _handedness
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2596259961721041272, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_SortingLayer
@@ -1084,7 +1088,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8512156075030184199, guid: 70bf396be0fef3740976340fa8bb0ab6, type: 3}
       propertyPath: m_Name
-      value: Mount Point (Right Eye)
+      value: Mount Point (Left Eye)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
