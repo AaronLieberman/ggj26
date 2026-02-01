@@ -4,12 +4,12 @@ public struct CustomerResult
 {
     public CustomerData CustomerData;
     public GameObject CustomerMask;
-    public bool Satisfied;
+    public int CustomerScore;
 
-    public CustomerResult(CustomerData customerData, GameObject customerMask, bool satisfied)
+    public CustomerResult(CustomerData customerData, GameObject customerMask, int customerScore)
     {
         CustomerData = customerData;
         CustomerMask = customerMask;
-        Satisfied = satisfied;
+        CustomerScore = customerScore;
     }
 }

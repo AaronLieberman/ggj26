@@ -27,6 +27,7 @@ public class ShopManager : MonoBehaviour
     bool _customerLeaving;
     string _lastDebugCustomerToShow;
     MaskDisplayManager _maskDisplayManager;
+    MaskComputer _maskComputer;
 
     TextMeshProUGUI _nameText;
     TextMeshProUGUI _conversationText;
@@ -39,6 +40,7 @@ public class ShopManager : MonoBehaviour
     {
         _customers = CustomerDataLoader.Load();
         _maskDisplayManager = Utilities.GetRootComponentRecursive<MaskDisplayManager>();
+        _maskComputer = Utilities.GetRootComponentRecursive<MaskComputer>();
     }
 
     void Start()
@@ -121,6 +123,13 @@ public class ShopManager : MonoBehaviour
 
     void CustomerLeave(bool satisfied)
     {
+        Mask customerMask = _currentCustomer.GetComponentInChildren<Mask>();
+        _currentCustomer.CustomerResult = new CustomerResult(
+            _currentCustomer.Data,
+            customerMask ? customerMask.gameObject : null,
+            customerMask ? _maskComputer.GetActiveMaskScore() : 0
+        );
+
         _maskDisplayManager.ClearMaskDisplay();
 
         _customerWaiting = false;

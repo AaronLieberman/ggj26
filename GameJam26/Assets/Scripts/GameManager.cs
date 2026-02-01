@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +27,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector2 endingMaskSizing;
     [SerializeField] private GameObject endingCustomerViewerPrefab;
     private Transform endingCustomerHolder;
+    [SerializeField] private Sprite[] endingCustomerSatisfactionSprites;
+    private TextMeshProUGUI endingCustomerScoreText;
 
     [SerializeField] private Vector2 customerMaskSizing;
 
@@ -36,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         startingGameCanvasGroup = GameObject.Find("StartingGameUI").GetComponent<CanvasGroup>();
         endingGameCanvasGroup = GameObject.Find("EndingGameUI").GetComponent<CanvasGroup>();
+        endingCustomerScoreText = GameObject.Find("EndOfGameScoreEarned").GetComponent<TextMeshProUGUI>();
 
         endingCustomerHolder = GameObject.Find("EndofGameCustomersHolder").transform;
     }
@@ -105,39 +110,28 @@ public class GameManager : MonoBehaviour
 
     private void PopulateEndingShopCustomers()
     {
-        // TODO: Replace with call to shop manager to receive customers results.
         List<CustomerResult> customerResults = new List<CustomerResult>();
-        GameObject maskGameObject = Utilities.GetRootComponentRecursive<Mask>().gameObject;
-        CustomerData customerData1 = new CustomerData();
-        customerData1.customerImageName = shopManager.Sprites[0].name;
-        customerResults.Add(
-            new CustomerResult(
-                customerData1,
-                maskGameObject,
-                false
-            )
-        );
+        customerResults = shopManager.GetComponentsInChildren<Customer>().Select(customer => customer.CustomerResult).ToList();
 
-        CustomerData customerData2 = new CustomerData();
-        customerData2.customerImageName = shopManager.Sprites[1].name;
-        customerResults.Add(
-            new CustomerResult(
-                customerData2,
-                maskGameObject,
-                true
-            )
-        );
-
+        int totalScore = 0;
         foreach (CustomerResult customerResult in customerResults)
         {
             GameObject endingCustomerViewer = Instantiate(endingCustomerViewerPrefab, Vector3.zero, Quaternion.identity, endingCustomerHolder);
             endingCustomerViewer.GetComponent<Image>().sprite = shopManager.GetCustomerSprite(customerResult.CustomerData.customerImageName);
-            endingCustomerViewer.transform.Find("CustomerSatisfactionUI").GetComponent<Image>().color = customerResult.Satisfied ? Color.green : Color.red;
+            endingCustomerViewer.transform.Find("CustomerSatisfactionUI").GetComponent<Image>().sprite 
+                = customerResult.CustomerScore > 0 ? endingCustomerSatisfactionSprites[0] : endingCustomerSatisfactionSprites[1];
 
-            GameObject endingCustomerMask = Instantiate(customerResult.CustomerMask, Vector3.zero, Quaternion.identity, endingCustomerViewer.transform);
-            endingCustomerMask.GetComponent<RectTransform>().sizeDelta = endingMaskSizing;
-            endingCustomerMask.transform.Find("MountPoints").GetComponent<RectTransform>().localScale = endingMaskPieceScaling;
+            totalScore += customerResult.CustomerScore;
+
+            if (customerResult.CustomerMask)
+            {
+                GameObject endingCustomerMask = Instantiate(customerResult.CustomerMask, Vector3.zero, Quaternion.identity, endingCustomerViewer.transform);
+                endingCustomerMask.GetComponent<RectTransform>().sizeDelta = endingMaskSizing;
+                endingCustomerMask.transform.Find("MountPoints").GetComponent<RectTransform>().localScale = endingMaskPieceScaling;
+            }
         }
+
+        endingCustomerScoreText.text = string.Format("Score Earned: {0}", totalScore);
     }
 
     public void DeliverMask()

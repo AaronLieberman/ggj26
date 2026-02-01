@@ -13,6 +13,7 @@ public class Customer : MonoBehaviour
     public Image TimerBack;
 
     public CustomerData Data { get; set; }
+    public CustomerResult CustomerResult { get; set; }
 
     UnityEngine.Vector2? _firstMaskLocation = null;
     float _totalTime;

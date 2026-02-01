@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 6237383352638718265}
   - component: {fileID: 1540608998047165915}
   m_Layer: 5
-  m_Name: EndOfGameMoneyEarned
+  m_Name: EndOfGameScoreEarned
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
