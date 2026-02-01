@@ -12,7 +12,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
     public MaskPartData Data { get; set; }
 
@@ -34,18 +34,6 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         _originalParent = this.transform.parent;
 
-        // TODO is this the best way to find name?
-        /*
-        foreach (MaskPieceType type in System.Enum.GetValues(typeof(MaskPieceType)))
-        {
-            if (this.gameObject.name.StartsWith(type.ToString()))
-            {
-                _type = type;
-                break;
-            }
-        }
-        */
-
 
         UnityEngine.Debug.Log($"MaskPiece type:{_type} {name}");
         _rectTransform = GetComponent<RectTransform>();
@@ -60,9 +48,8 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         if (Data == null)
         {
-            // NOTE: Commenting this out as it causes issues for customer and end of game refs since they don't need the Data.
-            //UnityEngine.Debug.LogError("No data on MaskPiece!");
-            //GameObject.Destroy(this.gameObject);
+            UnityEngine.Debug.LogError("No data on MaskPiece!");
+            GameObject.Destroy(this.gameObject);
             return;
         }
         _type = Data.slot;
@@ -79,7 +66,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
             .ToArray();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         _physics.linearVelocity = Vector2.zero;
         _physics.angularVelocity = 0f;
@@ -218,4 +205,5 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         return mask.GetComponentsInChildren<MaskPiece>();
     }
+
 }
