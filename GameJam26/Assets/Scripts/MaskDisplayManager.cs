@@ -5,7 +5,7 @@ public class MaskDisplayManager : MonoBehaviour
 {
     private Button maskDeliveryButton;
     private ShopManager shopManager;
-    private MaskComputer maskComputer;
+    private ScoreCalculator ScoreCalculator;
     private Mask displayMask;
 
     private void Awake()
@@ -13,12 +13,12 @@ public class MaskDisplayManager : MonoBehaviour
         displayMask = transform.GetComponentInChildren<Mask>();
         maskDeliveryButton = transform.Find("DeliverButton").GetComponent<Button>();
         shopManager = Utilities.GetRootComponentRecursive<ShopManager>();
-        maskComputer = Utilities.GetRootComponentRecursive<MaskComputer>();
+        ScoreCalculator = Utilities.GetRootComponentRecursive<ScoreCalculator>();
     }
 
     private void Update()
     {
-        maskDeliveryButton.interactable = shopManager.MaskIsDeliverable && maskComputer.GetActiveMaskAcceptable();
+        maskDeliveryButton.interactable = shopManager.MaskIsDeliverable && ScoreCalculator.GetActiveMaskAcceptable();
     }
 
     public void ClearMaskDisplay()
