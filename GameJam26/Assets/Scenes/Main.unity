@@ -1189,18 +1189,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildProgress
       objectReference: {fileID: 0}
-    - target: {fileID: 2245200292544056241, guid: 5ff815c748cc37543a819df846935d41, type: 3}
-      propertyPath: ExitPath
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245200292544056241, guid: 5ff815c748cc37543a819df846935d41, type: 3}
-      propertyPath: EnterPath
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245200292544056241, guid: 5ff815c748cc37543a819df846935d41, type: 3}
-      propertyPath: CustomerSpawnPoint
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7668236100958981289, guid: 5ff815c748cc37543a819df846935d41, type: 3}
       propertyPath: m_Pivot.x
       value: 1
