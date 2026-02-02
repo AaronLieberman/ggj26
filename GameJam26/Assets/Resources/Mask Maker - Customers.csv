@@ -7,7 +7,7 @@ Intro Dialog,"I'm going to <voffset=0.25em>high tea</voffset> with my nieces. I 
 Scary Minimum,0,2,1,0,6
 Scary Maximum,4,10,10,7,10
 Scary Points Per,0,20,30,3,40
-Goofy Minimum,3,3,0,1,0
+Goofy Minimum,2,3,0,1,0
 Goofy Maximum,10,10,9,9,6
 Goofy Points Per,50,20,0,6,0
 Beauty Minimum,3,1,0,1,0
