@@ -1,5 +1,6 @@
 
 using System.Diagnostics;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -65,9 +66,12 @@ class TooltipManager : MonoBehaviour
         _lastMousePos = mousePos;
 
         var conveyorManager = Utilities.GetRootComponentRecursive<ConveyorManager>();
-        var pieces = conveyorManager.GetComponentsInChildren<MaskPiece>();
+        var piecesOnConveyor = conveyorManager.GetComponentsInChildren<MaskPiece>();
+        
+        var maskDisplay = GameObject.Find("MaskDisplay");
+        var piecesOnMaskDisplay = maskDisplay.GetComponentsInChildren<MaskPiece>();
 
-        foreach (var piece in pieces)
+        foreach (var piece in piecesOnConveyor.Concat(piecesOnMaskDisplay))
         {
             var rt = piece.GetComponent<RectTransform>();
             var canvas = piece.GetComponentInParent<Canvas>();
