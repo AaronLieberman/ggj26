@@ -18,6 +18,15 @@ public class ConveyorManager : MonoBehaviour
     float _spawnDelaySeconds;
 
     [SerializeField]
+    int _initialBurstCount = 6;
+
+    [SerializeField]
+    float _initialBurstSpeed = 300f;
+
+    [SerializeField]
+    float _initialBurstSpawnDelay = 0.15f;
+
+    [SerializeField]
     Vector3 spawnPositionVariation;
 
     [SerializeField]
@@ -27,6 +36,7 @@ public class ConveyorManager : MonoBehaviour
     Transform _beltSpawnPointTransform;
     float _nextSpawnTime;
     bool _isActive;
+    int _burstRemaining;
     MaskPartData[] _parts;
     MaskPartData _overrideSpawnNext;
 
@@ -88,7 +98,8 @@ public class ConveyorManager : MonoBehaviour
 
         GameObject created = Instantiate(_maskPiecePrefab, adjustedPosition, _beltSpawnPointTransform.rotation, _beltTransform);
         created.transform.localScale = _maskPieceScale;
-        created.GetComponent<Rigidbody2D>().AddForce(new Vector2(_initialSpeed, 0.0f));
+        float speed = _burstRemaining > 0 ? _initialBurstSpeed : _initialSpeed;
+        created.GetComponent<Rigidbody2D>().AddForce(new Vector2(speed, 0.0f));
         if (!partData.NotFlipped)
         {
             created.transform.localScale = new(-created.transform.localScale.x, created.transform.localScale.y, created.transform.localScale.z);
@@ -99,12 +110,17 @@ public class ConveyorManager : MonoBehaviour
         maskPiece.Data = partData;
         maskPiece.ApplySpriteSize(partData.sprite);
 
-        _nextSpawnTime = Time.time + _spawnDelaySeconds;
+        float delay = _burstRemaining > 0 ? _initialBurstSpawnDelay : _spawnDelaySeconds;
+        if (_burstRemaining > 0)
+            _burstRemaining--;
+        _nextSpawnTime = Time.time + delay;
     }
 
     public void ActivateManager()
     {
         _isActive = true;
+        _burstRemaining = _initialBurstCount;
+        _nextSpawnTime = Time.time;
     }
 
     public void DeactivateManager()
