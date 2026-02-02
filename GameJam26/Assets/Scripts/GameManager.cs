@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Scripting;
 using UnityEngine.UI;
 
 public enum GameState { STARTED, ENDED }
@@ -17,10 +18,13 @@ public class GameManager : MonoBehaviour
     private int customersServed = 0;
     private GameState gameState;
 
-    [SerializeField] private float startGameTransitionDuration;
-    [SerializeField] private float endGameTransitionDuration;
+    [SerializeField] private float preStartGameTransitionDuration = 2;
+    [SerializeField] private float startGameTransitionDuration = 2;
+    [SerializeField] private float endGameTransitionDuration = 0.5f;
     private CanvasGroup startingGameCanvasGroup;
     private CanvasGroup endingGameCanvasGroup;
+
+    [SerializeField] private float shopStartSeconds = 2;
 
     [SerializeField] private Vector2 endingMaskPieceScaling;
     [SerializeField] private Vector2 endingMaskSizing;
@@ -46,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartGame();
+        StartCoroutine(StartGame());
     }
 
     private void Update()
@@ -65,24 +69,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void StartGame()
+    private IEnumerator StartGame()
     {
         Debug.Log("Starting game");
 
-        StartCoroutine(FadeUI(startingGameCanvasGroup, 1.0f, 0.0f, startGameTransitionDuration));
+        startingGameCanvasGroup.alpha = 1;
+        StartCoroutine(FadeUI(startingGameCanvasGroup, 1.0f, 0.0f, preStartGameTransitionDuration, startGameTransitionDuration));
         startingGameCanvasGroup.interactable = false;
 
-        shopManager.ActivateManager();
         conveyorManager.ActivateManager();
 
         gameState = GameState.STARTED;
+
+        yield return new WaitForSeconds(shopStartSeconds);
+        shopManager.ActivateManager();
     }
 
     private void EndGame()
     {
         Debug.Log("Ending game");
 
-        StartCoroutine(FadeUI(endingGameCanvasGroup, 0.0f, 1.0f, endGameTransitionDuration));
+        StartCoroutine(FadeUI(endingGameCanvasGroup, 0.0f, 1.0f, 0, endGameTransitionDuration));
         endingGameCanvasGroup.interactable = true;
         PopulateEndingShopCustomers();
 
@@ -92,8 +99,16 @@ public class GameManager : MonoBehaviour
         gameState = GameState.ENDED;
     }
 
-    private IEnumerator FadeUI(CanvasGroup canvasGroup, float startingAlpha, float endingAlpha, float duration)
+    private IEnumerator FadeUI(CanvasGroup canvasGroup, float startingAlpha, float endingAlpha, float waitDuration, float duration)
     {
+        if (waitDuration > 0)
+        {
+            Time.timeScale = 0;
+            // wait 2s (ignores timeScale)
+            yield return new WaitForSecondsRealtime(waitDuration);
+            Time.timeScale = 1f;
+        }
+
         float timeElapsed = 0f;
 
         while (timeElapsed < duration)

@@ -21,7 +21,7 @@ public class LetterboxCamera : MonoBehaviour
             cam.backgroundColor = Color.black;
         }
 
-        var canvas = FindObjectOfType<Canvas>();
+        var canvas = FindFirstObjectByType<Canvas>();
         if (canvas == null) return;
 
         _canvasRect = canvas.GetComponent<RectTransform>();
