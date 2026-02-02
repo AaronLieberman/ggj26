@@ -4,9 +4,10 @@ using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
+    [SerializeField] GameObject _pauseOverlay;
+
     float _savedTimeScale;
     bool _isPaused;
-    GameObject _pauseOverlay;
     Button _pauseButton;
     TextMeshProUGUI _buttonText;
 
@@ -14,7 +15,7 @@ public class PauseManager : MonoBehaviour
     {
         var canvas = Utilities.GetRootComponentRecursive<Canvas>();
         CreatePauseButton(canvas.transform);
-        CreatePauseOverlay(canvas.transform);
+        _pauseOverlay.SetActive(false);
     }
 
     void CreatePauseButton(Transform parent)
@@ -48,40 +49,6 @@ public class PauseManager : MonoBehaviour
         _buttonText.fontSize = 20;
         _buttonText.alignment = TextAlignmentOptions.Center;
         _buttonText.color = Color.white;
-    }
-
-    void CreatePauseOverlay(Transform parent)
-    {
-        _pauseOverlay = new GameObject("PauseOverlay");
-        _pauseOverlay.transform.SetParent(parent, false);
-
-        var rect = _pauseOverlay.AddComponent<RectTransform>();
-        rect.anchorMin = Vector2.zero;
-        rect.anchorMax = Vector2.one;
-        rect.sizeDelta = Vector2.zero;
-
-        var image = _pauseOverlay.AddComponent<Image>();
-        image.color = new Color(0, 0, 0, 0.4f);
-        image.raycastTarget = true;
-
-        var textObj = new GameObject("PausedText");
-        textObj.transform.SetParent(_pauseOverlay.transform, false);
-
-        var textRect = textObj.AddComponent<RectTransform>();
-        textRect.anchorMin = new Vector2(0.5f, 0.5f);
-        textRect.anchorMax = new Vector2(0.5f, 0.5f);
-        textRect.sizeDelta = new Vector2(400, 100);
-
-        var text = textObj.AddComponent<TextMeshProUGUI>();
-        text.text = "PAUSED";
-        text.fontSize = 60;
-        text.alignment = TextAlignmentOptions.Center;
-        text.color = Color.white;
-
-        _pauseOverlay.SetActive(false);
-
-        // Move pause button to front so it's still clickable over the overlay
-        _pauseButton.transform.SetAsLastSibling();
     }
 
     void TogglePause()
