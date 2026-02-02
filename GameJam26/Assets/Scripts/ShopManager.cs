@@ -68,7 +68,7 @@ public class ShopManager : MonoBehaviour
             _timeRemaining -= Time.deltaTime;
             if (_timeRemaining <= 0)
             {
-                var canDeliver = MaskIsDeliverable && _scoreCalculator.GetActiveMaskAcceptable();
+                var canDeliver = MaskIsDeliverable && (_scoreCalculator.GetActiveStatsScore()?.IsAcceptable() ?? false);
                 if (canDeliver && GameObject.Find("GameManager").GetComponent<GameManager>().DeliverMask())
                 {
                     // HACKHACK
@@ -151,7 +151,7 @@ public class ShopManager : MonoBehaviour
         _currentCustomer.CustomerResult = new CustomerResult(
             _currentCustomer.Data,
             customerMask ? customerMask.gameObject : null,
-            customerMask ? _scoreCalculator.GetActiveMaskScore(_currentCustomer) : 0,
+            customerMask ? (_scoreCalculator.GetActiveStatsScore()?.TotalScore() ?? 0) : 0,
             satisfied
         );
 

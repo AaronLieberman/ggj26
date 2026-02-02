@@ -8,7 +8,8 @@ public class MaskDeliverableDisplay : MonoBehaviour
 
     void Update()
     {
-        float newAlpha = Utilities.GetRootComponent<ScoreCalculator>().GetActiveMaskAcceptable()
+        var score = Utilities.GetRootComponent<ScoreCalculator>().GetActiveStatsScore();
+        float newAlpha = (score?.IsAcceptable() ?? false)
             ? 1
             : AlphaDim;
 

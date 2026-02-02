@@ -18,7 +18,8 @@ public class MaskDisplayManager : MonoBehaviour
 
     private void Update()
     {
-        maskDeliveryButton.interactable = shopManager.MaskIsDeliverable && ScoreCalculator.GetActiveMaskAcceptable();
+        maskDeliveryButton.interactable = shopManager.MaskIsDeliverable &&
+            (ScoreCalculator.GetActiveStatsScore()?.IsAcceptable() ?? false);
     }
 
     public void ClearMaskDisplay()
