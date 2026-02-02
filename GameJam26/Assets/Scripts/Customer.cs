@@ -60,12 +60,6 @@ public class Customer : MonoBehaviour
         TimerFront.fillAmount = _timeRemaining / _totalTime;
     }
 
-    public void HideTimers()
-    {
-        TimerFront.enabled = false;
-        TimerBack.enabled = false;
-    }
-
     public void StartTimer(float duration)
     {
         _totalTime = duration;

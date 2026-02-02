@@ -67,7 +67,17 @@ public class ShopManager : MonoBehaviour
         {
             _timeRemaining -= Time.deltaTime;
             if (_timeRemaining <= 0)
-                CustomerLeave(false);
+            {
+                if (GameObject.Find("GameManager").GetComponent<GameManager>().DeliverMask())
+                {
+                    // HACKHACK
+                    _timeRemaining = 1000;
+                }
+                else
+                {
+                    CustomerLeave(false);
+                }
+            }
         }
 
         if (_lastDebugCustomerToShow != null && DebugCustomerToShow != _lastDebugCustomerToShow)

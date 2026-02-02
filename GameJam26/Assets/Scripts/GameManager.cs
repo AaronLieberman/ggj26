@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -139,7 +138,7 @@ public class GameManager : MonoBehaviour
         endingCustomerScoreText.text = string.Format("Score Earned: {0}", totalScore);
     }
 
-    public void DeliverMask()
+    public bool DeliverMask()
     {
         if (shopManager.MaskIsDeliverable)
         {
@@ -147,9 +146,12 @@ public class GameManager : MonoBehaviour
 
             Transform customerTransform = shopManager.CurrentCustomer.transform;
             var maskCenter = customerTransform.Find("CustomerMaskCenter");
-            shopManager.CurrentCustomer.HideTimers();
+            shopManager.CurrentCustomer.StopTimer();
             StartCoroutine(LerpTo(shopManager.CurrentCustomer, mask, maskCenter.transform, 0.5f));
+            return true;
         }
+
+        return false;
     }
 
     public IEnumerator LerpTo(Customer customer, Mask maskGameObject, Transform target, float duration)
