@@ -48,8 +48,8 @@ public class BuildProgressBar : MonoBehaviour
     {
         t = Mathf.Clamp01(t / 10);
         float x = t * (1f - MeterWidth);
-        _meterRect.anchorMin = new Vector2(x - (t >= 0.05 ? MeterWidth / 2 : 0), _meterRect.anchorMin.y);
-        _meterRect.anchorMax = new Vector2(x + (t <= 0.95 ? MeterWidth / 2 : 0), _meterRect.anchorMax.y);
+        _meterRect.anchorMin = new Vector2(x - MeterWidth / 2, _meterRect.anchorMin.y);
+        _meterRect.anchorMax = new Vector2(x + MeterWidth / 2, _meterRect.anchorMax.y);
     }
 
     public void SetArrowMin(float t)
