@@ -76,14 +76,14 @@ public class ShopManager : MonoBehaviour
                 }
                 else
                 {
-                    CustomerLeave(false);
+                    CustomerLeave(false, null);
                 }
             }
         }
 
         if (_lastDebugCustomerToShow != null && DebugCustomerToShow != _lastDebugCustomerToShow)
         {
-            CustomerLeave(false);
+            CustomerLeave(false, null);
         }
 
         _lastDebugCustomerToShow = DebugCustomerToShow;
@@ -139,15 +139,14 @@ public class ShopManager : MonoBehaviour
         _currentCustomer.StartTimer(duration);
     }
 
-    public void CustomerSatisfied()
+    public void CustomerSatisfied(Mask customerMask)
     {
         if (!_customerWaiting) return;
-        CustomerLeave(true);
+        CustomerLeave(true, customerMask);
     }
 
-    void CustomerLeave(bool satisfied)
+    void CustomerLeave(bool satisfied, Mask customerMask)
     {
-        Mask customerMask = _currentCustomer.GetComponentInChildren<Mask>();
         _currentCustomer.CustomerResult = new CustomerResult(
             _currentCustomer.Data,
             customerMask ? customerMask.gameObject : null,
@@ -163,6 +162,7 @@ public class ShopManager : MonoBehaviour
         var data = _currentCustomer.Data;
         string dialog = satisfied ? data.gradeADialog : data.gradeFDialog;
         _conversationText.SetText(dialog);
+        NamePlate.SetActive(false);
 
         _customerLeaving = true;
 
@@ -173,7 +173,6 @@ public class ShopManager : MonoBehaviour
             //Destroy(_currentCustomer);
             _currentCustomer = null;
             _customerLeaving = false;
-            NamePlate.SetActive(false);
             ConversationPlate.SetActive(false);
         });
     }

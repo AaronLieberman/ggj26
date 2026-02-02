@@ -194,9 +194,7 @@ public class GameManager : MonoBehaviour
         anim.StartCelebration(1.5f);
 
         yield return new WaitForSeconds(1.7f);
-        Utilities.GetRootComponentRecursive<ShopManager>().CustomerSatisfied();
+        Utilities.GetRootComponentRecursive<ShopManager>().CustomerSatisfied(maskGameObject);
         maskDisplayManager.ClearMaskDisplay();
-
-
     }
 }
