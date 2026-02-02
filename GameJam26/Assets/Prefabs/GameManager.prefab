@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8532041669897793615}
   - component: {fileID: 2667469046109522154}
+  - component: {fileID: 1651445470076669182}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -54,3 +55,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ce57fe058aa64104a8b87dfb35e0271c, type: 3}
   - {fileID: 21300000, guid: 92521cf4a621c4a499f3220eae10e8bb, type: 3}
   customerMaskSizing: {x: 101, y: 150}
+--- !u!114 &1651445470076669182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692935737087203375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db2e699526e692b408f272afaf4d57da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseManager
