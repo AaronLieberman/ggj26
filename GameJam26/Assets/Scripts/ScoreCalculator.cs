@@ -36,17 +36,23 @@ public class ScoreCalculator : MonoBehaviour
         _shopManager = Utilities.GetRootComponentRecursive<ShopManager>();
     }
 
-    public StatsScore? GetActiveStatsScore()
+    public StatsScore? GetActiveStatsScore(Mask mask = null)
     {
         if (_shopManager == null || _shopManager.CurrentCustomer == null)
             return null;
-        CustomerData customerData = _shopManager.CurrentCustomer.Data;
-        var maskDisplay = GameObject.Find("MaskDisplay");
-        if (maskDisplay == null)
-            return null;
-        var mask = maskDisplay.GetComponentInChildren<Mask>();
+
+        if (mask == null)
+        {
+            var maskDisplay = GameObject.Find("MaskDisplay");
+            if (maskDisplay == null)
+                return null;
+            mask = maskDisplay.GetComponentInChildren<Mask>();
+        }
+
         if (mask == null)
             return null;
+
+        CustomerData customerData = _shopManager.CurrentCustomer.Data;
 
         var activeMaskParts = MaskPiece.GetActiveMaskPartData(mask);
 
@@ -66,9 +72,9 @@ public class ScoreCalculator : MonoBehaviour
         score.Anonymity.InRange = customerData.maskAnonymity.InRange(score.Anonymity.Progress);
 
         score.Scary.Score = activeMaskParts.Sum(p => p.scaryStat) * customerData.maskScary.Points;
-        score.Goofy.Score = activeMaskParts.Sum(p => p.goofyStat) * customerData.maskScary.Points;
-        score.Beauty.Score = activeMaskParts.Sum(p => p.beautyStat) * customerData.maskScary.Points;
-        score.Anonymity.Score = activeMaskParts.Sum(p => p.anonymityStat) * customerData.maskScary.Points;
+        score.Goofy.Score = activeMaskParts.Sum(p => p.goofyStat) * customerData.maskGoofy.Points;
+        score.Beauty.Score = activeMaskParts.Sum(p => p.beautyStat) * customerData.maskBeauty.Points;
+        score.Anonymity.Score = activeMaskParts.Sum(p => p.anonymityStat) * customerData.maskAnonymity.Points;
 
         return score;
     }

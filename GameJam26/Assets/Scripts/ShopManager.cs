@@ -149,8 +149,8 @@ public class ShopManager : MonoBehaviour
     {
         _currentCustomer.CustomerResult = new CustomerResult(
             _currentCustomer.Data,
-            customerMask ? customerMask.gameObject : null,
-            customerMask ? (_scoreCalculator.GetActiveStatsScore()?.TotalScore() ?? 0) : 0,
+            customerMask != null ? customerMask.gameObject : null,
+            customerMask != null ? (_scoreCalculator.GetActiveStatsScore(customerMask)?.TotalScore() ?? 0) : 0,
             satisfied
         );
 
