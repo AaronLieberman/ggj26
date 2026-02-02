@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -52,3 +53,4 @@ public class CheatInspectorEditor : Editor
         GUILayout.EndHorizontal();
     }
 }
+#endif
