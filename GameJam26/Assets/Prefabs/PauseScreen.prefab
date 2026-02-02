@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseManager
   _pauseOverlay: {fileID: 7601598835480569248}
+  _restartIcon: {fileID: 3586582929744198610, guid: 71ae88f4cf26a7e4ebf686bf0ca57de8, type: 3}
 --- !u!1 &4857559740854104662
 GameObject:
   m_ObjectHideFlags: 0

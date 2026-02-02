@@ -38,8 +38,13 @@ public class ScoreCalculator : MonoBehaviour
 
     public StatsScore? GetActiveStatsScore()
     {
+        if (_shopManager == null || _shopManager.CurrentCustomer == null)
+            return null;
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
-        var mask = GameObject.Find("MaskDisplay").GetComponentInChildren<Mask>();
+        var maskDisplay = GameObject.Find("MaskDisplay");
+        if (maskDisplay == null)
+            return null;
+        var mask = maskDisplay.GetComponentInChildren<Mask>();
         if (mask == null)
             return null;
 

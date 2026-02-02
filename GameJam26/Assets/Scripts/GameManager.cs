@@ -96,6 +96,8 @@ public class GameManager : MonoBehaviour
         shopManager.DeactivateManager();
         conveyorManager.DeactivateManager();
 
+        Utilities.GetRootComponentRecursive<PauseManager>().ShowRestartButton();
+
         gameState = GameState.ENDED;
     }
 
