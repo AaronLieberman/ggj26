@@ -9,6 +9,7 @@ public class BuildProgressBar : MonoBehaviour
     public GameObject ArrowMin;
     public GameObject ArrowMax;
     public float GlowOnIntensity = 1.5f;
+    public float AnimationSpeed = 8f;
 
     const float ArrowWidth = 0.1f;
     const float MeterWidth = 0.1f;
@@ -19,8 +20,12 @@ public class BuildProgressBar : MonoBehaviour
     RectTransform _rangeRect;
     List<Material> _glowMaterials = new List<Material>();
 
-    float _arrowMinValue;
-    float _arrowMaxValue;
+    float _meterCurrent;
+    float _meterTarget;
+    float _arrowMinCurrent;
+    float _arrowMinTarget;
+    float _arrowMaxCurrent;
+    float _arrowMaxTarget;
     bool _inRange;
 
     static readonly int GlowIntensityId = Shader.PropertyToID("_GlowIntensity");
@@ -46,30 +51,21 @@ public class BuildProgressBar : MonoBehaviour
 
     public void SetMeter(float t)
     {
-        t = Mathf.Clamp01(t / 10);
-        float x = t * (1f - MeterWidth);
-        _meterRect.anchorMin = new Vector2(x - MeterWidth / 2, _meterRect.anchorMin.y);
-        _meterRect.anchorMax = new Vector2(x + MeterWidth / 2, _meterRect.anchorMax.y);
+        _meterTarget = Mathf.Clamp01(t / 10);
     }
 
     public void SetArrowMin(float t)
     {
         t = Mathf.Clamp01(t / 10);
-        _arrowMinValue = t;
-        _arrowMinRect.anchorMin = new Vector2(t - ArrowWidth / 2, _arrowMinRect.anchorMin.y);
-        _arrowMinRect.anchorMax = new Vector2(t + ArrowWidth / 2, _arrowMinRect.anchorMax.y);
+        _arrowMinTarget = t;
         ArrowMin.SetActive(t >= 0.05);
-        UpdateRange();
     }
 
     public void SetArrowMax(float t)
     {
         t = Mathf.Clamp01(t / 10);
-        _arrowMaxValue = t;
-        _arrowMaxRect.anchorMin = new Vector2(t - ArrowWidth / 2, _arrowMaxRect.anchorMin.y);
-        _arrowMaxRect.anchorMax = new Vector2(t + ArrowWidth / 2, _arrowMaxRect.anchorMax.y);
+        _arrowMaxTarget = t;
         ArrowMax.SetActive(t <= 0.95);
-        UpdateRange();
     }
 
     public void SetInRange(bool value)
@@ -77,12 +73,25 @@ public class BuildProgressBar : MonoBehaviour
         _inRange = value;
     }
 
-    void UpdateRange()
+    void Update()
     {
-        float minX = _arrowMinValue;
-        float maxX = _arrowMaxValue;
-        _rangeRect.anchorMin = new Vector2(minX, _rangeRect.anchorMin.y);
-        _rangeRect.anchorMax = new Vector2(maxX, _rangeRect.anchorMax.y);
+        float dt = Time.deltaTime * AnimationSpeed;
+        _meterCurrent = Mathf.Lerp(_meterCurrent, _meterTarget, dt);
+        _arrowMinCurrent = Mathf.Lerp(_arrowMinCurrent, _arrowMinTarget, dt);
+        _arrowMaxCurrent = Mathf.Lerp(_arrowMaxCurrent, _arrowMaxTarget, dt);
+
+        float mx = _meterCurrent * (1f - MeterWidth);
+        _meterRect.anchorMin = new Vector2(mx - MeterWidth / 2, _meterRect.anchorMin.y);
+        _meterRect.anchorMax = new Vector2(mx + MeterWidth / 2, _meterRect.anchorMax.y);
+
+        _arrowMinRect.anchorMin = new Vector2(_arrowMinCurrent - ArrowWidth / 2, _arrowMinRect.anchorMin.y);
+        _arrowMinRect.anchorMax = new Vector2(_arrowMinCurrent + ArrowWidth / 2, _arrowMinRect.anchorMax.y);
+
+        _arrowMaxRect.anchorMin = new Vector2(_arrowMaxCurrent - ArrowWidth / 2, _arrowMaxRect.anchorMin.y);
+        _arrowMaxRect.anchorMax = new Vector2(_arrowMaxCurrent + ArrowWidth / 2, _arrowMaxRect.anchorMax.y);
+
+        _rangeRect.anchorMin = new Vector2(_arrowMinCurrent, _rangeRect.anchorMin.y);
+        _rangeRect.anchorMax = new Vector2(_arrowMaxCurrent, _rangeRect.anchorMax.y);
     }
 
     void LateUpdate()
