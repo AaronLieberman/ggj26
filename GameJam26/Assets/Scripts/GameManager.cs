@@ -143,15 +143,40 @@ public class GameManager : MonoBehaviour
     {
         if (shopManager.MaskIsDeliverable)
         {
-            GameObject maskGameObject = GameObject.Find("MaskDisplay").transform.GetComponentInChildren<Mask>().gameObject;
-            Transform customerTransform = shopManager.CurrentCustomer.transform;
-            GameObject customerMask = Instantiate(maskGameObject, Vector3.zero, Quaternion.identity, customerTransform);
-            customerMask.GetComponent<RectTransform>().offsetMin = Vector2.zero;
-            customerMask.GetComponent<RectTransform>().offsetMax = Vector2.zero;
-            customerMask.GetComponent<RectTransform>().sizeDelta = customerMaskSizing;
+            var mask = GameObject.Find("MaskDisplay").transform.GetComponentInChildren<Mask>();
 
-            Utilities.GetRootComponentRecursive<ShopManager>().CustomerSatisfied();
-            maskDisplayManager.ClearMaskDisplay();
+            Transform customerTransform = shopManager.CurrentCustomer.transform;
+            var maskCenter = customerTransform.Find("CustomerMaskCenter");
+            shopManager.CurrentCustomer.HideTimers();
+            StartCoroutine(LerpTo(shopManager.CurrentCustomer, mask, maskCenter.transform, 0.5f));
         }
+    }
+
+    public IEnumerator LerpTo(Customer customer, Mask maskGameObject, Transform target, float duration)
+    {
+        float time = 0;
+        Vector3 startPos = maskGameObject.transform.position;
+        Vector3 targetPos = target.position;
+
+        while (time < duration)
+        {
+            float t = time / duration;
+            t = t * t * (3f - 2f * t);
+            maskGameObject.transform.position = Vector2.Lerp(startPos, targetPos, t);
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        maskGameObject.transform.position = targetPos;
+        maskGameObject.transform.SetParent(target, true);
+
+        var anim = customer.gameObject.AddComponent<CelebrationAnim>();
+        anim.StartCelebration(1.5f);
+
+        yield return new WaitForSeconds(1.7f);
+        maskDisplayManager.ClearMaskDisplay();
+        Utilities.GetRootComponentRecursive<ShopManager>().CustomerSatisfied();
+
     }
 }
