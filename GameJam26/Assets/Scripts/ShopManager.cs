@@ -68,7 +68,8 @@ public class ShopManager : MonoBehaviour
             _timeRemaining -= Time.deltaTime;
             if (_timeRemaining <= 0)
             {
-                if (GameObject.Find("GameManager").GetComponent<GameManager>().DeliverMask())
+                var canDeliver = MaskIsDeliverable && _scoreCalculator.GetActiveMaskAcceptable();
+                if (canDeliver && GameObject.Find("GameManager").GetComponent<GameManager>().DeliverMask())
                 {
                     // HACKHACK
                     _timeRemaining = 1000;
