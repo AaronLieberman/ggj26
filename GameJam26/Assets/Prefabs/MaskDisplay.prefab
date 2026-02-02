@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4252586556097821154}
   - component: {fileID: 2722671881242332903}
   - component: {fileID: 809996517255301094}
+  - component: {fileID: 2607691877020922819}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -74,8 +75,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -137,6 +138,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2607691877020922819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640682490586183013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2346da1c91288ba4c997bece2a966fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskDeliverableDisplay
+  AlphaDim: 0.25
 --- !u!1 &1134218569035684719
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +291,7 @@ GameObject:
   - component: {fileID: 1445406669838011222}
   - component: {fileID: 8939017507447661273}
   - component: {fileID: 3461706901637790034}
+  - component: {fileID: 8999676250897247428}
   m_Layer: 5
   m_Name: DeliverButton
   m_TagString: Untagged
@@ -301,8 +316,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 173}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -1.2086029, y: 176.92776}
+  m_SizeDelta: {x: 219.3931, y: 43.8983}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7168354227096868608
 CanvasRenderer:
@@ -332,8 +347,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b2e00689c1c98194da4dd6e44dbf3265, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -410,6 +425,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c19804c5dcb8c0c47bbbd56a91770c25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliverMask
+--- !u!114 &8999676250897247428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2990725525991752309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2346da1c91288ba4c997bece2a966fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  AlphaDim: 0.5
 --- !u!1 &8381015528312462791
 GameObject:
   m_ObjectHideFlags: 0
