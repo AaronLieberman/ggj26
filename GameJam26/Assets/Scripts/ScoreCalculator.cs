@@ -38,10 +38,11 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     // make sure to test GetMaskAcceptable first before using this
-    public int GetActiveMaskScore()
+    public int GetActiveMaskScore(Customer customer)
     {
         CustomerData customerData = _shopManager.CurrentCustomer.Data;
-        var mask = GameObject.Find("MaskDisplay").GetComponentInChildren<Mask>();
+        var mask = customer.GetComponentInChildren<Mask>();
+        
         if (mask == null)
         {
             return 0;
