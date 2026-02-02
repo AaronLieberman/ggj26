@@ -24,15 +24,15 @@ public class ScoreCalculator : MonoBehaviour
         var mountPoints = mask.GetComponentsInChildren<MountPoint>();
         int numberOfSlots = mountPoints.Select(mp => Tuple.Create(mp.Type, mp.Handedness)).Distinct().Count();
 
-        int maskScary = activeMaskParts.Sum(p => p.scaryStat);
-        int maskGoofy = activeMaskParts.Sum(p => p.goofyStat);
-        int maskBeauty = activeMaskParts.Sum(p => p.beautyStat);
-        int maskAnonymity = activeMaskParts.Sum(p => p.anonymityStat);
+        int maskScary = activeMaskParts.Sum(p => p.scaryStat) / numberOfSlots;
+        int maskGoofy = activeMaskParts.Sum(p => p.goofyStat) / numberOfSlots;
+        int maskBeauty = activeMaskParts.Sum(p => p.beautyStat) / numberOfSlots;
+        int maskAnonymity = activeMaskParts.Sum(p => p.anonymityStat) / numberOfSlots;
 
-        bool maskScaryInRange = customerData.maskScary.InRange(maskScary, numberOfSlots);
-        bool maskGoofyInRange = customerData.maskGoofy.InRange(maskGoofy, numberOfSlots);
-        bool maskBeautyInRange = customerData.maskBeauty.InRange(maskBeauty, numberOfSlots);
-        bool maskAnonymityInRange = customerData.maskAnonymity.InRange(maskAnonymity, numberOfSlots);
+        bool maskScaryInRange = customerData.maskScary.InRange(maskScary);
+        bool maskGoofyInRange = customerData.maskGoofy.InRange(maskGoofy);
+        bool maskBeautyInRange = customerData.maskBeauty.InRange(maskBeauty);
+        bool maskAnonymityInRange = customerData.maskAnonymity.InRange(maskAnonymity);
 
         return maskScaryInRange && maskGoofyInRange && maskBeautyInRange && maskAnonymityInRange;
     }

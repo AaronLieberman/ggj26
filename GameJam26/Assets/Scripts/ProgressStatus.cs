@@ -33,23 +33,31 @@ public class ProgressStatus : MonoBehaviour
         int numberOfSlots = mountPoints.Select(mp => Tuple.Create(mp.Type, mp.Handedness)).Distinct().Count();
 
         float maskBeauty = (float)activeMaskParts.Sum(p => p.beautyStat) / numberOfSlots;
+        bool maskBeautyInRange = customerData.maskBeauty.InRange(maskBeauty);
         BarBeauty.SetArrowMin(customerData.maskBeauty.Min);
         BarBeauty.SetArrowMax(customerData.maskBeauty.Max);
         BarBeauty.SetMeter(maskBeauty);
+        BarBeauty.SetInRange(maskBeautyInRange);
 
         float maskScary = (float)activeMaskParts.Sum(p => p.scaryStat) / numberOfSlots;
+        bool maskScaryInRange = customerData.maskScary.InRange(maskScary);
         BarScary.SetArrowMin(customerData.maskScary.Min);
         BarScary.SetArrowMax(customerData.maskScary.Max);
         BarScary.SetMeter(maskScary);
+        BarScary.SetInRange(maskScaryInRange);
 
         float maskGoofy = (float)activeMaskParts.Sum(p => p.goofyStat) / numberOfSlots;
+        bool maskGoofyInRange = customerData.maskGoofy.InRange(maskGoofy);
         BarGoofy.SetArrowMin(customerData.maskGoofy.Min);
         BarGoofy.SetArrowMax(customerData.maskGoofy.Max);
         BarGoofy.SetMeter(maskGoofy);
+        BarGoofy.SetInRange(maskGoofyInRange);
 
         float maskAnonymity = (float)activeMaskParts.Sum(p => p.anonymityStat) / numberOfSlots;
+        bool maskAnonymityInRange = customerData.maskAnonymity.InRange(maskAnonymity);
         BarAnon.SetArrowMin(customerData.maskAnonymity.Min);
         BarAnon.SetArrowMax(customerData.maskAnonymity.Max);
         BarAnon.SetMeter(maskAnonymity);
+        BarAnon.SetInRange(maskAnonymityInRange);
     }
 }

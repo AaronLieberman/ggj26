@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildProgressBar : MonoBehaviour
 {
@@ -6,6 +8,7 @@ public class BuildProgressBar : MonoBehaviour
     public GameObject Range;
     public GameObject ArrowMin;
     public GameObject ArrowMax;
+    public float GlowOnIntensity = 1.5f;
 
     const float ArrowWidth = 0.1f;
     const float MeterWidth = 0.1f;
@@ -14,9 +17,13 @@ public class BuildProgressBar : MonoBehaviour
     RectTransform _arrowMaxRect;
     RectTransform _meterRect;
     RectTransform _rangeRect;
+    List<Material> _glowMaterials = new List<Material>();
 
     float _arrowMinValue;
     float _arrowMaxValue;
+    bool _inRange;
+
+    static readonly int GlowIntensityId = Shader.PropertyToID("_GlowIntensity");
 
     void Awake()
     {
@@ -24,6 +31,17 @@ public class BuildProgressBar : MonoBehaviour
         _arrowMaxRect = ArrowMax.GetComponent<RectTransform>();
         _meterRect = Meter.GetComponent<RectTransform>();
         _rangeRect = Range.GetComponent<RectTransform>();
+
+        var images = GetComponentsInChildren<Image>();
+        foreach (var image in images)
+        {
+            if (image != null && image.material != null && image.material.HasFloat(GlowIntensityId))
+            {
+                var instance = new Material(image.material);
+                image.material = instance;
+                _glowMaterials.Add(instance);
+            }
+        }
     }
 
     public void SetMeter(float t)
@@ -54,11 +72,24 @@ public class BuildProgressBar : MonoBehaviour
         UpdateRange();
     }
 
+    public void SetInRange(bool value)
+    {
+        _inRange = value;
+    }
+
     void UpdateRange()
     {
         float minX = _arrowMinValue;
         float maxX = _arrowMaxValue;
         _rangeRect.anchorMin = new Vector2(minX, _rangeRect.anchorMin.y);
         _rangeRect.anchorMax = new Vector2(maxX, _rangeRect.anchorMax.y);
+    }
+
+    void LateUpdate()
+    {
+        foreach (var material in _glowMaterials)
+        {
+            material.SetFloat(GlowIntensityId, _inRange ? GlowOnIntensity : 0f);
+        }
     }
 }
