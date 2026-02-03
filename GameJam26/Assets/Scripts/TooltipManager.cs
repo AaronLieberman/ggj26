@@ -50,7 +50,7 @@ class TooltipManager : MonoBehaviour
 
         if (_showingOnPiece != null && PieceStatsTooltip != null)
         {
-            PieceStatsTooltip.transform.position = mousePos + new Vector2(0, TooltipYOffset);
+            PieceStatsTooltip.transform.position = mousePos + new Vector2(0, TooltipYOffset * _canvas.scaleFactor);
         }
 
         if (_lastMousePos == mousePos
@@ -103,7 +103,7 @@ class TooltipManager : MonoBehaviour
         }
 
         UnityEngine.Debug.Log($"Showing tooltip for piece: {piece.name}");
-        PieceStatsTooltip.transform.position = mousePos + new Vector2(0, TooltipYOffset);
+        PieceStatsTooltip.transform.position = mousePos + new Vector2(0, TooltipYOffset * _canvas.scaleFactor);
         PieceStatsTooltip.Data = piece.Data;
     }
 
