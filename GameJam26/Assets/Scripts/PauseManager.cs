@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,19 +8,43 @@ public class PauseManager : MonoBehaviour
 {
     [SerializeField] GameObject _pauseOverlay;
     [SerializeField] Sprite _restartIcon;
+    [SerializeField] int _blurIterations = 4;
+    [SerializeField] int _blurDownsample = 2;
 
     float _savedTimeScale;
     bool _isPaused;
     Button _pauseButton;
     TextMeshProUGUI _buttonText;
     GameObject _restartButtonObj;
+    RawImage _blurImage;
+    RenderTexture _blurredTexture;
+    Material _blurMaterial;
+    Coroutine _blurCoroutine;
 
     void Start()
     {
         var canvas = Utilities.GetRootComponentRecursive<Canvas>();
         CreatePauseButton(canvas.transform);
         CreateRestartButton(canvas.transform);
+        CreateBlurImage();
+        _blurMaterial = new Material(Shader.Find("Hidden/UIBlur"));
         _pauseOverlay.SetActive(false);
+    }
+
+    void CreateBlurImage()
+    {
+        var blurObj = new GameObject("BlurBackground");
+        blurObj.transform.SetParent(transform, false);
+        blurObj.transform.SetSiblingIndex(0);
+
+        var rect = blurObj.AddComponent<RectTransform>();
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.sizeDelta = Vector2.zero;
+
+        _blurImage = blurObj.AddComponent<RawImage>();
+        _blurImage.color = new Color(0.5f, 0.5f, 0.5f);
+        blurObj.SetActive(false);
     }
 
     void CreatePauseButton(Transform parent)
@@ -117,19 +142,74 @@ public class PauseManager : MonoBehaviour
         _savedTimeScale = Time.timeScale;
         Time.timeScale = 0f;
         _isPaused = true;
-        _pauseOverlay.SetActive(true);
         _buttonText.text = "►";
         _restartButtonObj.SetActive(true);
         _pauseButton.transform.SetAsLastSibling();
         _restartButtonObj.transform.SetAsLastSibling();
+        _blurCoroutine = StartCoroutine(CaptureAndBlur());
+    }
+
+    IEnumerator CaptureAndBlur()
+    {
+        yield return new WaitForEndOfFrame();
+
+        var screenTex = ScreenCapture.CaptureScreenshotAsTexture();
+        int width = screenTex.width / _blurDownsample;
+        int height = screenTex.height / _blurDownsample;
+
+        var rt1 = RenderTexture.GetTemporary(width, height);
+        var rt2 = RenderTexture.GetTemporary(width, height);
+
+        Graphics.Blit(screenTex, rt1);
+
+        for (int i = 0; i < _blurIterations; i++)
+        {
+            _blurMaterial.SetFloat("_Offset", i + 1);
+            Graphics.Blit(rt1, rt2, _blurMaterial);
+            var temp = rt1;
+            rt1 = rt2;
+            rt2 = temp;
+        }
+
+        if (_blurredTexture != null) _blurredTexture.Release();
+        _blurredTexture = new RenderTexture(width, height, 0);
+        Graphics.Blit(rt1, _blurredTexture);
+
+        _blurImage.texture = _blurredTexture;
+        _blurImage.gameObject.SetActive(true);
+        _pauseOverlay.SetActive(true);
+
+        RenderTexture.ReleaseTemporary(rt1);
+        RenderTexture.ReleaseTemporary(rt2);
+        Destroy(screenTex);
+        _blurCoroutine = null;
     }
 
     void Unpause()
     {
+        if (_blurCoroutine != null)
+        {
+            StopCoroutine(_blurCoroutine);
+            _blurCoroutine = null;
+        }
+
         Time.timeScale = _savedTimeScale;
         _isPaused = false;
         _pauseOverlay.SetActive(false);
+        _blurImage.gameObject.SetActive(false);
         _buttonText.text = "| |";
         _restartButtonObj.SetActive(false);
+
+        if (_blurredTexture != null)
+        {
+            _blurredTexture.Release();
+            _blurredTexture = null;
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (_blurredTexture != null) _blurredTexture.Release();
+        if (_blurMaterial != null) Destroy(_blurMaterial);
     }
 }
