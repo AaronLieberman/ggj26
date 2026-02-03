@@ -43,7 +43,6 @@ public class PauseManager : MonoBehaviour
         rect.sizeDelta = Vector2.zero;
 
         _blurImage = blurObj.AddComponent<RawImage>();
-        _blurImage.color = new Color(0.5f, 0.5f, 0.5f);
         blurObj.SetActive(false);
     }
 
