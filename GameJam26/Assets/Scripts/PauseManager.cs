@@ -10,6 +10,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] Sprite _restartIcon;
     [SerializeField] int _blurIterations = 4;
     [SerializeField] int _blurDownsample = 2;
+    [SerializeField] bool _enableBlur = true;
 
     float _savedTimeScale;
     bool _isPaused;
@@ -27,7 +28,9 @@ public class PauseManager : MonoBehaviour
         CreatePauseButton(canvas.transform);
         CreateRestartButton(canvas.transform);
         CreateBlurImage();
-        _blurMaterial = new Material(Shader.Find("Hidden/UIBlur"));
+        var shader = Shader.Find("Hidden/UIBlur");
+        if (shader != null)
+            _blurMaterial = new Material(shader);
         _pauseOverlay.SetActive(false);
     }
 
@@ -153,6 +156,13 @@ public class PauseManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         var screenTex = ScreenCapture.CaptureScreenshotAsTexture();
+        if (!_enableBlur || screenTex == null || _blurMaterial == null)
+        {
+            _pauseOverlay.SetActive(true);
+            _blurCoroutine = null;
+            yield break;
+        }
+
         int width = screenTex.width / _blurDownsample;
         int height = screenTex.height / _blurDownsample;
 
