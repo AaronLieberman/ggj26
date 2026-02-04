@@ -7,6 +7,7 @@ public class LetterboxCamera : MonoBehaviour
     const float TargetAspect = 16f / 9f;
 
     RectTransform _canvasRect;
+    CanvasScaler _scaler;
     int _lastWidth;
     int _lastHeight;
 
@@ -25,6 +26,7 @@ public class LetterboxCamera : MonoBehaviour
         if (canvas == null) return;
 
         _canvasRect = canvas.GetComponent<RectTransform>();
+        _scaler = canvas.GetComponent<CanvasScaler>();
 
         for (int i = 0; i < _canvasRect.childCount; i++)
         {
@@ -49,7 +51,24 @@ public class LetterboxCamera : MonoBehaviour
 
         if (_canvasRect == null) return;
 
-        Vector2 canvasSize = _canvasRect.rect.size;
+        Vector2 canvasSize;
+        if (_scaler != null && _scaler.uiScaleMode == CanvasScaler.ScaleMode.ScaleWithScreenSize)
+        {
+            float screenAspect = (float)Screen.width / Screen.height;
+            float match = screenAspect > TargetAspect ? 1f : 0f;
+            _scaler.matchWidthOrHeight = match;
+
+            Vector2 refRes = _scaler.referenceResolution;
+            float logWidth = Mathf.Log(Screen.width / refRes.x, 2);
+            float logHeight = Mathf.Log(Screen.height / refRes.y, 2);
+            float scaleFactor = Mathf.Pow(2f, Mathf.Lerp(logWidth, logHeight, match));
+            canvasSize = new Vector2(Screen.width / scaleFactor, Screen.height / scaleFactor);
+        }
+        else
+        {
+            canvasSize = _canvasRect.rect.size;
+        }
+
         if (canvasSize.x <= 0 || canvasSize.y <= 0) return;
 
         float canvasAspect = canvasSize.x / canvasSize.y;
