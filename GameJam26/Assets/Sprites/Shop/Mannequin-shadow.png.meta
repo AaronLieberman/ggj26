@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6a8dd61b91a55ce40ba5546b07fb1dde
+guid: c4f660136ec38a44c919d2f0db02c3bd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1907163598658165457
-    second: Mannequin_0
+      213: 5712300208890767636
+    second: Customer-shadow_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +24,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mannequin_0
+      name: Customer-shadow_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 94
-        height: 167
+        x: 4
+        y: 2
+        width: 114
+        height: 151
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1da539a303b977a10800000000000000
-      internalID: 1907163598658165457
+      spriteID: 419e25166ca264f40800000000000000
+      internalID: 5712300208890767636
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Mannequin_0: 1907163598658165457
+      Customer-shadow_0: 5712300208890767636
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
