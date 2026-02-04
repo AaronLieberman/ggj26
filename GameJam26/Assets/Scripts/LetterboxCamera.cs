@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +11,11 @@ public class LetterboxCamera : MonoBehaviour
     CanvasScaler _scaler;
     int _lastWidth;
     int _lastHeight;
+    int _lastChildCount;
 
     readonly Dictionary<RectTransform, (Vector2 min, Vector2 max)> _originalAnchors = new();
+    readonly HashSet<RectTransform> _barPanels = new();
+    RectTransform _barLeft, _barRight, _barTop, _barBottom;
 
     void Start()
     {
@@ -28,19 +32,77 @@ public class LetterboxCamera : MonoBehaviour
         _canvasRect = canvas.GetComponent<RectTransform>();
         _scaler = canvas.GetComponent<CanvasScaler>();
 
+        CreateBarPanels();
+        ScanChildren();
+        UpdateAnchors();
+    }
+
+    void CreateBarPanels()
+    {
+        _barLeft = CreateBar("LetterboxLeft");
+        _barRight = CreateBar("LetterboxRight");
+        _barTop = CreateBar("LetterboxTop");
+        _barBottom = CreateBar("LetterboxBottom");
+    }
+
+    RectTransform CreateBar(string name)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(CanvasGroup));
+        go.transform.SetParent(_canvasRect, false);
+
+        var rt = go.GetComponent<RectTransform>();
+        rt.sizeDelta = Vector2.zero;
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
+
+        var img = go.GetComponent<Image>();
+        img.color = Color.black;
+        img.raycastTarget = false;
+
+        var cg = go.GetComponent<CanvasGroup>();
+        cg.blocksRaycasts = true;
+
+        _barPanels.Add(rt);
+        return rt;
+    }
+
+    void ScanChildren()
+    {
+        var toRemove = _originalAnchors
+            .Where(kvp => kvp.Key == null || kvp.Key.parent != _canvasRect)
+            .ToList();
+
+        foreach (var (rt, orig) in toRemove)
+        {
+            if (rt != null)
+            {
+                rt.anchorMin = orig.min;
+                rt.anchorMax = orig.max;
+            }
+            _originalAnchors.Remove(rt);
+        }
+
         for (int i = 0; i < _canvasRect.childCount; i++)
         {
             var child = _canvasRect.GetChild(i) as RectTransform;
-            if (child != null)
+            if (child != null && !_originalAnchors.ContainsKey(child) && !_barPanels.Contains(child))
                 _originalAnchors[child] = (child.anchorMin, child.anchorMax);
         }
 
-        UpdateAnchors();
+        _lastChildCount = _canvasRect.childCount;
     }
 
     void Update()
     {
-        if (Screen.width != _lastWidth || Screen.height != _lastHeight)
+        if (_canvasRect == null) return;
+
+        bool sizeChanged = Screen.width != _lastWidth || Screen.height != _lastHeight;
+        bool childCountChanged = _canvasRect.childCount != _lastChildCount;
+
+        if (childCountChanged)
+            ScanChildren();
+
+        if (sizeChanged || childCountChanged)
             UpdateAnchors();
     }
 
@@ -112,5 +174,24 @@ public class LetterboxCamera : MonoBehaviour
                 Mathf.Lerp(normBottom, normTop, orig.max.y)
             );
         }
+
+        SetBarAnchors(_barLeft, 0f, 0f, normLeft, 1f);
+        SetBarAnchors(_barRight, normRight, 0f, 1f, 1f);
+        SetBarAnchors(_barBottom, 0f, 0f, 1f, normBottom);
+        SetBarAnchors(_barTop, 0f, normTop, 1f, 1f);
+
+        _barLeft.SetAsLastSibling();
+        _barRight.SetAsLastSibling();
+        _barTop.SetAsLastSibling();
+        _barBottom.SetAsLastSibling();
+    }
+
+    void SetBarAnchors(RectTransform bar, float minX, float minY, float maxX, float maxY)
+    {
+        if (bar == null) return;
+        bar.anchorMin = new Vector2(minX, minY);
+        bar.anchorMax = new Vector2(maxX, maxY);
+        bar.offsetMin = Vector2.zero;
+        bar.offsetMax = Vector2.zero;
     }
 }
