@@ -69,6 +69,9 @@ UpgradeLog.htm
 # Crashlytics generated file
 crashlytics-build.properties
 
+# TMP fallback font asset (regenerated during builds)
+/[Aa]ssets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
