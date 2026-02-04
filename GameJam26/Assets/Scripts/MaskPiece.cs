@@ -106,7 +106,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         _physics.angularVelocity = 0f;
 
         RefreshMountPoints();
-        this.transform.SetParent(OriginalParent, true);
+        this.transform.SetParent(_canvas.transform, true);
         _dragPos = _rectTransform.anchoredPosition;
         this.transform.SetAsLastSibling();
 
@@ -128,8 +128,9 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
 
         DetachMountHints();
 
-        if (this._rectTransform.parent == OriginalParent)
+        if (this._rectTransform.parent == _canvas.transform)
         {
+            this.transform.SetParent(OriginalParent, true);
             GetComponent<Rigidbody2D>().simulated = true;
         }
 
@@ -236,7 +237,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         _dragPos += eventData.delta / _canvas.scaleFactor;
         if (closest == null)
         {
-            transform.SetParent(OriginalParent, false);
+            transform.SetParent(_canvas.transform, false);
             _rectTransform.anchoredPosition = _dragPos;
             transform.SetAsLastSibling();
 
