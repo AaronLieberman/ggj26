@@ -274,7 +274,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
                     mountPoint.transform.position);
 
             if ((closest == null
-                    && dist < maskSnappingDistance)
+                    && dist < maskSnappingDistance * _canvas.scaleFactor)
                 || dist < closestDist)
             {
                 closest = mountPoint;
