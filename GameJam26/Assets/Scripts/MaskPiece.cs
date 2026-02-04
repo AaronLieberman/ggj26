@@ -231,7 +231,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
 
     public void OnDrag(PointerEventData eventData)
     {
-        MountPoint closest = FindClosest();
+        MountPoint closest = FindClosest(eventData.position);
 
         _dragPos += eventData.delta / _canvas.scaleFactor;
         if (closest == null)
@@ -255,12 +255,12 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
 
     }
 
-    private MountPoint FindClosest()
+    private MountPoint FindClosest(Vector2 pointerPosition)
     {
         float closestDist = 0f;
         MountPoint closest = null;
 
-        var fromPosition = Mouse.current.position.ReadValue();
+        var fromPosition = pointerPosition;
         foreach (var mountPoint in _mountPoints)
         {
             UIPulse[] nonPlaceableHints = mountPoint.transform.parent.GetComponentsInChildren<UIPulse>().Where(hint => hint.name.Contains("_nonPlaceableHint")).ToArray();
