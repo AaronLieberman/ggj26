@@ -29,6 +29,8 @@ public struct StatsScore
 
 public class ScoreCalculator : MonoBehaviour
 {
+    public bool AlwaysAcceptable = false;
+
     ShopManager _shopManager;
 
     void Start()
@@ -66,10 +68,10 @@ public class ScoreCalculator : MonoBehaviour
         score.Beauty.Progress = (float)activeMaskParts.Sum(p => p.beautyStat) / numberOfSlots;
         score.Anonymity.Progress = (float)activeMaskParts.Sum(p => p.anonymityStat) / numberOfSlots;
 
-        score.Scary.InRange = customerData.maskScary.InRange(score.Scary.Progress);
-        score.Goofy.InRange = customerData.maskGoofy.InRange(score.Goofy.Progress);
-        score.Beauty.InRange = customerData.maskBeauty.InRange(score.Beauty.Progress);
-        score.Anonymity.InRange = customerData.maskAnonymity.InRange(score.Anonymity.Progress);
+        score.Scary.InRange = AlwaysAcceptable || customerData.maskScary.InRange(score.Scary.Progress);
+        score.Goofy.InRange = AlwaysAcceptable || customerData.maskGoofy.InRange(score.Goofy.Progress);
+        score.Beauty.InRange = AlwaysAcceptable || customerData.maskBeauty.InRange(score.Beauty.Progress);
+        score.Anonymity.InRange = AlwaysAcceptable || customerData.maskAnonymity.InRange(score.Anonymity.Progress);
 
         score.Scary.Score = activeMaskParts.Sum(p => p.scaryStat) * customerData.maskScary.Points;
         score.Goofy.Score = activeMaskParts.Sum(p => p.goofyStat) * customerData.maskGoofy.Points;
