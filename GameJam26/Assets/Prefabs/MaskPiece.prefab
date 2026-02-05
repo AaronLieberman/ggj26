@@ -166,5 +166,6 @@ MonoBehaviour:
   maskPieceScale: {x: 2, y: 2, z: 2}
   maskPieceDisplayScale: {x: 1, y: 1, z: 1}
   maskSnappingDistance: 50
+  releaseVelocityMultiplier: 0.4
   _mountPoints: []
   _mountHints: []

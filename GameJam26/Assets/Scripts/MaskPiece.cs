@@ -18,6 +18,9 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
     [SerializeField]
     float maskSnappingDistance;
 
+    [SerializeField]
+    float releaseVelocityMultiplier = 0.5f;
+
     public MaskPartData Data { get; set; }
 
     MaskPartSlot _type;
@@ -29,6 +32,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
     BoxCollider2D _collider;
     Vector2 _dragPos;
     Vector2 _nonDragVelocity;
+    Vector2 _dragVelocity;
 
     public MaskPartSlot Type { get { return _type; } }
     public Transform OriginalParent { get { return _originalParent; } }
@@ -104,6 +108,7 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
 
         _physics.linearVelocity = Vector2.zero;
         _physics.angularVelocity = 0f;
+        _dragVelocity = Vector2.zero;
 
         RefreshMountPoints();
         this.transform.SetParent(_canvas.transform, true);
@@ -132,9 +137,8 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
         {
             this.transform.SetParent(OriginalParent, true);
             GetComponent<Rigidbody2D>().simulated = true;
+            _physics.linearVelocity = _dragVelocity * releaseVelocityMultiplier;
         }
-
-        //_physics.linearVelocity = _nonDragVelocity;
     }
 
     public void AttachMountHints()
@@ -234,7 +238,9 @@ public class MaskPiece : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerD
     {
         MountPoint closest = FindClosest(eventData.position);
 
-        _dragPos += eventData.delta / _canvas.scaleFactor;
+        Vector2 frameDelta = eventData.delta / _canvas.scaleFactor;
+        _dragVelocity = frameDelta / Time.deltaTime;
+        _dragPos += frameDelta;
         if (closest == null)
         {
             transform.SetParent(_canvas.transform, false);
