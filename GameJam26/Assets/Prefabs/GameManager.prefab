@@ -51,6 +51,7 @@ MonoBehaviour:
   shopStartSeconds: 2
   endingMaskPieceScaling: {x: 0.45, y: 0.45}
   endingMaskSizing: {x: 50.5, y: 75}
+  endingMaskOffset: {x: 0, y: 24}
   endingCustomerViewerPrefab: {fileID: 6351986831198142498, guid: 7fddcae09ef018048859f061da9717ad, type: 3}
   endingCustomerSatisfactionSprites:
   - {fileID: 21300000, guid: ce57fe058aa64104a8b87dfb35e0271c, type: 3}

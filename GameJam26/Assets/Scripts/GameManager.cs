@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Vector2 endingMaskPieceScaling;
     [SerializeField] private Vector2 endingMaskSizing;
+    [SerializeField] private Vector2 endingMaskOffset;
     [SerializeField] private GameObject endingCustomerViewerPrefab;
     private Transform endingCustomerHolder;
     [SerializeField] private Sprite[] endingCustomerSatisfactionSprites;
@@ -146,8 +147,10 @@ public class GameManager : MonoBehaviour
 
             if (customerResult.CustomerMask)
             {
-                GameObject endingCustomerMask = Instantiate(customerResult.CustomerMask, Vector3.zero, Quaternion.identity, endingCustomerViewer.transform);
-                endingCustomerMask.GetComponent<RectTransform>().sizeDelta = endingMaskSizing;
+                GameObject endingCustomerMask = Instantiate(customerResult.CustomerMask, endingCustomerViewer.transform);
+                RectTransform maskRect = endingCustomerMask.GetComponent<RectTransform>();
+                maskRect.anchoredPosition = endingMaskOffset;
+                maskRect.sizeDelta = endingMaskSizing;
                 endingCustomerMask.transform.Find("MountPoints").GetComponent<RectTransform>().localScale = endingMaskPieceScaling;
             }
         }
