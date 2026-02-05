@@ -21,6 +21,7 @@ public class PauseManager : MonoBehaviour
     RenderTexture _blurredTexture;
     Material _blurMaterial;
     Coroutine _blurCoroutine;
+    MusicManager _musicManager;
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class PauseManager : MonoBehaviour
         if (shader != null)
             _blurMaterial = new Material(shader);
         _pauseOverlay.SetActive(false);
+        _musicManager = Utilities.GetRootComponentRecursive<MusicManager>();
     }
 
     void CreateBlurImage()
@@ -149,6 +151,8 @@ public class PauseManager : MonoBehaviour
         _pauseButton.transform.SetAsLastSibling();
         _restartButtonObj.transform.SetAsLastSibling();
         _blurCoroutine = StartCoroutine(CaptureAndBlur());
+        if (_musicManager != null)
+            _musicManager.FadeOut();
     }
 
     IEnumerator CaptureAndBlur()
@@ -214,6 +218,9 @@ public class PauseManager : MonoBehaviour
             _blurredTexture.Release();
             _blurredTexture = null;
         }
+
+        if (_musicManager != null)
+            _musicManager.FadeIn();
     }
 
     void OnDestroy()
