@@ -30,9 +30,8 @@ public class MaskDisplayManager : MonoBehaviour
             return;
         }
 
-        foreach (MaskPiece maskPiece in MaskPiece.GetActiveMaskParts(displayMask.GetComponent<Mask>()))
-        {
-            GameObject.Destroy(maskPiece.gameObject);
-        }
+        displayMask.transform.SetParent(GameObject.Find("MaskExit").transform, true);
+        displayMask.FlyOff();
+        displayMask.enabled = false;
     }
 }
